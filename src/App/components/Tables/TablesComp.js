@@ -20,7 +20,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import './TableStyles.scss';
 import { Row, Col } from 'react-bootstrap';
-
+import Aux from "../../../hoc/_Aux";
+import { Pagination } from 'antd';
+import 'antd/dist/antd.css';
 
 class TableData extends React.Component {
 
@@ -32,12 +34,13 @@ class TableData extends React.Component {
             selected: [],
             page: 0,
             rowsPerPage: 5,
+            rows: []
+
         }
     }
 
     headCells;
-
-    rows = [];
+    pageSizeOptions = [5, 10, 25]
 
 
     async componentDidMount() {
@@ -47,14 +50,25 @@ class TableData extends React.Component {
 
     }
 
+    async componentWillReceiveProps() {
+        const { headCells, data, DataShowPerTable } = this.props;
+        this.headCells = headCells;
+        await this.InitializeRows(data, DataShowPerTable);
+    }
+
     InitializeRows(data, DataShowPerTable) {
-        data.map((Item, i) => {
-            this.createData(Item, DataShowPerTable);
+        this.setState({ rows: [] }, () => {
+            data.map((Item, i) => {
+                this.createData(Item, DataShowPerTable);
+            })
         })
+
+
 
     }
 
     createData(Item, DataShowPerTable) {
+        const { rows } = this.state;
         let result = {};
         Object.entries(Item).map((value) => {
             DataShowPerTable.map((requiredData) => {
@@ -63,7 +77,8 @@ class TableData extends React.Component {
                 }
             })
         })
-        this.rows.push(result);
+        rows.push(result);
+        this.setState({ rows: rows })
     }
 
 
@@ -131,7 +146,8 @@ class TableData extends React.Component {
 
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd } = this.props;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data } = this.props;
+        const { rows } = this.state;
         const classes = {
             root: {
                 width: '100%',
@@ -162,24 +178,26 @@ class TableData extends React.Component {
 
 
         const handleChangePage = (event, newPage) => {
-            this.setState({ page: newPage })
+            debugger
+            this.setState({ page: (event - 1), rowsPerPage: newPage })
         };
 
-        const handleChangeRowsPerPage = (event) => {
-            this.setState({ page: 0, rowsPerPage: parseInt(event.target.value, 10) })
+        const handleChangeRowsPerPage = (value) => {
+            debugger
+            this.setState({ page: 0, rowsPerPage: this.pageSizeOptions[value - 1] })
 
         };
 
 
         const isSelected = (name) => this.state.selected.indexOf(name) !== -1;
 
-        const emptyRows = this.state.rowsPerPage - Math.min(this.state.rowsPerPage, this.rows.length - this.state.page * this.state.rowsPerPage);
+        const emptyRows = this.state.rowsPerPage - Math.min(this.state.rowsPerPage, rows.length - this.state.page * this.state.rowsPerPage);
 
 
 
         return (
-            <div className={classes.root}>
-                <Paper className={classes.paper}>
+            <div style={{ width: '100%' }}>
+                <Paper style={{ width: '100%' }}>
                     <Row className="headerContainer">
                         <Col md="6">
                             <h3>{Title}</h3>
@@ -187,21 +205,28 @@ class TableData extends React.Component {
                         <Col md="6">
                             <div className="btnContainer">
                                 {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
-                                <Button variant="contained">Export Table</Button>
+                                <Button variant="contained"><i className="fa fa-download" />Export Table</Button>
                             </div>
                         </Col>
                         <hr />
                         <Col md="12" className="SpecRow">
                             <div id="main-search" className={'main-search'}>
-                                <div className="input-group">
-                                    <input type="text" id="m-search" className="form-control" placeholder="Search . . ." style={{ width: this.state.searchString }} />
-                                    <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
-                                        <i className="feather icon-x input-group-text" />
-                                    </a>
-                                    <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
-                                        <i className="feather icon-search input-group-text" />
-                                    </span>
-                                </div>
+                                <Row>
+                                    <Col md="2">
+                                        <p className="SearchTxt">Search:</p>
+                                    </Col>
+                                    <Col md="10">
+                                        <div className="input-group">
+                                            <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} />
+                                            <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
+                                                <i className="feather icon-x input-group-text" />
+                                            </a>
+                                            <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
+                                                <i className="feather icon-search input-group-text" />
+                                            </span>
+                                        </div>
+                                    </Col>
+                                </Row>
                             </div>
                         </Col>
                     </Row>
@@ -215,9 +240,9 @@ class TableData extends React.Component {
                             aria-label="enhanced table"
                         >
 
-                            {this.EnhancedTableHead(this.state.selected.length, this.state.order, this.state.orderBy, this.rows.length, handleRequestSort)}
+                            {this.EnhancedTableHead(this.state.selected.length, this.state.order, this.state.orderBy, rows.length, handleRequestSort)}
                             <TableBody>
-                                {this.stableSort(this.rows, this.getComparator(this.state.order, this.state.orderBy))
+                                {this.stableSort(rows, this.getComparator(this.state.order, this.state.orderBy))
                                     .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
                                     .map((row, index) => {
                                         const isItemSelected = isSelected(row.name);
@@ -234,29 +259,43 @@ class TableData extends React.Component {
                                                     return (<TableCell align="center">{Item[1]}</TableCell>)
                                                 })}
                                                 <TableCell align="center" className="IconContainers">
-                                                    <i className="fas fa-trash-alt" onClick={() => { handleDelete(row) }} />
-                                                    <i className="fas fa-info-circle" onClick={() => { handleDetails(row) }} />
-                                                    <i className="fas fa-edit" onClick={() => { handleEdit(row) }} />
+                                                    <i className="fas fa-trash-alt" onClick={() => { handleDelete(data[index], index) }} />
+                                                    <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
+                                                    <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
                                                 </TableCell>
                                             </TableRow>
                                         );
                                     })}
                                 {emptyRows > 0 && (
-                                    <TableRow style={{ height: 30 * emptyRows }}>
+                                    <TableRow style={{ height: 20 * emptyRows }}>
                                         <TableCell colSpan={6} />
                                     </TableRow>
                                 )}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[5, 10, 25]}
-                        count={totalPages}
-                        rowsPerPage={this.state.rowsPerPage}
-                        page={this.state.page}
-                        onChangePage={handleChangePage}
-                        onChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
+                    <div className="TablePaginationContainer">
+                        {/* <TablePagination
+
+                            rowsPerPageOptions={[5, 10, 25]}
+                            count={totalPages}
+                            rowsPerPage={this.state.rowsPerPage}
+                            page={this.state.page}
+                            onChangePage={handleChangePage}
+                            onChangeRowsPerPage={handleChangeRowsPerPage}
+                        /> */}
+                        {/* <Pagination defaultCurrent={this.state.page} total={totalPages} pageSizeOptions={[5, 10, 25]} defaultPageSize={5} onShowSizeChange={handleChangeRowsPerPage} onChange={handleChangePage} /> */}
+                        <Pagination
+                            defaultCurrent={(this.state.page + 1)}
+                            pageSize={this.state.rowsPerPage}
+                            total={10}
+                            pageSizeOptions={this.pageSizeOptions}
+                            onShowSizeChange={(val) => handleChangeRowsPerPage(val)}
+                            onChange={handleChangePage}
+                            showSizeChanger={true}
+                        />
+
+                    </div>
                 </Paper>
 
             </div >
@@ -265,10 +304,13 @@ class TableData extends React.Component {
 
 
     render() {
+        const { rows } = this.state
         return (
-            <div className="TableContainer">
-                {this.rows && this.headCells && this.EnhancedTable()}
-            </div>
+            <Aux>
+                <div className="TableContainer">
+                    {rows && this.headCells && this.EnhancedTable()}
+                </div>
+            </Aux>
         )
     }
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Row,
     Col,
@@ -8,7 +8,7 @@ import {
 
 import Aux from "../../../hoc/_Aux";
 import Card from "../../../App/components/MainCard";
-import DEMO from "../../../store/constant";
+import DEMO from "../../../store/constants/Global";
 
 class BreadcrumbPagination extends Component {
     render() {
@@ -83,7 +83,7 @@ class BreadcrumbPagination extends Component {
                         <Card title="Pagination">
                             <Pagination>{items}</Pagination>
                             <h5 className="mt-5">Working With Icons</h5>
-                            <hr/>
+                            <hr />
                             <Pagination>
                                 <Pagination.First />
                                 <Pagination.Prev />
@@ -92,7 +92,7 @@ class BreadcrumbPagination extends Component {
                                 <Pagination.Last />
                             </Pagination>
                             <h5 className="mt-5">More Options</h5>
-                            <hr/>
+                            <hr />
                             <Pagination>
                                 <Pagination.Prev />
                                 <Pagination.Item>{1}</Pagination.Item>
@@ -105,17 +105,17 @@ class BreadcrumbPagination extends Component {
                                 <Pagination.Next />
                             </Pagination>
                             <h5 className="mt-5">Active</h5>
-                            <hr/>
+                            <hr />
                             <Pagination>
                                 {activeItems}
                             </Pagination>
                             <h5 className="mt-5">Disabled</h5>
-                            <hr/>
+                            <hr />
                             <Pagination>
                                 {disabledItems}
                             </Pagination>
                             <h5 className="mt-5">Sizing</h5>
-                            <hr/>
+                            <hr />
                             <Pagination>{items}</Pagination>
                             <Pagination size="lg">{items}</Pagination>
                             <Pagination size="sm">{items}</Pagination>

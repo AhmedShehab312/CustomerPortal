@@ -22,9 +22,12 @@ const FormsElements = React.lazy(() => import('./Demo/Forms/FormsElements'));
 const OtherSamplePage = React.lazy(() => import('./Demo/Other/SamplePage'));
 const OtherDocs = React.lazy(() => import('./Demo/Other/Docs'));
 const Tables = React.lazy(() => import('./App/components/Tables'));
+const CompanyProfile = React.lazy(() => import('./Demo/CompanyProfile/CompanyProfile'));
+const Branches = React.lazy(() => import('./Demo/Branches/Branches'));
+
 
 const routes = [
-    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
+    { path: '/dashboard', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
     { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
     { path: '/basic/breadcrumb-paging', exact: true, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
@@ -35,6 +38,10 @@ const routes = [
     { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
     { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
     { path: '/Tables', exact: true, name: 'Tables', component: Tables },
+    { path: '/CompanyProfile', exact: true, name: 'CompanyProfile', component: CompanyProfile },
+    { path: '/Branches', exact: true, name: 'Branches', component: Branches },
+
+
 ];
 
 export default routes;

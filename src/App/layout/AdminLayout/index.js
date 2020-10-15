@@ -10,7 +10,8 @@ import Breadcrumb from './Breadcrumb';
 import Loader from "../Loader";
 import routes from "../../../routes";
 import Aux from "../../../hoc/_Aux";
-import * as actionTypes from "../../../store/actions";
+import * as actionTypes from "../../../store/actions/GlobalAction";
+import { getLoggedIn } from '../../../globals/globals';
 
 import './app.scss';
 
@@ -21,6 +22,18 @@ class AdminLayout extends Component {
             this.props.onFullScreenExit();
         }
     };
+
+    componentDidMount() {
+        if (!getLoggedIn()) {
+            this.props.history.push('/signin-1');
+        }
+    }
+
+    componentWillReceiveProps(props) {
+        if (!getLoggedIn()) {
+            props.history.push('/signin-1');
+        }
+    }
 
     componentWillMount() {
         if (this.props.windowWidth > 992 && this.props.windowWidth <= 1024 && this.props.layout !== 'horizontal') {
@@ -87,11 +100,11 @@ class AdminLayout extends Component {
 
 const mapStateToProps = state => {
     return {
-        defaultPath: state.defaultPath,
-        isFullScreen: state.isFullScreen,
-        collapseMenu: state.collapseMenu,
-        configBlock: state.configBlock,
-        layout: state.layout
+        defaultPath: state.GlobalState.defaultPath,
+        isFullScreen: state.GlobalState.isFullScreen,
+        collapseMenu: state.GlobalState.collapseMenu,
+        configBlock: state.GlobalState.configBlock,
+        layout: state.GlobalState.layout
     }
 };
 

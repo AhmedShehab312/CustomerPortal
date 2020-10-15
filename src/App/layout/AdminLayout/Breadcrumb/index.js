@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import config from '../../../../config';
 import navigation from '../../../../menu-items';
-import DEMO from "../../../../store/constant";
+import DEMO from "../../../../store/constants/Global";
 import Aux from "../../../../hoc/_Aux";
 
 class Breadcrumb extends Component {
@@ -32,12 +32,12 @@ class Breadcrumb extends Component {
 
     getCollapse = (item) => {
         if (item.children) {
-            (item.children).filter( collapse => {
+            (item.children).filter(collapse => {
                 if (collapse.type && collapse.type === 'collapse') {
                     this.getCollapse(collapse,);
                 } else if (collapse.type && collapse.type === 'item') {
-                    if (document.location.pathname === config.basename+collapse.url) {
-                        this.setState({item: collapse, main: item});
+                    if (document.location.pathname === collapse.url) {
+                        this.setState({ item: collapse, main: item });
                     }
                 }
                 return false;
@@ -65,7 +65,7 @@ class Breadcrumb extends Component {
                 </li>
             );
 
-            if(this.state.item.breadcrumbs !== false) {
+            if (this.state.item.breadcrumbs !== false) {
                 breadcrumb = (
                     <div className="page-header">
                         <div className="page-block">
@@ -76,7 +76,7 @@ class Breadcrumb extends Component {
                                     </div>
                                     <ul className="breadcrumb">
                                         <li className="breadcrumb-item">
-                                            <Link to="/"><i className="feather icon-home"/></Link>
+                                            <Link to="/dashboard"><i className="feather icon-home" /></Link>
                                         </li>
                                         {main}
                                         {item}
@@ -90,7 +90,6 @@ class Breadcrumb extends Component {
 
         }
 
-        document.title = title + ' | Datta Able Free React + Redux Admin Template';
 
         return (
             <Aux>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Aux from "../../../../../../../../../hoc/_Aux";
-import DEMO from "../../../../../../../../../store/constant";
+import DEMO from "../../../../../../../../../store/constants/Global";
 const images = require.context('../../../../../../../../../assets/images/user', true);
 
 const messages = (props) => {
@@ -15,7 +15,7 @@ const messages = (props) => {
     }
 
     let msgClass = ['media-body'];
-    if(props.message.type) {
+    if (props.message.type) {
         msgClass = [...msgClass, 'chat-menu-content'];
     } else {
         msgClass = [...msgClass, 'chat-menu-reply'];

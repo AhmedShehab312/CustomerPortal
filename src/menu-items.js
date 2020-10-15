@@ -5,21 +5,57 @@ export default {
             title: 'Navigation',
             type: 'group',
             icon: 'icon-navigation',
+            role: ["SUPER"],
             children: [
                 {
                     id: 'dashboard',
                     title: 'Dashboard',
                     type: 'item',
-                    url: '/dashboard/default',
+                    url: '/dashboard',
                     icon: 'feather icon-home',
+                    role: ["SUPER"],
                 }
             ]
         },
+        {
+            id: 'Profile',
+            title: 'Profile Data',
+            type: 'group',
+            icon: 'icon-ui',
+            role: ["SUPER"],
+            children: [
+                {
+                    id: 'Conf',
+                    title: 'Configuration',
+                    type: 'collapse',
+                    icon: 'feather icon-lock',
+                    role: ["SUPER"],
+                    children: [
+                        {
+                            id: 'CompanyProfile',
+                            title: 'Company Profile',
+                            type: 'item',
+                            url: '/CompanyProfile',
+                            role: ["SUPER"],
+
+                        },
+                        {
+                            id: 'Branches',
+                            title: 'Branches',
+                            type: 'item',
+                            url: '/Branches',
+                            role: ["SUPER"],
+
+                        },
+                    ]
+
+                },
+            ]
+        },
+
 
     ]
 }
-
-
 // items: [
 //     {
 //         id: 'navigation',

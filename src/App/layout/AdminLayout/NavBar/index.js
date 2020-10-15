@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import NavLeft from "./NavLeft";
 import NavRight from "./NavRight";
 import Aux from "../../../../hoc/_Aux";
-import DEMO from "../../../../store/constant";
-import * as actionTypes from "../../../../store/actions";
+import DEMO from "../../../../store/constants/Global";
+import * as actionTypes from "../../../../store/actions/GlobalAction";
 
 class NavBar extends Component {
     render() {
@@ -43,10 +43,10 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
     return {
-        rtlLayout: state.rtlLayout,
-        headerBackColor: state.headerBackColor,
-        headerFixedLayout: state.headerFixedLayout,
-        collapseMenu: state.collapseMenu
+        rtlLayout: state.GlobalState.rtlLayout,
+        headerBackColor: state.GlobalState.headerBackColor,
+        headerFixedLayout: state.GlobalState.headerFixedLayout,
+        collapseMenu: state.GlobalState.collapseMenu
     }
 };
 

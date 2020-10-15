@@ -1,0 +1,30 @@
+.UncontrolledDropdownContainer {
+  border: 1px solid #8d919d;
+  border-radius: 25px;
+  margin-top: 23px;
+
+  a {
+    color: #000;
+  }
+  .dropdown-menu .dropdown-item.active,
+  .dropdown-menu .dropdown-item:active {
+    background-color: #d4d5d8;
+  }
+
+  .dropdown-menu .dropdown-item,
+  .bootstrap-select .dropdown-menu.inner li a {
+    font-size: 16px;
+    cursor: pointer;
+  }
+  i {
+    right: 18px;
+    position: absolute;
+  }
+  .dropdown-menu {
+    width: 100%;
+  }
+}
+
+.dropDownTitle {
+  margin-left: 7px;
+}

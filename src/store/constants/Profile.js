@@ -1,0 +1,3 @@
+const STORE_PROFILE = 'STORE_PROFILE';
+
+export { STORE_PROFILE };

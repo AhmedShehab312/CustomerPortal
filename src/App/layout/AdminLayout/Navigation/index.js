@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import windowSize from 'react-window-size';
 
@@ -7,7 +7,7 @@ import NavLogo from './NavLogo';
 import NavContent from './NavContent';
 import OutsideClick from './OutsideClick';
 import Aux from './../../../../hoc/_Aux'
-import * as actionTypes from './../../../../store/actions';
+import * as actionTypes from './../../../../store/actions/GlobalAction';
 import navigation from '../../../../menu-items';
 
 class Navigation extends Component {
@@ -42,8 +42,8 @@ class Navigation extends Component {
                 this.props.layoutType,
                 this.props.navBackColor,
                 this.props.navBrandColor,
-                'drp-icon-'+this.props.navDropdownIcon,
-                'menu-item-icon-'+this.props.navListIcon,
+                'drp-icon-' + this.props.navDropdownIcon,
+                'menu-item-icon-' + this.props.navListIcon,
                 this.props.navActiveListColor,
                 this.props.navListTitleColor,
             ];
@@ -134,31 +134,31 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
-        layout: state.layout,
-        preLayout: state.preLayout,
-        collapseMenu: state.collapseMenu,
-        layoutType: state.layoutType,
-        navBackColor: state.navBackColor,
-        navBackImage: state.navBackImage,
-        navIconColor: state.navIconColor,
-        navBrandColor: state.navBrandColor,
-        layout6Background: state.layout6Background,
-        layout6BackSize: state.layout6BackSize,
-        rtlLayout: state.rtlLayout,
-        navFixedLayout: state.navFixedLayout,
-        boxLayout: state.boxLayout,
-        navDropdownIcon: state.navDropdownIcon,
-        navListIcon: state.navListIcon,
-        navActiveListColor: state.navActiveListColor,
-        navListTitleColor: state.navListTitleColor,
-        navListTitleHide: state.navListTitleHide
+        layout: state.GlobalState.layout,
+        preLayout: state.GlobalState.preLayout,
+        collapseMenu: state.GlobalState.collapseMenu,
+        layoutType: state.GlobalState.layoutType,
+        navBackColor: state.GlobalState.navBackColor,
+        navBackImage: state.GlobalState.navBackImage,
+        navIconColor: state.GlobalState.navIconColor,
+        navBrandColor: state.GlobalState.navBrandColor,
+        layout6Background: state.GlobalState.layout6Background,
+        layout6BackSize: state.GlobalState.layout6BackSize,
+        rtlLayout: state.GlobalState.rtlLayout,
+        navFixedLayout: state.GlobalState.navFixedLayout,
+        boxLayout: state.GlobalState.boxLayout,
+        navDropdownIcon: state.GlobalState.navDropdownIcon,
+        navListIcon: state.GlobalState.navListIcon,
+        navActiveListColor: state.GlobalState.navActiveListColor,
+        navListTitleColor: state.GlobalState.navListTitleColor,
+        navListTitleHide: state.GlobalState.navListTitleHide
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onToggleNavigation: () => dispatch({type: actionTypes.COLLAPSE_MENU}),
-        onChangeLayout: (layout) => dispatch({type: actionTypes.CHANGE_LAYOUT, layout: layout}),
+        onToggleNavigation: () => dispatch({ type: actionTypes.COLLAPSE_MENU }),
+        onChangeLayout: (layout) => dispatch({ type: actionTypes.CHANGE_LAYOUT, layout: layout }),
     }
 };
 

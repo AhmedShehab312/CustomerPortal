@@ -4,7 +4,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import chatMsg from './chat';
 import Messages from './Messages';
 import Aux from "../../../../../../../../hoc/_Aux";
-import DEMO from "../../../../../../../../store/constant";
+import DEMO from "../../../../../../../../store/constants/Global";
 
 const chat = (props) => {
     let chatClass = ['header-chat'];
@@ -49,7 +49,7 @@ const chat = (props) => {
                 </div>
                 <div className="h-list-footer">
                     <div className="input-group">
-                        <input type="file" className="chat-attach" style={{display: 'none'}} />
+                        <input type="file" className="chat-attach" style={{ display: 'none' }} />
                         <a href={DEMO.BLANK_LINK} className="input-group-prepend btn btn-success btn-attach">
                             <i className="feather icon-paperclip" />
                         </a>

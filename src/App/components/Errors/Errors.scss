@@ -1,0 +1,51 @@
+.error-div {
+  display: none;
+  position: fixed;
+  top: 17px;
+  width: 40%;
+  z-index: 100;
+  color: #721c24;
+  background-color: #ff7272;
+  border-color: #ff7272;
+  height: 45px;
+  left: 30%;
+  border-radius: 20px;
+  padding: 11px;
+  img {
+    cursor: pointer;
+    width: 30px;
+    position: absolute;
+    right: 9px;
+    top: -4px;
+  }
+  .row {
+    align-self: center;
+    height: 100%;
+  }
+}
+
+#errorTxt{
+  color: #fff;
+  margin-left: 20px;
+}
+
+.success-div {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #d4edda;
+  height: 45px;
+  img {
+    cursor: pointer;
+    width: 45px;
+    position: absolute;
+    right: 9px;
+  }
+  .row {
+    align-self: center;
+    height: 100%;
+  }
+}

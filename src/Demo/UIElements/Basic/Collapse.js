@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     Row,
     Col,
@@ -8,7 +8,7 @@ import {
 } from 'react-bootstrap';
 
 import Aux from "../../../hoc/_Aux";
-import DEMO from "../../../store/constant";
+import DEMO from "../../../store/constants/Global";
 
 class BasicCollapse extends Component {
     state = {
@@ -18,7 +18,7 @@ class BasicCollapse extends Component {
     };
 
     targetHandler = target => {
-        if(this.state.isMultiTarget.some(item => item === target)) {
+        if (this.state.isMultiTarget.some(item => item === target)) {
             this.setState(prevState => {
                 return {
                     isMultiTarget: prevState.isMultiTarget.filter(item => item !== target)
@@ -49,7 +49,7 @@ class BasicCollapse extends Component {
                 <Row>
                     <Col sm={12}>
                         <h5>Basic Collapse</h5>
-                        <hr/>
+                        <hr />
                         <Card>
                             <Card.Header>
                                 <Button href={DEMO.BLANK_LINK} onClick={() => this.setState({ isBasic: !isBasic })} aria-controls="basic-collapse" aria-expanded={isBasic}>Collapse Link</Button>
@@ -68,7 +68,7 @@ class BasicCollapse extends Component {
                     </Col>
                     <Col sm={12}>
                         <h5>Multiple Targets</h5>
-                        <hr/>
+                        <hr />
                         <Button onClick={() => this.targetHandler('target1')} aria-controls="target1" aria-expanded={isMultiTarget.some(target => target === 'target1')}>Toggle first element</Button>
                         <Button onClick={() => this.targetHandler('target2')} aria-controls="target2" aria-expanded={isMultiTarget.some(target => target === 'target2')}>Toggle second element</Button>
                         <Button onClick={this.multiTargetHandler}>Toggle both elements</Button>
@@ -105,14 +105,14 @@ class BasicCollapse extends Component {
                     </Col>
                     <Col sm={12} className="accordion">
                         <h5>Accordion Example</h5>
-                        <hr/>
+                        <hr />
                         <Card className="mt-2">
                             <Card.Header>
                                 <Card.Title as="h5">
                                     <a href={DEMO.BLANK_LINK}
-                                       onClick={() => this.setState({ accordionKey: (accordionKey !== 1) ? 1 : 0 })}
-                                       aria-controls="accordion1"
-                                       aria-expanded={accordionKey=== 1}>
+                                        onClick={() => this.setState({ accordionKey: (accordionKey !== 1) ? 1 : 0 })}
+                                        aria-controls="accordion1"
+                                        aria-expanded={accordionKey === 1}>
                                         Collapsible Group Item #1
                                     </a>
                                 </Card.Title>
@@ -136,9 +136,9 @@ class BasicCollapse extends Component {
                             <Card.Header>
                                 <Card.Title as="h5">
                                     <a href={DEMO.BLANK_LINK}
-                                       onClick={() => this.setState({ accordionKey: (accordionKey !== 2) ? 2 : 0 })}
-                                       aria-controls="accordion2"
-                                       aria-expanded={accordionKey === 2}>
+                                        onClick={() => this.setState({ accordionKey: (accordionKey !== 2) ? 2 : 0 })}
+                                        aria-controls="accordion2"
+                                        aria-expanded={accordionKey === 2}>
                                         Collapsible Group Item #2
                                     </a>
                                 </Card.Title>
@@ -162,9 +162,9 @@ class BasicCollapse extends Component {
                             <Card.Header>
                                 <Card.Title as="h5">
                                     <a href={DEMO.BLANK_LINK}
-                                       onClick={() => this.setState({ accordionKey: (accordionKey !== 3) ? 3 : 0 })}
-                                       aria-controls="accordion3"
-                                       aria-expanded={accordionKey === 3}>
+                                        onClick={() => this.setState({ accordionKey: (accordionKey !== 3) ? 3 : 0 })}
+                                        aria-controls="accordion3"
+                                        aria-expanded={accordionKey === 3}>
                                         Collapsible Group Item #3
                                     </a>
                                 </Card.Title>

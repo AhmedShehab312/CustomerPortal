@@ -1,12 +1,12 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {Dropdown} from 'react-bootstrap';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Dropdown } from 'react-bootstrap';
 import windowSize from 'react-window-size';
 
 import NavSearch from './NavSearch';
 import Aux from "../../../../../hoc/_Aux";
-import DEMO from "../../../../../store/constant";
-import * as actionTypes from "../../../../../store/actions";
+import DEMO from "../../../../../store/constants/Global";
+import * as actionTypes from "../../../../../store/actions/GlobalAction";
 
 class NavLeft extends Component {
 
@@ -42,7 +42,7 @@ class NavLeft extends Component {
                             </ul>
                         </Dropdown>
                     </li>
-                    <li className="nav-item"><NavSearch/></li>
+                    <li className="nav-item"><NavSearch /></li>
                 </ul>
             </Aux>
         );
@@ -51,14 +51,14 @@ class NavLeft extends Component {
 
 const mapStateToProps = state => {
     return {
-        isFullScreen: state.isFullScreen,
+        isFullScreen: state.GlobalState.isFullScreen,
         rtlLayout: state.rtlLayout
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFullScreen: () => dispatch({type: actionTypes.FULL_SCREEN}),
+        onFullScreen: () => dispatch({ type: actionTypes.FULL_SCREEN }),
     }
 };
 

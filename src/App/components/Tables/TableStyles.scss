@@ -1,19 +1,40 @@
 
 .TableContainer{
     width: 100%;
+
 .MuiTableSortLabel-root{
     margin-left: 23px;
-    color: #b1b1b1;
-    font-size: 17px;
     text-transform: uppercase;
+    color: rgb(153, 153, 153);
+    font-size: 15px;
+}
+
+.MuiPaper-elevation1{
+    padding-bottom: 1px;
+}
+
+.MuiTableContainer-root{
+    width: 95%;
+    margin: auto;
+}
+
+.TablePaginationContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    td{
+        margin: auto;
+    }
 }
 .IconContainers {
     i{
         color: #b1b1b1;
-        margin-left: 2px;
-        margin-right: 2px;
-        font-size: 16px;
+        margin-left: 7px;
+        margin-right: 7px;
+        font-size: 17px;
         cursor: pointer;
+        font-weight: 400;
         &:hover{
             color: #000;
             transition: .5s ease-in-out;
@@ -26,7 +47,7 @@
     margin-bottom: 20px;
     .SpecRow{
         display: flex; 
-        justify-content: center
+        justify-content: flex-end;
     }
     h3{
         text-transform: uppercase;
@@ -43,7 +64,7 @@
         margin: 20px;
         background: #fff;
         border: 1px solid #3699ff;
-        font-size: 13px;
+        font-size: 12px;
         box-shadow: none;
         padding: 10px;
         height: 40px;
@@ -68,17 +89,25 @@
     margin-top: 20px;
     margin-right: 20px;
     margin-left: 20px;
-    width: 30%;
+    width: 25%;
     i{
-        color: #3699ff;
+        color: rgb(204, 204, 204);
+    }
+
+    .SearchTxt{
+        margin-top: 6px;
+        color: #717171;
+        font-weight: 500;
     }
   
     .input-group {
-        border-radius: 10px;
-        padding: 10px;
+        padding: 4px;
         padding-left: 10px;
         background: #ffffff;
-        border: 1px solid #3699ff;
+        border: 1px solid;
+        border-color: rgb(204, 204, 204);
+        border-radius: .28rem;
+        
     }
 
         .form-control,

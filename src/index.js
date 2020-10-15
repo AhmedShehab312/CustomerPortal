@@ -1,21 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App/index';
-import reducer from './store/reducer';
 import config from './config';
+import { configureStore } from './store/configureStore';
+import { Errors } from "./App/components/ComponentModule";
 
-const store = createStore(reducer);
 
 const app = (
-    <Provider store={store}>
+    <Provider store={configureStore}>
         <BrowserRouter basename={config.basename}>
-            {/* basename="/datta-able" */}
             <App />
         </BrowserRouter>
+        <Errors />
+
     </Provider>
 );
 

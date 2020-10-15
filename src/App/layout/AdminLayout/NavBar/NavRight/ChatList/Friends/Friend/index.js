@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Aux from "../../../../../../../../hoc/_Aux";
-import DEMO from "../../../../../../../../store/constant";
+import DEMO from "../../../../../../../../store/constants/Global";
 const images = require.context('../../../../../../../../assets/images/user', true);
 
 const friend = (props) => {
@@ -26,7 +26,7 @@ const friend = (props) => {
     return (
         <Aux>
             <div className={props.activeId === props.data.id ? 'media userlist-box ripple active' : 'media userlist-box ripple'} onClick={props.clicked}>
-                <a className="media-left" href={DEMO.BLANK_LINK}> <img className="media-object img-radius" src={photo} alt={props.data.name}/>{newFriend}</a>
+                <a className="media-left" href={DEMO.BLANK_LINK}> <img className="media-object img-radius" src={photo} alt={props.data.name} />{newFriend}</a>
                 <div className="media-body">
                     <h6 className="chat-header">{props.data.name}{time}</h6>
                 </div>
