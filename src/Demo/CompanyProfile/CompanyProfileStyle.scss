@@ -24,4 +24,33 @@
       font-weight: 500;
     }
   }
+
+  .Details{
+    i{
+      position: absolute;
+    right: 22px;
+    top: 20%;
+    font-size: 20px;
+    cursor: pointer;
+    color: #339dbe;
+    }
+    .detailsContainer{
+      border-bottom: 1px dashed;
+      margin-bottom: 30px;
+      .Title{
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        color:#868686
+      }
+    
+      .subTitle{
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        margin-left: 7px;
+        color: #000;
+      }
+    }
+  }
+
+
 }

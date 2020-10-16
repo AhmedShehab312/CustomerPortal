@@ -33,7 +33,7 @@ class SignUp1 extends React.Component {
                 this.InitialProfile(res);
             }
             else {
-                displayToast('Try again', false);
+                displayToast('UserName or Password is wrong', true);
             }
         })
     }

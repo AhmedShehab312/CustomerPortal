@@ -1,22 +1,27 @@
 .error-div {
-  display: none;
-  position: fixed;
-  top: 17px;
-  width: 40%;
-  z-index: 100;
-  color: #721c24;
-  background-color: #ff7272;
-  border-color: #ff7272;
-  height: 45px;
-  left: 30%;
-  border-radius: 20px;
-  padding: 11px;
+      display: none;
+    position: fixed;
+    top: 17px;
+    width: 25%;
+    z-index: 100;
+    color: #721c24;
+    background-color: #ff7272;
+    border-color: #ff7272;
+    height: 45px;
+    left: 38%;
+    padding: 11px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
   img {
+  
     cursor: pointer;
-    width: 30px;
+    width: 21px;
     position: absolute;
-    right: 9px;
-    top: -4px;
+    right: -6px;
+    top: -20px;
+    background: #5d5d5d;
+    border-radius: 50%;
+
   }
   .row {
     align-self: center;

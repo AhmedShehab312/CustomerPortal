@@ -107,7 +107,7 @@ class Branches extends React.Component {
                 Branches.splice(key, 1);
                 this.setState({ Branches: Branches })
                 storeBranches(Branches)
-                displayToast('done', true);
+                displayToast('branch is deleted succefully', true);
 
             }
         })
@@ -242,7 +242,7 @@ class Branches extends React.Component {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
                 storeBranches(Branches)
-                displayToast('done', true);
+                displayToast('Branch is updated succefully', true);
             }
         })
     }
@@ -257,7 +257,7 @@ class Branches extends React.Component {
                 Branches.push(res);
                 storeBranches(Branches);
                 this.setState({ Branches: Branches });
-                displayToast('done', true);
+                displayToast('Branch data is added succefully', true);
             }
         })
     }

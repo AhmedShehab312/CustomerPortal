@@ -26,7 +26,8 @@ class CompanyProfile extends React.Component {
                 name: "",
                 password: "",
                 username: "",
-            }
+            },
+            editMode: false
         }
     }
 
@@ -59,10 +60,11 @@ class CompanyProfile extends React.Component {
         const { profileObject } = this.state;
         const { storeProfile } = this.props;
         if (this.checkValidation()) {
-            HtttpPutDefult('customer/1', profileObject).then((res) => {
+            HtttpPutDefult('brand/1', profileObject).then((res) => {
                 if (res) {
                     storeProfile(profileObject);
-                    displayToast('done', true);
+                    displayToast('Profile data is updated succefully', true);
+                    this.setState({ editMode: false })
                 }
             })
 
@@ -110,46 +112,94 @@ class CompanyProfile extends React.Component {
 
 
     render() {
+        const { editMode } = this.state;
         const { name, username, password, address, contact, contactPerson } = this.state.profileObject;
         return (
             <div className="content CompanyProfile">
                 <Col md="12">
-                    <Card isOption title="Edit your profile">
+                    <Card isOption title={editMode ? "Edit your profile" : "Profile Data"}>
                         <CardBody>
-                            <Form>
-                                <Row>
-                                    {/* <Col md={12}>
-                                        <FormGroup className="profilePicContainer">
-                                            <label>{i18n.t("CompanyProfile.Logo")}</label>
-                                            <Input ref="file" type="file" name="file" onChange={this.changePhoto.bind(this)} />
-                                            <img alt="" src={profilePic} />
-                                        </FormGroup>
-                                    </Col> */}
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} disabled />
-                                    </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.UserName")} placeholder={i18n.t("CompanyProfile.UserNamePlacholder")} disabled value={username} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
-                                        <InputWithText type="password" label={i18n.t("CompanyProfile.Password")} placeholder={"********"} onChange={(val) => this.changeInput("password", val)} value={password} />
-                                    </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Address")} placeholder={i18n.t("CompanyProfile.AddressPlacholder")} onChange={(val) => this.changeInput("address", val)} value={address} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Contact")} placeholder={"01222****"} onChange={(val) => this.changeInput("contact", val)} value={contact} />
-                                    </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.ContactPersonal")} placeholder={"01222****"} onChange={(val) => this.changeInput("contactPersonal", val)} value={contactPerson} />
-                                    </Col>
-                                </Row>
-                                <button type="button" className="btn btn-primary" onClick={() => { this.submit() }}>{i18n.t("global.submit")}</button>
-                            </Form>
+
+                            {
+                                editMode ?
+                                    <Form>
+                                        <Row>
+                                            {/* <Col md={12}>
+                                <FormGroup className="profilePicContainer">
+                                    <label>{i18n.t("CompanyProfile.Logo")}</label>
+                                    <Input ref="file" type="file" name="file" onChange={this.changePhoto.bind(this)} />
+                                    <img alt="" src={profilePic} />
+                                </FormGroup>
+                            </Col> */}
+                                            <Col md={6}>
+                                                <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} disabled />
+                                            </Col>
+                                            <Col md={6}>
+                                                <InputWithText type="text" label={i18n.t("CompanyProfile.UserName")} placeholder={i18n.t("CompanyProfile.UserNamePlacholder")} disabled value={username} />
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md={6}>
+                                                <InputWithText type="password" label={i18n.t("CompanyProfile.Password")} placeholder={"********"} onChange={(val) => this.changeInput("password", val)} value={password} />
+                                            </Col>
+                                            <Col md={6}>
+                                                <InputWithText type="text" label={i18n.t("CompanyProfile.Address")} placeholder={i18n.t("CompanyProfile.AddressPlacholder")} onChange={(val) => this.changeInput("address", val)} value={address} />
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md={6}>
+                                                <InputWithText type="text" label={i18n.t("CompanyProfile.Contact")} placeholder={"01222****"} onChange={(val) => this.changeInput("contact", val)} value={contact} />
+                                            </Col>
+                                            <Col md={6}>
+                                                <InputWithText type="text" label={i18n.t("CompanyProfile.ContactPersonal")} placeholder={"01222****"} onChange={(val) => this.changeInput("contactPersonal", val)} value={contactPerson} />
+                                            </Col>
+                                        </Row>
+                                        <button type="button" className="btn btn-primary" onClick={() => { this.submit() }}>{i18n.t("global.submit")}</button>
+                                        <button type="button" className="btn btn-primary" onClick={() => { this.setState({ editMode: false }) }}>{i18n.t("global.cancel")}</button>
+                                    </Form>
+                                    :
+                                    <div className="Details">
+                                        <i class="far fa-edit" onClick={() => { this.setState({ editMode: true }) }}></i>
+                                        <Row>
+                                            <Col>
+                                                <div className="detailsContainer">
+                                                    <label className="Title">Name:</label>
+                                                    <label className="subTitle">{name ? name : "No value"}</label>
+                                                </div>
+                                            </Col>
+                                            <Col>
+                                                <div className="detailsContainer">
+                                                    <label className="Title">Username:</label>
+                                                    <label className="subTitle">{username ? username : "No value"}</label>
+                                                </div>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col>
+                                                <div className="detailsContainer">
+                                                    <label className="Title">Address:</label>
+                                                    <label className="subTitle">{address ? address : "No value"}</label>
+                                                </div>
+                                            </Col>
+                                            <Col>
+                                                <div className="detailsContainer">
+                                                    <label className="Title">Contact:</label>
+                                                    <label className="subTitle">{contact ? contact : "No value"}</label>
+                                                </div>
+                                            </Col>
+                                        </Row>
+
+                                        <Row>
+                                            <Col md="6">
+                                                <div className="detailsContainer">
+                                                    <label className="Title">ContactPerson:</label>
+                                                    <label className="subTitle">{contactPerson ? contactPerson : "No value"}</label>
+                                                </div>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                            }
                         </CardBody>
                     </Card>
                 </Col>
