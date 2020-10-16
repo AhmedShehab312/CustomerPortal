@@ -15,8 +15,8 @@ class SignUp1 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            UserName: "Mac",
-            Password: "1234",
+            UserName: "",
+            Password: "",
             saveCredentials: false
         }
     }
@@ -25,8 +25,8 @@ class SignUp1 extends React.Component {
     submit() {
         const { UserName, Password } = this.state;
         let body = {
-            username: "starbucks",
-            password: "1234",
+            username: "",
+            password: "",
         }
         HtttpPostDefult('auth/login', body).then((res) => {
             if (res) {
