@@ -25,8 +25,8 @@ class SignUp1 extends React.Component {
     submit() {
         const { UserName, Password } = this.state;
         let body = {
-            username: "",
-            password: "",
+            username: UserName,
+            password: Password,
         }
         HtttpPostDefult('auth/login', body).then((res) => {
             if (res) {
