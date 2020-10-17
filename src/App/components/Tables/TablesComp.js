@@ -25,7 +25,9 @@ class TableData extends React.Component {
             selected: [],
             page: 0,
             rowsPerPage: 5,
-            rows: []
+            rows: [],
+            searchVal: null,
+            originalRows: []
 
         }
     }
@@ -69,7 +71,9 @@ class TableData extends React.Component {
             })
         })
         rows.push(result);
-        this.setState({ rows: rows })
+        this.setState({ rows: rows, originalRows: rows }, () => {
+            console.log(this.state.rows)
+        })
     }
 
 
@@ -153,6 +157,21 @@ class TableData extends React.Component {
             });
     }
 
+    search(val) {
+        this.setState({ search: val }, () => {
+            this.filter(this.state.search);
+        });
+    }
+
+    filter(val) {
+        const { rows, originalRows } = this.state;
+        let res = originalRows.filter((Item) => {
+            return Item.name.indexOf(val) != -1
+        })
+        debugger
+        this.setState({ rows: res })
+    }
+
     EnhancedTable() {
         const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data } = this.props;
         const { rows } = this.state;
@@ -223,7 +242,7 @@ class TableData extends React.Component {
                                     </Col>
                                     <Col md="10">
                                         <div className="input-group">
-                                            <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} />
+                                            <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
                                             <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
                                                 <i className="feather icon-x input-group-text" />
                                             </a>

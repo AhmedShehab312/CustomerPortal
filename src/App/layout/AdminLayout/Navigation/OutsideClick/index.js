@@ -16,9 +16,9 @@ class OutsideClick extends Component {
         document.addEventListener('mousedown', this.handleOutsideClick);
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleOutsideClick);
-    }
+    // componentWillUnmount() {
+    //     document.removeEventListener('mousedown', this.handleOutsideClick);
+    // }
 
     setWrapperRef(node) {
         this.wrapperRef = node;
