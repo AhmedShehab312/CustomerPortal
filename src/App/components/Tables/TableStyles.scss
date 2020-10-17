@@ -2,6 +2,7 @@
 .TableContainer{
     width: 100%;
 
+
 .MuiTableSortLabel-root{
     margin-left: 23px;
     text-transform: uppercase;
@@ -187,4 +188,8 @@
     }
 
 
+}
+
+.swal-text{
+    text-align: center !important; 
 }

@@ -30,7 +30,8 @@
     "react-window-size": "^1.2.2",
     "reactstrap": "^8.6.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

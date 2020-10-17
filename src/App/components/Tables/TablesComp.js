@@ -1,28 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { Button } from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
-import './TableStyles.scss';
-import { Row, Col } from 'react-bootstrap';
-import Aux from "../../../hoc/_Aux";
 import { Pagination } from 'antd';
 import 'antd/dist/antd.css';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import swal from 'sweetalert';
+import Aux from "../../../hoc/_Aux";
+import './TableStyles.scss';
 
 class TableData extends React.Component {
 
@@ -145,6 +136,23 @@ class TableData extends React.Component {
 
 
 
+    deleteAction(data, index) {
+        const { handleDelete } = this.props;
+
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this branch!",
+            icon: "error",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    handleDelete(data, index);
+                }
+            });
+    }
+
     EnhancedTable() {
         const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data } = this.props;
         const { rows } = this.state;
@@ -178,12 +186,10 @@ class TableData extends React.Component {
 
 
         const handleChangePage = (event, newPage) => {
-            debugger
             this.setState({ page: (event - 1), rowsPerPage: newPage })
         };
 
         const handleChangeRowsPerPage = (value) => {
-            debugger
             this.setState({ page: 0, rowsPerPage: this.pageSizeOptions[value - 1] })
 
         };
@@ -259,7 +265,7 @@ class TableData extends React.Component {
                                                     return (<TableCell align="center">{Item[1]}</TableCell>)
                                                 })}
                                                 <TableCell align="center" className="IconContainers">
-                                                    <i className="fas fa-trash-alt" onClick={() => { handleDelete(data[index], index) }} />
+                                                    <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />
                                                     <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
                                                     <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
                                                 </TableCell>
