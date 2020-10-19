@@ -37,7 +37,7 @@ export default {
                             type: 'item',
                             url: '/CompanyProfile',
                             role: ["SUPER"],
-
+                            icon: 'fas fa-user-circle'
                         },
                         {
                             id: 'Branches',
@@ -45,7 +45,7 @@ export default {
                             type: 'item',
                             url: '/Branches',
                             role: ["SUPER"],
-
+                            icon: 'fas fa-code-branch'
                         },
                     ]
 
@@ -53,7 +53,71 @@ export default {
             ]
         },
 
-
+        {
+            id: 'settings',
+            title: 'Settings',
+            type: 'group',
+            icon: 'fas fa-cogs',
+            role: ["SUPER"],
+            children: [
+                {
+                    id: 'Admins',
+                    title: 'Admins',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-user',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'Reports',
+                    title: 'Reports',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-file',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'Analytics',
+                    title: 'Analytics',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-chart-bar',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'Contacts',
+                    title: 'Contacts',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-address-book',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'InvoicesPayments',
+                    title: 'InvoicesPayments',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-database',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'InternetManagement',
+                    title: 'InternetManagement',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-wifi',
+                    role: ["SUPER"],
+                },
+                {
+                    id: 'Integration',
+                    title: 'Integration',
+                    type: 'item',
+                    url: '/dashboard',
+                    icon: 'fas fa-code',
+                    role: ["SUPER"],
+                }
+            ]
+        },
     ]
 }
 // items: [

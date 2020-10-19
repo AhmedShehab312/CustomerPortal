@@ -864,6 +864,9 @@
                 transform-origin: 0 0;
                 opacity: 0;
                 transition: unset;
+                transform: none;
+                opacity: 1;
+                width: 45px;
             }
 
             .logo-thumb {
