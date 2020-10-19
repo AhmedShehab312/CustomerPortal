@@ -3,11 +3,36 @@
     width: 100%;
 
 
+.ExportTxt{
+    display: inline;
+    font-size: 15px;
+    font-weight: 200;
+    line-height: 11px;}
+
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.MuiSelect-select.MuiSelect-select{
+    padding-right: 50px;
+    color: #000;
+}
+
+
 .MuiTableSortLabel-root{
     margin-left: 23px;
     text-transform: uppercase;
     color: rgb(153, 153, 153);
     font-size: 15px;
+   
+}
+
+
+
+.MuiInputBase-root{
+    color: rgb(67, 158, 254);
+    font-weight: 300;
 }
 
 .MuiPaper-elevation1{
@@ -68,7 +93,7 @@
         font-size: 12px;
         box-shadow: none;
         padding: 10px;
-        height: 40px;
+        // height: 40px;
         color: #3699ff;
         background-color: transparent;
         font-weight: 300;
@@ -88,15 +113,15 @@
 
 .main-search {
     margin-top: 20px;
-    margin-right: 20px;
+    margin-right: 40px;
     margin-left: 20px;
-    width: 25%;
+    width: 30%;
     i{
         color: rgb(204, 204, 204);
     }
 
     .SearchTxt{
-        margin-top: 6px;
+        margin-top: 22px;
         color: #717171;
         font-weight: 500;
     }
@@ -108,6 +133,7 @@
         border: 1px solid;
         border-color: rgb(204, 204, 204);
         border-radius: .28rem;
+        margin-top: 15px;
         
     }
 

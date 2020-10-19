@@ -10,10 +10,15 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { Pagination } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Dropdown } from 'react-bootstrap';
 import swal from 'sweetalert';
 import Aux from "../../../hoc/_Aux";
 import './TableStyles.scss';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class TableData extends React.Component {
 
@@ -27,7 +32,9 @@ class TableData extends React.Component {
             rowsPerPage: 5,
             rows: [],
             searchVal: null,
-            originalRows: []
+            originalRows: [],
+            age: "",
+            selectedFilter: null
 
         }
     }
@@ -50,7 +57,7 @@ class TableData extends React.Component {
     }
 
     InitializeRows(data, DataShowPerTable) {
-        this.setState({ rows: [] }, () => {
+        this.setState({ rows: [], selectedFilter: this.headCells[0].id }, () => {
             data.map((Item, i) => {
                 this.createData(Item, DataShowPerTable);
             })
@@ -164,11 +171,10 @@ class TableData extends React.Component {
     }
 
     filter(val) {
-        const { rows, originalRows } = this.state;
+        const { selectedFilter, originalRows } = this.state;
         let res = originalRows.filter((Item) => {
-            return Item.name.indexOf(val) != -1
+            return Item[selectedFilter].toString().indexOf(val) != -1
         })
-        debugger
         this.setState({ rows: res })
     }
 
@@ -230,7 +236,13 @@ class TableData extends React.Component {
                         <Col md="6">
                             <div className="btnContainer">
                                 {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
-                                <Button variant="contained"><i className="fa fa-download" />Export Table</Button>
+                                <Dropdown>
+                                    <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        <Dropdown.Item ><i className="fa fa-file-excel" /> Excel</Dropdown.Item>
+                                        <Dropdown.Item ><i className="fa fa-file-pdf" />PDF</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                </Dropdown>
                             </div>
                         </Col>
                         <hr />
@@ -241,15 +253,37 @@ class TableData extends React.Component {
                                         <p className="SearchTxt">Search:</p>
                                     </Col>
                                     <Col md="10">
-                                        <div className="input-group">
-                                            <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
-                                            <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
-                                                <i className="feather icon-x input-group-text" />
-                                            </a>
-                                            <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
-                                                <i className="feather icon-search input-group-text" />
-                                            </span>
-                                        </div>
+                                        <Row>
+                                            <Col md="8">
+                                                <div className="input-group">
+                                                    <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
+                                                    <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
+                                                        <i className="feather icon-x input-group-text" />
+                                                    </a>
+                                                    <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
+                                                        <i className="feather icon-search input-group-text" />
+                                                    </span>
+                                                </div>
+                                            </Col>
+                                            <Col md="4">
+                                                <FormControl className={classes.formControl}>
+                                                    <InputLabel id="demo-simple-select-label">Fields</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-label"
+                                                        id="demo-simple-select"
+                                                        value={this.state.selectedFilter}
+                                                        onChange={(val) => { this.setState({ selectedFilter: val.target.value }) }}
+                                                    >
+                                                        {this.headCells &&
+                                                            this.headCells.map((Item) => {
+                                                                return <MenuItem value={Item.id}>{Item.id}</MenuItem>
+                                                            })
+
+                                                        }
+                                                    </Select>
+                                                </FormControl>
+                                            </Col>
+                                        </Row>
                                     </Col>
                                 </Row>
                             </div>

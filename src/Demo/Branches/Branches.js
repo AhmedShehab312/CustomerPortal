@@ -50,7 +50,7 @@ class Branches extends React.Component {
     }
 
     headCells = [
-        { id: 'id', numeric: true, disablePadding: false, label: 'Id' },
+        { id: 'id', numeric: false, disablePadding: false, label: 'Id' },
         { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
     ];
 
