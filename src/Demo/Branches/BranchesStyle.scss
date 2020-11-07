@@ -14,7 +14,7 @@
     max-width: initial;
     }
 
-   
+
 
   .dropDownContainer {
     width: 24%;
@@ -84,4 +84,53 @@
     font-size: 19px !important;
     color: #7b7b7b;
   }
+
+    i{
+      position: absolute;
+    right: 22px;
+    top: 20%;
+    font-size: 20px;
+    cursor: pointer;
+    color: #339dbe;
+    }
+    .detailsContainer{
+      border-bottom: 1px dashed;
+      margin-bottom: 30px;
+      .Title{
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        color:#868686
+      }
+    
+      .subTitle{
+        font-size: 16px;
+        letter-spacing: 0.5px;
+        margin-left: 7px;
+        color: #000;
+      }
+    }
+  
+}
+
+
+.DatePicker{
+  border: 1px solid #ced4d9;
+  height: 40px;
+   width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  padding-left: 15px;
+}
+.react-datepicker-wrapper{
+  width: 100%;
+
+}
+
+.fa-calendar-alt{
+  position: absolute;
+  right: 25px;
+  top: 41px;
+  color: #797979;
+  cursor: pointer;
+
 }

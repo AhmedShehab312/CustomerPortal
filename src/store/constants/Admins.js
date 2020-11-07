@@ -1,0 +1,3 @@
+const STORE_ADMINS = 'STORE_ADMINS';
+
+export { STORE_ADMINS };

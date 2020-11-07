@@ -29,10 +29,10 @@ class NavCollapse extends Component {
                 item = collapses[item];
                 switch (item.type) {
                     case 'collapse':
-                        if (item.role.indexOf(OwnerProfile.role) == -1) return false
+                        if (item.role.indexOf(OwnerProfile.loginType) == -1) return false
                         else return <LoopNavCollapse key={item.id} collapse={item} type="sub" />;
                     case 'item':
-                        if (item.role.indexOf(OwnerProfile.role) == -1) return false
+                        if (item.role.indexOf(OwnerProfile.loginType) == -1) return false
                         else return <NavItem layout={this.props.layout} key={item.id} item={item} />;
                     default:
                         return false;

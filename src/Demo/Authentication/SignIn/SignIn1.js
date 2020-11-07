@@ -7,6 +7,7 @@ import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import { setLoggedIn, displayToast } from '../../../globals/globals';
 import { StoreProfile } from '../../../store/actions/ProfileAction';
 import { StoreBranches } from '../../../store/actions/BranchsAction';
+import { StoreAdmins } from '../../../store/actions/AdminsAction';
 import { connect } from 'react-redux';
 import { HtttpGetDefult, HtttpPostDefult } from '../../../actions/httpClient';
 
@@ -19,13 +20,14 @@ class SignUp1 extends React.Component {
             Password: "",
             saveCredentials: false
         }
+
     }
 
 
     submit() {
         const { UserName, Password } = this.state;
         let body = {
-            username: UserName,
+            email: UserName,
             password: Password,
         }
         HtttpPostDefult('auth/login', body).then((res) => {
@@ -39,19 +41,22 @@ class SignUp1 extends React.Component {
     }
 
     InitialProfile(data) {
-        const { history, storeProfile } = this.props;
-        data.role = "SUPER";
+        const { history, storeProfile, } = this.props;
         storeProfile(data);
+        if (data.loginType == "OWNER") {
+            this.getBranches(data.id)
+        }
+
         history.push('/dashboard');
         setLoggedIn(true);
-        this.getBranches(data.id);
     }
 
     getBranches(id) {
-        const { storeBranches } = this.props;
+        const { storeBranches, StoreAdmins } = this.props;
         HtttpGetDefult('brand/' + id + '').then((res) => {
             if (res) {
                 storeBranches(res.branches);
+                StoreAdmins(res.admins)
             }
         })
     }
@@ -114,6 +119,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         storeProfile: (val) => dispatch(StoreProfile(val)),
         storeBranches: (val) => dispatch(StoreBranches(val)),
+        StoreAdmins: (val) => dispatch(StoreAdmins(val)),
 
     };
 };

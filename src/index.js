@@ -7,6 +7,7 @@ import App from './App/index';
 import config from './config';
 import { configureStore } from './store/configureStore';
 import { Errors } from "./App/components/ComponentModule";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const app = (

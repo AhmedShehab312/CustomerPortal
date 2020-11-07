@@ -5,7 +5,7 @@ export default {
             title: 'Navigation',
             type: 'group',
             icon: 'icon-navigation',
-            role: ["SUPER"],
+            role: ["OWNER", "ADMIN"],
             children: [
                 {
                     id: 'dashboard',
@@ -13,7 +13,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'feather icon-home',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 }
             ]
         },
@@ -22,21 +22,21 @@ export default {
             title: 'Profile Data',
             type: 'group',
             icon: 'icon-ui',
-            role: ["SUPER"],
+            role: ["OWNER", "ADMIN"],
             children: [
                 {
                     id: 'Conf',
                     title: 'Configuration',
                     type: 'collapse',
                     icon: 'feather icon-lock',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                     children: [
                         {
                             id: 'CompanyProfile',
                             title: 'Company Profile',
                             type: 'item',
                             url: '/CompanyProfile',
-                            role: ["SUPER"],
+                            role: ["OWNER", "ADMIN"],
                             icon: 'fas fa-user-circle'
                         },
                         {
@@ -44,7 +44,7 @@ export default {
                             title: 'Branches',
                             type: 'item',
                             url: '/Branches',
-                            role: ["SUPER"],
+                            role: ["OWNER", "ADMIN"],
                             icon: 'fas fa-code-branch'
                         },
                     ]
@@ -58,7 +58,7 @@ export default {
             title: 'Settings',
             type: 'group',
             icon: 'fas fa-cogs',
-            role: ["SUPER"],
+            role: ["OWNER", "ADMIN"],
             children: [
                 {
                     id: 'Admins',
@@ -66,7 +66,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-user',
-                    role: ["SUPER"],
+                    role: ["OWNER"],
                 },
                 {
                     id: 'Reports',
@@ -74,7 +74,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-file',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 },
                 {
                     id: 'Analytics',
@@ -82,7 +82,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-chart-bar',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 },
                 {
                     id: 'Contacts',
@@ -90,7 +90,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-address-book',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 },
                 {
                     id: 'InvoicesPayments',
@@ -98,7 +98,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-database',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 },
                 {
                     id: 'InternetManagement',
@@ -106,7 +106,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-wifi',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 },
                 {
                     id: 'Integration',
@@ -114,7 +114,7 @@ export default {
                     type: 'item',
                     url: '/dashboard',
                     icon: 'fas fa-code',
-                    role: ["SUPER"],
+                    role: ["OWNER", "ADMIN"],
                 }
             ]
         },

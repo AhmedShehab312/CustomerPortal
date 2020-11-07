@@ -45,7 +45,7 @@ class NavContent extends Component {
         const navItems = this.props.navigation.map(item => {
             switch (item.type) {
                 case 'group':
-                    if (item.role.indexOf(OwnerProfile.role) == -1) return false
+                    if (item.role.indexOf(OwnerProfile.loginType) == -1) return false
                     else return <NavGroup layout={this.props.layout} key={item.id} group={item} />;
                 default:
                     return false;

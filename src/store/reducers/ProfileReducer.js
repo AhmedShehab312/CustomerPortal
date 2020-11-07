@@ -4,7 +4,6 @@ import {
 
 const initialState = {
     OwnerProfile: {
-        role: 'SUPER'
     },
 };
 

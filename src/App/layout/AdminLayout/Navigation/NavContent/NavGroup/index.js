@@ -13,11 +13,11 @@ const navGroup = (props) => {
             item = groups[item];
             switch (item.type) {
                 case 'collapse':
-                    if (item.role.indexOf(props.OwnerProfile.role) == -1) return false
+                    if (item.role.indexOf(props.OwnerProfile.loginType) == -1) return false
                     else return <NavCollapse key={item.id} collapse={item} type="main" />;
 
                 case 'item':
-                    if (item.role.indexOf(props.OwnerProfile.role) == -1) return false
+                    if (item.role.indexOf(props.OwnerProfile.loginType) == -1) return false
                     else return <NavItem layout={props.layout} key={item.id} item={item} />;
                 default:
                     return false;

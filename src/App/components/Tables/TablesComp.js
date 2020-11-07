@@ -70,16 +70,17 @@ class TableData extends React.Component {
     createData(Item, DataShowPerTable) {
         const { rows } = this.state;
         let result = {};
-        Object.entries(Item).map((value) => {
-            DataShowPerTable.map((requiredData) => {
+
+        DataShowPerTable.map((requiredData) => {
+            Object.entries(Item).map((value) => {
                 if (requiredData == value[0]) {
                     result[requiredData] = value[1]
                 }
             })
         })
+
         rows.push(result);
         this.setState({ rows: rows, originalRows: rows }, () => {
-            console.log(this.state.rows)
         })
     }
 
@@ -179,7 +180,8 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data } = this.props;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable } = this.props;
+        debugger
         const { rows } = this.state;
         const classes = {
             root: {
@@ -317,6 +319,7 @@ class TableData extends React.Component {
                                                 {Object.entries(row).map((Item) => {
                                                     return (<TableCell align="center">{Item[1]}</TableCell>)
                                                 })}
+
                                                 <TableCell align="center" className="IconContainers">
                                                     <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />
                                                     <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />

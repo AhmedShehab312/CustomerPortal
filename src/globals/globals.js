@@ -2,7 +2,7 @@
 var globalsVariable = {
   languages: [],
   loggedIn: false,
-  roles: [{ id: 1, name: "SUPER" }, { id: 2, name: "BRAND" }, { id: 3, name: "BRANCH" }]
+  roles: [{ id: 1, name: "OWNER" }, { id: 2, name: "ADMIN" }]
 
 };
 
