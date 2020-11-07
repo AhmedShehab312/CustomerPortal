@@ -288,50 +288,48 @@ class Branches extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("Branches.NamePlacholder")} value={name} onChange={(val) => { this.changeAddInput('name', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <label className="Title">Start Date:</label>
                                         <div>
                                             <DatePicker className="DatePicker" selected={moment(startDate).toDate()} onChange={date => this.changeAddInput('startDate', moment(date).format('DD-MMM-YYYY'))} />
                                             <i class="fas fa-calendar-alt"></i>
                                         </div>
                                     </Col>
-
+                                    <Col md={4}>
+                                        <InputWithText type="text" label={"flash Start Username"} placeholder={"Enter flash Start Username"} value={flashStartUsername} onChange={(val) => { this.changeAddInput('flashStartUsername', val) }} />
+                                    </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <FormGroup className="dropDownContainer">
                                             <label className="title">Intervals</label>
                                             <DropDown label={"Interval"} items={this.intervals} onClick={(val) => { this.selectedInterval(val) }} selctedItem={selectedIntervals} />
                                         </FormGroup>
                                     </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={"flash Start Username"} placeholder={"Enter flash Start Username"} value={flashStartUsername} onChange={(val) => { this.changeAddInput('flashStartUsername', val) }} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Notification Email"} placeholder={"Enter Notification Email"} value={notificationEmail} onChange={(val) => { this.changeAddInput('notificationEmail', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"nas Name"} placeholder={"Enter nasName"} value={nasName} onChange={(val) => { this.changeAddInput('nasName', val) }} />
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Type"} placeholder={"Enter Notification Type"} value={type} onChange={(val) => { this.changeAddInput('type', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Price"} placeholder={"Enter Price"} value={price} onChange={(val) => { this.changeAddInput('price', val) }} />
+                                    </Col>
+                                    <Col md={4}>
+                                        <InputWithText type="password" label={"Flash Start Pass"} placeholder={"Enter Flash Start Pass "} value={flashStartPass} onChange={(val) => { this.changeAddInput('flashStartPass', val) }} />
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={6}>
-                                        <InputWithText type="password" label={"Flash Start Pass"} placeholder={"Enter Flash Start Pass "} value={flashStartPass} onChange={(val) => { this.changeAddInput('flashStartPass', val) }} />
-                                    </Col>
-                                    <Col md={6}>
+
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"currency"} placeholder={"Enter Currency"} value={currency} onChange={(val) => { this.changeAddInput('currency', val) }} />
                                     </Col>
                                 </Row>
@@ -369,47 +367,42 @@ class Branches extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("Branches.NamePlacholder")} value={name} onChange={(val) => { this.changeEditInput('name', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <label className="Title">Start Date:</label>
                                         <div>
                                             <DatePicker className="DatePicker" selected={moment(startDate).toDate()} onChange={date => this.changeEditInput('startDate', moment(date).format('DD-MMM-YYYY'))} />
                                             <i class="fas fa-calendar-alt"></i>
                                         </div>
                                     </Col>
-
+                                    <Col md={4}>
+                                        <InputWithText type="text" label={"flash Start Username"} placeholder={"Enter flash Start Username"} value={flashStartUsername} onChange={(val) => { this.changeEditInput('flashStartUsername', val) }} />
+                                    </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <FormGroup className="dropDownContainer">
                                             <label className="title">Intervals</label>
                                             <DropDown label={"Interval"} items={this.intervals} onClick={(val) => { this.selectedInterval(val) }} selctedItem={selectedIntervals} />
                                         </FormGroup>
                                     </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={"flash Start Username"} placeholder={"Enter flash Start Username"} value={flashStartUsername} onChange={(val) => { this.changeEditInput('flashStartUsername', val) }} />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Notification Email"} placeholder={"Enter Notification Email"} value={notificationEmail} onChange={(val) => { this.changeEditInput('notificationEmail', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"nas Name"} placeholder={"Enter nasName"} value={nasName} onChange={(val) => { this.changeEditInput('nasName', val) }} />
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Type"} placeholder={"Enter Notification Type"} value={type} onChange={(val) => { this.changeEditInput('type', val) }} />
                                     </Col>
-                                    <Col md={6}>
+                                    <Col md={4}>
                                         <InputWithText type="text" label={"Price"} placeholder={"Enter Price"} value={price} onChange={(val) => { this.changeEditInput('price', val) }} />
                                     </Col>
                                 </Row>
-
-
                             </Form>
                         </CardBody>
                     </Modal.Body>
@@ -436,41 +429,40 @@ class Branches extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Name:</label>
                                             <label className="subTitle">{name ? name : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Start Date:</label>
                                             <label className="subTitle">{startDate ? startDate : "No value"}</label>
                                         </div>
                                     </Col>
-                                </Row>
-                                <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Renewal Date:</label>
                                             <label className="subTitle">{renewalDate ? renewalDate : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="6">
+                                </Row>
+                                <Row>
+
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Interval:</label>
                                             <label className="subTitle">{interval ? interval : "No value"}</label>
                                         </div>
                                     </Col>
-                                </Row>
-                                <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Flash Start Username:</label>
                                             <label className="subTitle">{flashStartUsername ? flashStartUsername : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Notification Email:</label>
                                             <label className="subTitle">{notificationEmail ? notificationEmail : "No value"}</label>
@@ -478,21 +470,19 @@ class Branches extends React.Component {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Nas Name:</label>
                                             <label className="subTitle">{nasName ? nasName : "No value"}</label>
                                         </div>
                                     </Col>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Type:</label>
                                             <label className="subTitle">{type ? type : "No value"}</label>
                                         </div>
                                     </Col>
-                                </Row>
-                                <Row>
-                                    <Col md="6">
+                                    <Col md="4">
                                         <div className="detailsContainer">
                                             <label className="Title">Price:</label>
                                             <label className="subTitle">{price ? price : "No value"}</label>

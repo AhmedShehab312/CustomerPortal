@@ -881,3 +881,10 @@ p.text-muted {
     -webkit-font-smoothing: antialiased;
 }
 /* material icon for material datetime picker */
+
+@media (min-width: 576px) {
+    .modal-dialog {
+      max-width: 60%;
+      margin: 1.75rem auto;
+    }
+  }
