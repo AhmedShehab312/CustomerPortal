@@ -69,10 +69,8 @@ class SignUp1 extends React.Component {
         let adminBranches = [];
         HtttpGetDefult('admin/' + id + '').then((res) => {
             if (res) {
-                debugger
                 if (res.roles && res.roles.length > 0) {
                     res.roles.map((Item) => {
-                        debugger
                         if (Item.Branch) {
                             adminBranches.push(Item.Branch);
                         }
