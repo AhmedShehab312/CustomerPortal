@@ -46,18 +46,24 @@ class TableData extends React.Component {
     async componentDidMount() {
         const { headCells, data, DataShowPerTable } = this.props;
         this.headCells = headCells;
-        await this.InitializeRows(data, DataShowPerTable);
-
+        this.setState({ selectedFilter: this.headCells[0].id })
+        if (data) {
+            await this.InitializeRows(data, DataShowPerTable);
+        }
     }
 
     async componentWillReceiveProps() {
         const { headCells, data, DataShowPerTable } = this.props;
         this.headCells = headCells;
-        await this.InitializeRows(data, DataShowPerTable);
+        this.setState({ selectedFilter: this.headCells[0].id })
+        if (data) {
+            await this.InitializeRows(data, DataShowPerTable);
+        }
+
     }
 
     InitializeRows(data, DataShowPerTable) {
-        this.setState({ rows: [], selectedFilter: this.headCells[0].id }, () => {
+        this.setState({ rows: [] }, () => {
             data.map((Item, i) => {
                 this.createData(Item, DataShowPerTable);
             })
@@ -153,7 +159,7 @@ class TableData extends React.Component {
 
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this branch!",
+            text: "Once deleted, you will not be able to recover!",
             icon: "error",
             buttons: true,
             dangerMode: true,
@@ -180,9 +186,9 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable } = this.props;
-        debugger
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction } = this.props;
         const { rows } = this.state;
+        console.log(data);
         const classes = {
             root: {
                 width: '100%',
@@ -248,114 +254,123 @@ class TableData extends React.Component {
                             </div>
                         </Col>
                         <hr />
-                        <Col md="12" className="SpecRow">
-                            <div id="main-search" className={'main-search'}>
-                                <Row>
-                                    <Col md="2">
-                                        <p className="SearchTxt">Search:</p>
-                                    </Col>
-                                    <Col md="10">
-                                        <Row>
-                                            <Col md="8">
-                                                <div className="input-group">
-                                                    <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
-                                                    <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
-                                                        <i className="feather icon-x input-group-text" />
-                                                    </a>
-                                                    <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
-                                                        <i className="feather icon-search input-group-text" />
-                                                    </span>
-                                                </div>
-                                            </Col>
-                                            <Col md="4">
-                                                <FormControl className={classes.formControl}>
-                                                    <InputLabel id="demo-simple-select-label">Fields</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-label"
-                                                        id="demo-simple-select"
-                                                        value={this.state.selectedFilter}
-                                                        onChange={(val) => { this.setState({ selectedFilter: val.target.value }) }}
-                                                    >
-                                                        {this.headCells &&
-                                                            this.headCells.map((Item) => {
-                                                                return <MenuItem value={Item.id}>{Item.id}</MenuItem>
-                                                            })
+                        {
+                            rows && rows.length > 0 &&
+                            <Col md="12" className="SpecRow">
+                                <div id="main-search" className={'main-search'}>
+                                    <Row>
+                                        <Col md="2">
+                                            <p className="SearchTxt">Search:</p>
+                                        </Col>
+                                        <Col md="10">
+                                            <Row>
+                                                <Col md="8">
+                                                    <div className="input-group">
+                                                        <input type="text" id="m-search" className="form-control" style={{ width: this.state.searchString }} onChange={(val) => this.search(val.target.value)} />
+                                                        <a href={""} className="input-group-append search-close" onClick={this.searchOffHandler}>
+                                                            <i className="feather icon-x input-group-text" />
+                                                        </a>
+                                                        <span className="input-group-append search-btn btn btn-primary" onClick={this.searchOnHandler}>
+                                                            <i className="feather icon-search input-group-text" />
+                                                        </span>
+                                                    </div>
+                                                </Col>
+                                                <Col md="4">
+                                                    <FormControl className={classes.formControl}>
+                                                        <InputLabel id="demo-simple-select-label">Fields</InputLabel>
+                                                        <Select
+                                                            labelId="demo-simple-select-label"
+                                                            id="demo-simple-select"
+                                                            value={this.state.selectedFilter}
+                                                            onChange={(val) => { this.setState({ selectedFilter: val.target.value }) }}
+                                                        >
+                                                            {this.headCells &&
+                                                                this.headCells.map((Item) => {
+                                                                    return <MenuItem value={Item.id}>{Item.id}</MenuItem>
+                                                                })
 
-                                                        }
-                                                    </Select>
-                                                </FormControl>
-                                            </Col>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </div>
-                        </Col>
+                                                            }
+                                                        </Select>
+                                                    </FormControl>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+
+                        }
+
                     </Row>
 
 
                     <TableContainer>
-                        <Table
-                            className={classes.table}
-                            aria-labelledby="tableTitle"
-                            size={'medium'}
-                            aria-label="enhanced table"
-                        >
+                        {rows && rows.length > 0 ?
+                            <Table
+                                className={classes.table}
+                                aria-labelledby="tableTitle"
+                                size={'medium'}
+                                aria-label="enhanced table"
+                            >
 
-                            {this.EnhancedTableHead(this.state.selected.length, this.state.order, this.state.orderBy, rows.length, handleRequestSort)}
-                            <TableBody>
-                                {this.stableSort(rows, this.getComparator(this.state.order, this.state.orderBy))
-                                    .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
-                                    .map((row, index) => {
-                                        const isItemSelected = isSelected(row.name);
-                                        return (
-                                            <TableRow
-                                                hover
-                                                aria-checked={isItemSelected}
-                                                tabIndex={-1}
-                                                key={row.name}
-                                                selected={isItemSelected}
-                                            >
+                                {this.EnhancedTableHead(this.state.selected.length, this.state.order, this.state.orderBy, rows.length, handleRequestSort)}
+                                <TableBody>
+                                    {this.stableSort(rows, this.getComparator(this.state.order, this.state.orderBy))
+                                        .slice(this.state.page * this.state.rowsPerPage, this.state.page * this.state.rowsPerPage + this.state.rowsPerPage)
+                                        .map((row, index) => {
+                                            const isItemSelected = isSelected(row.name);
+                                            return (
+                                                <TableRow
+                                                    hover
+                                                    aria-checked={isItemSelected}
+                                                    tabIndex={-1}
+                                                    key={row.name}
+                                                    selected={isItemSelected}
+                                                >
 
-                                                {Object.entries(row).map((Item) => {
-                                                    return (<TableCell align="center">{Item[1]}</TableCell>)
-                                                })}
+                                                    {Object.entries(row).map((Item) => {
+                                                        return (<TableCell align="center">{Item[1]}</TableCell>)
+                                                    })}
 
-                                                <TableCell align="center" className="IconContainers">
-                                                    <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />
-                                                    <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
-                                                    <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    })}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 20 * emptyRows }}>
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                                    <TableCell align="center" className="IconContainers">
+                                                        {/* {data[index] ?
+                                                            data[index].isActive ?
+                                                                <i className="fas fa-times-circle" onClick={() => { deActiveAction(data[index], index) }} /> :
+                                                                <i className="fas fa-check-circle" onClick={() => { ActiveAction(data[index], index) }} />
+                                                            : null
+                                                        }
+                                                        <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} /> */}
+                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
+                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
+                                                    </TableCell>
+                                                </TableRow>
+                                            );
+                                        })}
+                                    {emptyRows > 0 && (
+                                        <TableRow style={{ height: 20 * emptyRows }}>
+                                            <TableCell colSpan={6} />
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                            :
+                            <p className="NoData">No Data</p>
+                        }
                     </TableContainer>
                     <div className="TablePaginationContainer">
-                        {/* <TablePagination
+                        {
+                            rows && rows.length > 0 &&
+                            <Pagination
+                                defaultCurrent={(this.state.page + 1)}
+                                pageSize={this.state.rowsPerPage}
+                                total={10}
+                                pageSizeOptions={this.pageSizeOptions}
+                                onShowSizeChange={(val) => handleChangeRowsPerPage(val)}
+                                onChange={handleChangePage}
+                                showSizeChanger={true}
+                            />
+                        }
 
-                            rowsPerPageOptions={[5, 10, 25]}
-                            count={totalPages}
-                            rowsPerPage={this.state.rowsPerPage}
-                            page={this.state.page}
-                            onChangePage={handleChangePage}
-                            onChangeRowsPerPage={handleChangeRowsPerPage}
-                        /> */}
-                        {/* <Pagination defaultCurrent={this.state.page} total={totalPages} pageSizeOptions={[5, 10, 25]} defaultPageSize={5} onShowSizeChange={handleChangeRowsPerPage} onChange={handleChangePage} /> */}
-                        <Pagination
-                            defaultCurrent={(this.state.page + 1)}
-                            pageSize={this.state.rowsPerPage}
-                            total={10}
-                            pageSizeOptions={this.pageSizeOptions}
-                            onShowSizeChange={(val) => handleChangeRowsPerPage(val)}
-                            onChange={handleChangePage}
-                            showSizeChanger={true}
-                        />
 
                     </div>
                 </Paper>

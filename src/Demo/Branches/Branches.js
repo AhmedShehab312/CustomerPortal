@@ -560,23 +560,18 @@ class Branches extends React.Component {
                     {showDetails && this.DetailsForm()}
                     <Row>
                         <Col md="12">
-                            {
-                                Branches && Branches.length > 0 ?
-                                    <TableData
-                                        headCells={this.headCells}
-                                        data={Branches}
-                                        DataShowPerTable={this.DataShowPerTable}
-                                        handleDelete={(val, index) => { this.delete(val, index) }}
-                                        handleDetails={(val, index) => { this.Details(val, index) }}
-                                        handleEdit={(val, index) => { this.Edit(val, index) }}
-                                        totalPages={1}
-                                        Title={"Branches"}
-                                        handleAdd={() => { this.Add() }}
-                                    />
-                                    :
-                                    <p className="noResult">No Branches Found</p>
+                            <TableData
+                                headCells={this.headCells}
+                                data={Branches}
+                                DataShowPerTable={this.DataShowPerTable}
+                                handleDelete={(val, index) => { this.delete(val, index) }}
+                                handleDetails={(val, index) => { this.Details(val, index) }}
+                                handleEdit={(val, index) => { this.Edit(val, index) }}
+                                totalPages={1}
+                                Title={"Branches"}
+                                handleAdd={() => { this.Add() }}
+                            />
 
-                            }
 
                         </Col>
                     </Row>
