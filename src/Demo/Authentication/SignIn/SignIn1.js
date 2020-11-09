@@ -46,6 +46,9 @@ class SignUp1 extends React.Component {
         if (data.loginType == "OWNER") {
             this.getBranches(data.id)
         }
+        else {
+            this.getAdminBranches(data.id);
+        }
 
         history.push('/dashboard');
         setLoggedIn(true);
@@ -59,6 +62,28 @@ class SignUp1 extends React.Component {
                 StoreAdmins(res.admins)
             }
         })
+    }
+
+    getAdminBranches(id) {
+        const { storeBranches } = this.props;
+        let adminBranches = [];
+        HtttpGetDefult('admin/' + id + '').then((res) => {
+            if (res) {
+                debugger
+                if (res.roles && res.roles.length > 0) {
+                    res.roles.map((Item) => {
+                        debugger
+                        if (Item.Branch) {
+                            adminBranches.push(Item.Branch);
+                        }
+
+                    })
+
+                }
+            }
+        })
+
+        storeBranches(adminBranches);
     }
 
     // saveCredentials(data) {

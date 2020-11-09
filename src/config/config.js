@@ -1,4 +1,4 @@
-const ENDPOINT = "http://18.157.186.202:3000/";
+const ENDPOINT = "http://52.29.158.36:3000/";
 
 const TIMEOUT = 120000;
 
