@@ -24,6 +24,15 @@ const OtherDocs = React.lazy(() => import('./Demo/Other/Docs'));
 const Tables = React.lazy(() => import('./App/components/Tables'));
 const CompanyProfile = React.lazy(() => import('./Demo/CompanyProfile/CompanyProfile'));
 const Branches = React.lazy(() => import('./Demo/Branches/Branches'));
+const Admins = React.lazy(() => import('./Demo/Admins/Admins'));
+const Reports = React.lazy(() => import('./Demo/Reports'));
+
+const Analytics = React.lazy(() => import('./Demo/Analytics'));
+const Integration = React.lazy(() => import('./Demo/Integration'));
+const InternetMangment = React.lazy(() => import('./Demo/InternetMangment'));
+const InvoicesPayments = React.lazy(() => import('./Demo/InvoicesPayments'));
+const Contacts = React.lazy(() => import('./Demo/Contacts'));
+
 
 
 const routes = [
@@ -40,6 +49,15 @@ const routes = [
     { path: '/Tables', exact: true, name: 'Tables', component: Tables },
     { path: '/CompanyProfile', exact: true, name: 'CompanyProfile', component: CompanyProfile },
     { path: '/Branches', exact: true, name: 'Branches', component: Branches },
+    { path: '/Admins', exact: true, name: 'Admins', component: Admins },
+    { path: '/Reports', exact: true, name: 'Reports', component: Reports },
+
+    { path: '/Analytics', exact: true, name: 'Analytics', component: Analytics },
+    { path: '/Integration', exact: true, name: 'Integration', component: Integration },
+    { path: '/InternetMangment', exact: true, name: 'InternetMangment', component: InternetMangment },
+    { path: '/InvoicesPayments', exact: true, name: 'InvoicesPayments', component: InvoicesPayments },
+    { path: '/Contacts', exact: true, name: 'Contacts', component: Contacts },
+
 
 
 ];

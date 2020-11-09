@@ -41,15 +41,12 @@ class BasicButton extends React.Component {
     DataShowPerTable = ["id", "name", "UserName", "address"];
 
     delete(row) {
-        console.log(row)
     }
 
     Details(row) {
-        console.log(row)
     }
 
     Edit(row) {
-        console.log(row)
     }
 
     Add() {

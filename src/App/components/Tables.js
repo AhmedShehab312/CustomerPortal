@@ -80,7 +80,6 @@ class TableData extends React.Component {
         let a = [];
         a.push(result)
 
-        console.log(a)
 
 
     }
@@ -259,7 +258,6 @@ class TableData extends React.Component {
 
 
     EnhancedTable() {
-        console.log(this.rows)
         const classes = {
             root: {
                 width: '100%',

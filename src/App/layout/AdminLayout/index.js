@@ -25,13 +25,13 @@ class AdminLayout extends Component {
 
     componentDidMount() {
         if (!getLoggedIn()) {
-            this.props.history.push('/signin-1');
+            this.props.history.push('/signin');
         }
     }
 
     componentWillReceiveProps(props) {
         if (!getLoggedIn()) {
-            props.history.push('/signin-1');
+            props.history.push('/signin');
         }
     }
 

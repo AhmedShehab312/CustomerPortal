@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, Tooltip } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -188,7 +188,6 @@ class TableData extends React.Component {
     EnhancedTable() {
         const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction } = this.props;
         const { rows } = this.state;
-        console.log(data);
         const classes = {
             root: {
                 width: '100%',
@@ -340,8 +339,8 @@ class TableData extends React.Component {
                                                             : null
                                                         }
                                                         <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} /> */}
-                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} />
-                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} />
+                                                        <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />
+                                                        <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />
                                                     </TableCell>
                                                 </TableRow>
                                             );

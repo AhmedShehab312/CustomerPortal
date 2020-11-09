@@ -19,7 +19,7 @@ class NavRight extends Component {
     logOut() {
 
         const { history } = this.props;
-        history.push('/signin-1');
+        history.push('/signin');
         setLoggedIn(false)
 
     }
