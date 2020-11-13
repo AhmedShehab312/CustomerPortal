@@ -29,7 +29,7 @@ class TableData extends React.Component {
             orderBy: '',
             selected: [],
             page: 0,
-            rowsPerPage: 5,
+            rowsPerPage: 10,
             rows: [],
             searchVal: null,
             originalRows: [],
@@ -187,7 +187,7 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete } = this.props;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG } = this.props;
         const { rows } = this.state;
         const classes = {
             root: {
@@ -354,7 +354,7 @@ class TableData extends React.Component {
                                 </TableBody>
                             </Table>
                             :
-                            <p className="NoData">No Data</p>
+                            <p className="NoData">{noResultMSG}</p>
                         }
                     </TableContainer>
                     <div className="TablePaginationContainer">

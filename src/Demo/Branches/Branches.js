@@ -430,7 +430,7 @@ class Branches extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col md={4}>
-                                        <InputWithText type="text" label={"currency"} placeholder={"Enter Currency"} value={currency} onChange={(val) => { this.changeAddInput('currency', val) }} validation="number" isRequired onBlur={(val) => { this.checkAddValidation('8', val, 9) }} />
+                                        <InputWithText type="text" label={"currency"} placeholder={"Enter Currency"} value={currency} onChange={(val) => { this.changeAddInput('currency', val) }} isRequired onBlur={(val) => { this.checkAddValidation('8', val, 9) }} />
                                     </Col>
                                 </Row>
                             </Form>
@@ -498,7 +498,7 @@ class Branches extends React.Component {
                                         <InputWithText type="text" label={"Price"} placeholder={"Enter Price"} value={price} onChange={(val) => { this.changeEditInput('price', val) }} isRequired validation="number" onBlur={(val) => { this.checkEditValidation('6', val, 8) }} />
                                     </Col>
                                     <Col md={4}>
-                                        <InputWithText type="text" label={"currency"} placeholder={"Enter Currency"} value={currency} onChange={(val) => { this.changeEditInput('currency', val) }} validation="number" isRequired onBlur={(val) => { this.checkEditValidation('7', val, 8) }} />
+                                        <InputWithText type="text" label={"currency"} placeholder={"Enter Currency"} value={currency} onChange={(val) => { this.changeEditInput('currency', val) }} isRequired onBlur={(val) => { this.checkEditValidation('7', val, 8) }} />
                                     </Col>
                                 </Row>
                             </Form>
@@ -631,6 +631,7 @@ class Branches extends React.Component {
                         </CardBody>
                     </Card>
                 </Col>
+
             </>
         );
     }
@@ -664,6 +665,7 @@ class Branches extends React.Component {
         newBranch.accessPoints = null
         HtttpPostDefult("branch/create", newBranch).then((res) => {
             if (!res.errors) {
+                newBranch._id = res.id;
                 Branches.push(newBranch);
                 storeBranches(Branches);
                 this.setState({ Branches: Branches });
@@ -912,6 +914,7 @@ class Branches extends React.Component {
                                     Title={"Branches"}
                                     handleAdd={() => { this.Add() }}
                                     showDelete={false}
+                                    noResultMSG={"There is no available branches"}
                                 />
                             </Col>
                         </Row>

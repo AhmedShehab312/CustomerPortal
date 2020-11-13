@@ -22,21 +22,21 @@ export default {
             title: 'Profile Data',
             type: 'group',
             icon: 'icon-ui',
-            role: ["OWNER", "ADMIN", "NotActive"],
+            role: ["OWNER", "ADMIN", "NotActiveAdmin", "NotActiveBrand"],
             children: [
                 {
                     id: 'Conf',
                     title: 'Configuration',
                     type: 'collapse',
                     icon: 'feather icon-lock',
-                    role: ["OWNER", "ADMIN", "NotActive"],
+                    role: ["OWNER", "ADMIN", "NotActiveAdmin", "NotActiveBrand"],
                     children: [
                         {
                             id: 'CompanyProfile',
                             title: 'Company Profile',
                             type: 'item',
                             url: '/CompanyProfile',
-                            role: ["OWNER", "ADMIN", "NotActive"],
+                            role: ["OWNER", "ADMIN", "NotActiveAdmin", "NotActiveBrand"],
                             icon: 'fas fa-user-circle'
                         },
                         {

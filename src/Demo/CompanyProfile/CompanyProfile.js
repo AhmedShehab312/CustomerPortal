@@ -59,7 +59,6 @@ class CompanyProfile extends React.Component {
         this.setState({ EditArr: updatedArr })
         if (OwnerProfile.loginType == "ADMIN") {
             this.checkDisableOrEnableBtn(3, EditArr);
-
         }
         else {
             this.checkDisableOrEnableBtn(14, EditArr);
@@ -92,9 +91,6 @@ class CompanyProfile extends React.Component {
         const { profileObject } = this.state;
         const { storeProfile, OwnerProfile } = this.props;
         let res = profileObject;
-        // delete res["__v"];
-        // delete res["_id"];
-        debugger
         HtttpPutDefult('brand/' + OwnerProfile._id + '', res).then((res) => {
             if (res) {
                 storeProfile(profileObject);
@@ -224,6 +220,14 @@ class CompanyProfile extends React.Component {
                     }
                 })
                 break;
+            case 'email':
+                this.setState({
+                    profileObject: {
+                        ...this.state.profileObject,
+                        email: val
+                    }
+                })
+                break;
         }
 
 
@@ -240,7 +244,7 @@ class CompanyProfile extends React.Component {
             <div className="content CompanyProfile">
                 <Col md="12">
                     <Card isOption title={editMode ? "Edit your profile" : "Profile Data"}>
-                        {OwnerProfile.loginType == "NotActive" &&
+                        {OwnerProfile.loginType == "NotActiveAdmin" || OwnerProfile.loginType == "NotActiveBrand" &&
                             <React.Fragment>  <img src={alert} style={{ width: '3%' }} /> <p className="alertTxt">You need to activate your account</p></React.Fragment>
                         }
 
@@ -249,7 +253,7 @@ class CompanyProfile extends React.Component {
                                 editMode ?
                                     <Form>
                                         {
-                                            OwnerProfile.loginType == "OWNER" ?
+                                            OwnerProfile.loginType == "OWNER" || OwnerProfile.loginType == "NotActiveBrand" ?
                                                 <React.Fragment>
                                                     <Row>
                                                         {/* <Col md={12}>
@@ -263,7 +267,7 @@ class CompanyProfile extends React.Component {
                                                             <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} disabled />
                                                         </Col>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={i18n.t("CompanyProfile.Email")} placeholder={i18n.t("CompanyProfile.EmailPlacholder")} isRequired validation="email" onBlur={(val) => { this.checkValidation('0', val) }} value={email} />
+                                                            <InputWithText type="text" label={i18n.t("CompanyProfile.Email")} placeholder={i18n.t("CompanyProfile.EmailPlacholder")} onChange={(val) => this.changeInput("email", val)} isRequired validation="email" onBlur={(val) => { this.checkValidation('0', val) }} value={email} />
                                                         </Col>
                                                     </Row>
                                                     <Row>
@@ -321,6 +325,7 @@ class CompanyProfile extends React.Component {
                                                         </Col>
                                                     </Row>
                                                 </React.Fragment>
+
                                                 :
                                                 <React.Fragment>
                                                     <Row>
@@ -346,7 +351,7 @@ class CompanyProfile extends React.Component {
                                     </Form>
                                     :
                                     <div className="Details">
-                                        {OwnerProfile.loginType == "ADMIN" || OwnerProfile.loginType == "NotActive" ?
+                                        {OwnerProfile.loginType == "ADMIN" || OwnerProfile.loginType == "NotActiveAdmin" ?
 
                                             <i class={"far fa-edit"} style={{ top: '30%' }} onClick={() => { this.setState({ editMode: true }) }}></i>
 
@@ -355,7 +360,7 @@ class CompanyProfile extends React.Component {
 
                                         }
                                         {
-                                            OwnerProfile.loginType == "OWNER" ?
+                                            OwnerProfile.loginType == "OWNER" || OwnerProfile.loginType == "NotActiveBrand" ?
                                                 <React.Fragment>
                                                     <Row>
                                                         <Col>

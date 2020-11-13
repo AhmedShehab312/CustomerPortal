@@ -16,13 +16,10 @@ import { InputWithText, DropDown } from '../../App/components/ComponentModule'
 import Aux from "../../hoc/_Aux";
 import TableData from '../../App/components/Tables/TablesComp';
 import './AdminsStyle.scss';
-import i18n from '../../i18n';
 import { HtttpDeleteDefult, HtttpPostDefult, HtttpPutDefult, HtttpGetDefult } from '../../actions/httpClient';
 import { connect } from 'react-redux';
 import { displayToast } from '../../globals/globals';
 import { StoreAdmins } from '../../store/actions/AdminsAction';
-import DatePicker from "react-datepicker";
-import moment from 'moment'
 import Card from "../../App/components/MainCard";
 import Delete from '../../assets/delete.png';
 import Add from '../../assets/add.png';
@@ -52,7 +49,6 @@ class Admins extends React.Component {
             btnEditDisable: true,
             selectedServices: null,
             errorMsg: null
-
         }
     }
 
@@ -205,19 +201,6 @@ class Admins extends React.Component {
 
     }
 
-    // delete(Item, key) {
-    //     const { Branches } = this.state;
-    //     const { storeBranches } = this.props;
-    //     HtttpDeleteDefult("branch/" + Item.id + "").then((res) => {
-    //         if (res) {
-    //             Branches.splice(key, 1);
-    //             this.setState({ Branches: Branches })
-    //             storeBranches(Branches)
-    //             displayToast('branch is deleted successfully', true);
-
-    //         }
-    //     })
-    // }
 
 
     Details(item) {
@@ -226,20 +209,6 @@ class Admins extends React.Component {
 
     async Edit(item, index) {
         await this.setState({ selectedAdmin: item, selectedAdminIndex: index, showEdit: true, newAdminRoles: item.adminRoles });
-        // await this.setState({ selectedAdmin: item, selectedAdminIndex: index, showEdit: true });
-        // HtttpGetDefult('admin/' + item.id + '').then((res) => {
-        //     if (res) {
-        //         if (res.roles && res.roles.length > 0) {
-        //             res.roles.map((Item) => {
-        //                 if (Item.Branch) {
-        //                     adminBranches.push(Item.Branch);
-        //                 }
-
-        //             })
-
-        //         }
-        //     }
-        // })
     }
 
 
@@ -293,10 +262,9 @@ class Admins extends React.Component {
 
 
     RemovedminRole(Item, index) {
-        const { availableServices, selectedServices, newAdminRoles, selectedBranch } = this.state;
-        delete newAdminRoles[index];
+        const { newAdminRoles } = this.state;
+        newAdminRoles.splice(index, 1);
         this.setState({ newAdminRoles })
-
     }
 
 
@@ -392,7 +360,7 @@ class Admins extends React.Component {
         const { Branches } = this.props;
         const { name, email, password } = selectedAdmin
 
-        const handleClose = () => this.setState({ showEdit: false });
+        const handleClose = () => this.setState({ showEdit: false, newAdminRoles: [] });
         return (
             <>
                 <Modal show={showEdit} onHide={handleClose} dialogClassName="modal-70w">
@@ -536,7 +504,7 @@ class Admins extends React.Component {
         HtttpPutDefult("admin/" + selectedAdmin._id + "", selectedAdmin).then((res) => {
             if (res) {
                 Admins[selectedAdminIndex] = selectedAdmin;
-                this.setState({ Admins: Admins, newAdminRoles: null });
+                this.setState({ Admins: Admins, newAdminRoles: [] });
                 StoreAdmins(Admins)
                 displayToast('The Admin is updated successfully', true);
             }
@@ -551,10 +519,10 @@ class Admins extends React.Component {
         this.setState({ showAdd: false });
         HtttpPostDefult("admin/create", newAdmin).then(async (res) => {
             if (!res.errors) {
+                newAdmin._id = res.id
                 Admins.push(newAdmin);
                 StoreAdmins(Admins);
-                // await this.attachRoleAdmin(res);
-                this.setState({ Admins: Admins, newAdminRoles: null });
+                this.setState({ Admins: Admins, newAdminRoles: [] });
                 displayToast('"The Admin is created successfully"', true);
             }
             else {
@@ -572,7 +540,6 @@ class Admins extends React.Component {
                 this.setState({ Admins: Admins })
                 StoreAdmins(Admins)
                 displayToast('Admin is deleted successfully', true);
-
             }
         })
     }
@@ -600,6 +567,7 @@ class Admins extends React.Component {
                                     Title={"Admins"}
                                     handleAdd={() => { this.Add() }}
                                     showDelete
+                                    noResultMSG={"There is no available admins"}
                                 />
 
 

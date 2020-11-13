@@ -40,7 +40,7 @@ function errorHandler(err, data) {
     } else errMsg = data.error_description;
   } else {
     if (err === 404) {
-      errMsg = i18n.t("Errors.404");
+      errMsg = "Not Found";
     } else if (err === 401) {
       errMsg = i18n.t("Errors.401");
     } else {
@@ -52,7 +52,7 @@ function errorHandler(err, data) {
     }
   }
   if (err === 401) {
-    window.location.href = "/quacck";
+    window.location.href = "/";
   }
   displayToast(errMsg);
 }

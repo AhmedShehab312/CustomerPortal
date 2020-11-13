@@ -45,14 +45,14 @@ class SignUp1 extends React.Component {
     InitialProfile(data) {
         const { history, storeProfile } = this.props;
         if (data.loginType == "OWNER") {
-            this.getBranches(data.id);
+            this.getBranches(data.id); // get branches
             if (data.isActivated) {
                 data.details.loginType = "OWNER"
                 history.push('/dashboard');
             }
 
             else {
-                data.details.loginType = "NotActive"
+                data.details.loginType = "NotActiveBrand"
                 history.push('/CompanyProfile');
             }
             storeProfile(data.details);
@@ -65,16 +65,15 @@ class SignUp1 extends React.Component {
             }
 
             else {
-                data.details.loginType = "NotActive"
+                data.details.loginType = "NotActiveAdmin"
                 history.push('/CompanyProfile');
             }
-            this.getAdminBranches(data.id);
+            this.getAdminBranches(data.id); // get Admin branches
             storeProfile(data.details);
         }
 
         setLoggedIn(true);
     }
-
 
     getBranches(id) {
         const { storeBranches, StoreAdmins } = this.props;
@@ -102,8 +101,6 @@ class SignUp1 extends React.Component {
                 }
             }
         })
-        debugger
-
         storeBranches(adminBranches);
     }
 
