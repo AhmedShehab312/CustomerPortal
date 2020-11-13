@@ -24,6 +24,7 @@ import { StoreBranches } from '../../store/actions/BranchsAction';
 import DatePicker from "react-datepicker";
 import moment from 'moment'
 import Card from "../../App/components/MainCard";
+import { StoreAdmins } from '../../store/actions/AdminsAction';
 
 
 class Branches extends React.Component {
@@ -55,11 +56,11 @@ class Branches extends React.Component {
     }
 
     intervals = [
-        { id: "0", name: "1" },
-        { id: "1", name: "3" },
-        { id: "2", name: "6" },
-        { id: "3", name: "9" },
-        { id: "4", name: "12" },
+        { _id: "0", name: "1" },
+        { _id: "1", name: "3" },
+        { _id: "2", name: "6" },
+        { _id: "3", name: "9" },
+        { _id: "4", name: "12" },
     ]
 
     headCells = [
@@ -79,22 +80,31 @@ class Branches extends React.Component {
     DataShowPerTable = ["name", "startDate", "interval", "notificationEmail"];
 
     async componentDidMount() {
-        const { Branches } = this.props;
-        if (Branches && Branches.length > 0) {
-            let result = await Branches.filter((Item) => {
-                return Item.isDeleted == false;
-            })
-
-            this.setState({ Branches: result });
-            setTimeout(
-                () => this.setState({ Branches: result }),
-                10
-            );
-        }
-
+        const { OwnerProfile } = this.props;
+        this.getBranches(OwnerProfile._id);
     }
 
+    getBranches(id) {
+        const { storeBranches, StoreAdmins } = this.props;
+        HtttpGetDefult('brand/' + id + '').then(async (res) => {
+            if (res) {
+                storeBranches(res.branches);
+                StoreAdmins(res.admins);
+                if (res.branches && res.branches.length > 0) {
+                    let result = await res.branches.filter((Item) => {
+                        return Item.isDeleted == false;
+                    })
 
+                    this.setState({ Branches: result });
+                    setTimeout(
+                        () => this.setState({ Branches: result }),
+                        10
+                    );
+                }
+            }
+        })
+
+    }
 
     checkEditValidation(index, val, allLength) {
         const { EditArr } = this.state;
@@ -936,6 +946,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         storeBranches: (val) => dispatch(StoreBranches(val)),
+        StoreAdmins: (val) => dispatch(StoreAdmins(val)),
+
     };
 };
 
