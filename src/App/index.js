@@ -39,6 +39,12 @@ class App extends Component {
                         </Switch>
                     </Suspense>
                 </ScrollToTop>
+                <div id="spinner" style={{ display: 'none' }}>
+                    <div className="spinner">
+                        <img src={require("../assets/loading.gif")} alt="loading" />
+                    </div>
+                </div>
+
             </Aux>
         );
     }

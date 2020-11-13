@@ -501,7 +501,7 @@ class Admins extends React.Component {
         const { StoreAdmins } = this.props;
         selectedAdmin.adminRoles = newAdminRoles;
         this.setState({ showEdit: false });
-        HtttpPutDefult("admin/" + selectedAdmin._id + "", selectedAdmin).then((res) => {
+        HtttpPutDefult("admin/" + selectedAdmin._id + "", selectedAdmin, true).then((res) => {
             if (res) {
                 Admins[selectedAdminIndex] = selectedAdmin;
                 this.setState({ Admins: Admins, newAdminRoles: [] });
@@ -517,7 +517,7 @@ class Admins extends React.Component {
         newAdmin.brand = OwnerProfile._id;
         newAdmin.adminRoles = newAdminRoles;
         this.setState({ showAdd: false });
-        HtttpPostDefult("admin/create", newAdmin).then(async (res) => {
+        HtttpPostDefult("admin/create", newAdmin, true).then(async (res) => {
             if (!res.errors) {
                 newAdmin._id = res.id
                 Admins.push(newAdmin);
@@ -534,7 +534,7 @@ class Admins extends React.Component {
     delete(Item, key) {
         const { Admins } = this.state;
         const { StoreAdmins } = this.props;
-        HtttpDeleteDefult("admin/" + Item._id + "").then((res) => {
+        HtttpDeleteDefult("admin/" + Item._id + "", true).then((res) => {
             if (res) {
                 Admins.splice(key, 1);
                 this.setState({ Admins: Admins })

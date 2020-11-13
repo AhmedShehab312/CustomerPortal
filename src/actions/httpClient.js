@@ -93,8 +93,7 @@ export function setRequestHeader(isRefresh, isLogin, url) {
 
 export function HtttpGetDefult(
   url,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 ) {
@@ -120,8 +119,7 @@ export function HtttpGetDefult(
 export function HtttpPostDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 
@@ -146,8 +144,7 @@ export function HtttpPostDefult(
 export function HtttpDeleteDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 
@@ -172,8 +169,7 @@ export function HtttpDeleteDefult(
 export function HtttpPutDefult(
   url,
   data,
-  serviceKey,
-  showSpinner = true,
+  showSpinner = false,
   isLogin = false,
   isRefresh = false
 

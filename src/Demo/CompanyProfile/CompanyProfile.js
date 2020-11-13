@@ -91,7 +91,7 @@ class CompanyProfile extends React.Component {
         const { profileObject } = this.state;
         const { storeProfile, OwnerProfile } = this.props;
         let res = profileObject;
-        HtttpPutDefult('brand/' + OwnerProfile._id + '', res).then((res) => {
+        HtttpPutDefult('brand/' + OwnerProfile._id + '', res, true).then((res) => {
             if (res) {
                 storeProfile(profileObject);
                 displayToast('Profile data is updated successfully', true);

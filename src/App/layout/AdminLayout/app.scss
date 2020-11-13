@@ -1,1 +1,18 @@
 @import "../../../assets/scss/style";
+.spinner {
+    text-align: center;
+    right: 0;
+    top: 45%;
+    position: fixed;
+    left: 0;
+    height: 100%;
+    img {
+      width: 100px;
+    }
+    // display:none
+  }
+  .spinnerDisplayed
+{
+  opacity: .5;
+  pointer-events: none;
+}
