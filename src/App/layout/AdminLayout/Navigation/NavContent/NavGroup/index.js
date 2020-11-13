@@ -35,10 +35,10 @@ const navGroup = (props) => {
 
 const mapStateToProps = state => {
     return {
-        layout: state.GlobalState.layout,
-        isOpen: state.GlobalState.isOpen,
-        isTrigger: state.GlobalState.isTrigger,
-        OwnerProfile: state.ProfileState.OwnerProfile,
+        layout: state.storage.GlobalState.layout,
+        isOpen: state.storage.GlobalState.isOpen,
+        isTrigger: state.storage.GlobalState.isTrigger,
+        OwnerProfile: state.storage.ProfileState.OwnerProfile,
 
     }
 };

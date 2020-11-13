@@ -45,7 +45,7 @@ class NavSearch extends Component {
 
     render() {
         let searchClass = ['main-search'];
-        if (this.state.GlobalState.isOpen) {
+        if (this.state.storage.GlobalState.isOpen) {
             searchClass = [...searchClass, 'open'];
         }
 

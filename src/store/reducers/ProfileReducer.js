@@ -9,6 +9,7 @@ const initialState = {
 
 const ProfileReducer = (state = initialState, action) => {
     if (action.type === STORE_PROFILE) {
+        debugger
         return {
             ...state,
             OwnerProfile: action.payload.Profile,

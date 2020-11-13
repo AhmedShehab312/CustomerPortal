@@ -5,18 +5,20 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App/index';
 import config from './config';
-import { configureStore } from './store/configureStore';
+import { configureStore, persistor } from './store/configureStore';
 import { Errors } from "./App/components/ComponentModule";
 import "react-datepicker/dist/react-datepicker.css";
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 const app = (
     <Provider store={configureStore}>
-        <BrowserRouter basename={config.basename}>
-            <App />
-        </BrowserRouter>
-        <Errors />
-
+        <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter basename={config.basename}>
+                <App />
+            </BrowserRouter>
+            <Errors />
+        </PersistGate>
     </Provider>
 );
 

@@ -134,24 +134,24 @@ class Navigation extends Component {
 
 const mapStateToProps = state => {
     return {
-        layout: state.GlobalState.layout,
-        preLayout: state.GlobalState.preLayout,
-        collapseMenu: state.GlobalState.collapseMenu,
-        layoutType: state.GlobalState.layoutType,
-        navBackColor: state.GlobalState.navBackColor,
-        navBackImage: state.GlobalState.navBackImage,
-        navIconColor: state.GlobalState.navIconColor,
-        navBrandColor: state.GlobalState.navBrandColor,
-        layout6Background: state.GlobalState.layout6Background,
-        layout6BackSize: state.GlobalState.layout6BackSize,
-        rtlLayout: state.GlobalState.rtlLayout,
-        navFixedLayout: state.GlobalState.navFixedLayout,
-        boxLayout: state.GlobalState.boxLayout,
-        navDropdownIcon: state.GlobalState.navDropdownIcon,
-        navListIcon: state.GlobalState.navListIcon,
-        navActiveListColor: state.GlobalState.navActiveListColor,
-        navListTitleColor: state.GlobalState.navListTitleColor,
-        navListTitleHide: state.GlobalState.navListTitleHide
+        layout: state.storage.GlobalState.layout,
+        preLayout: state.storage.GlobalState.preLayout,
+        collapseMenu: state.storage.GlobalState.collapseMenu,
+        layoutType: state.storage.GlobalState.layoutType,
+        navBackColor: state.storage.GlobalState.navBackColor,
+        navBackImage: state.storage.GlobalState.navBackImage,
+        navIconColor: state.storage.GlobalState.navIconColor,
+        navBrandColor: state.storage.GlobalState.navBrandColor,
+        layout6Background: state.storage.GlobalState.layout6Background,
+        layout6BackSize: state.storage.GlobalState.layout6BackSize,
+        rtlLayout: state.storage.GlobalState.rtlLayout,
+        navFixedLayout: state.storage.GlobalState.navFixedLayout,
+        boxLayout: state.storage.GlobalState.boxLayout,
+        navDropdownIcon: state.storage.GlobalState.navDropdownIcon,
+        navListIcon: state.storage.GlobalState.navListIcon,
+        navActiveListColor: state.storage.GlobalState.navActiveListColor,
+        navListTitleColor: state.storage.GlobalState.navListTitleColor,
+        navListTitleHide: state.storage.GlobalState.navListTitleHide
     }
 };
 

@@ -18,7 +18,9 @@ class SignUp1 extends React.Component {
         this.state = {
             UserName: "",
             Password: "",
-            saveCredentials: false
+            saveCredentials: false,
+            showPassword: false,
+            type: "password"
         }
 
     }
@@ -41,18 +43,38 @@ class SignUp1 extends React.Component {
     }
 
     InitialProfile(data) {
-        const { history, storeProfile, } = this.props;
-        storeProfile(data);
+        const { history, storeProfile } = this.props;
         if (data.loginType == "OWNER") {
-            this.getBranches(data.id)
+            this.getBranches(data.id);
+            if (data.isActivated) {
+                data.details.loginType = "OWNER"
+                history.push('/dashboard');
+            }
+
+            else {
+                data.details.loginType = "NotActive"
+                history.push('/CompanyProfile');
+            }
+            storeProfile(data.details);
+
         }
         else {
+            if (data.isActivated) {
+                data.details.loginType = "ADMIN"
+                history.push('/dashboard');
+            }
+
+            else {
+                data.details.loginType = "NotActive"
+                history.push('/CompanyProfile');
+            }
             this.getAdminBranches(data.id);
+            storeProfile(data.details);
         }
 
-        history.push('/dashboard');
         setLoggedIn(true);
     }
+
 
     getBranches(id) {
         const { storeBranches, StoreAdmins } = this.props;
@@ -69,10 +91,10 @@ class SignUp1 extends React.Component {
         let adminBranches = [];
         HtttpGetDefult('admin/' + id + '').then((res) => {
             if (res) {
-                if (res.roles && res.roles.length > 0) {
-                    res.roles.map((Item) => {
-                        if (Item.Branch) {
-                            adminBranches.push(Item.Branch);
+                if (res.adminRoles && res.adminRoles.length > 0) {
+                    res.adminRoles.map((Item) => {
+                        if (Item.branch) {
+                            adminBranches.push(Item.branch);
                         }
 
                     })
@@ -80,6 +102,7 @@ class SignUp1 extends React.Component {
                 }
             }
         })
+        debugger
 
         storeBranches(adminBranches);
     }
@@ -95,8 +118,23 @@ class SignUp1 extends React.Component {
     //     }
     // }
 
+    showPassword() {
+        const { showPassword } = this.state;
+        this.setState({ showPassword: !showPassword }, () => {
+            if (showPassword) {
+                this.setState({ type: "password" })
+
+            }
+            else {
+                this.setState({ type: "text" })
+
+            }
+        })
+
+    }
+
     render() {
-        const { saveCredentials } = this.state;
+        const { showPassword, type } = this.state;
         return (
             <Aux>
                 <Breadcrumb />
@@ -118,7 +156,9 @@ class SignUp1 extends React.Component {
                                     <input type="email" className="form-control" placeholder="Email" onChange={(val) => { this.setState({ UserName: val.target.value }) }} />
                                 </div>
                                 <div className="input-group mb-4">
-                                    <input type="password" className="form-control" placeholder="password" onChange={(val) => { this.setState({ Password: val.target.value }) }} />
+                                    <input type={type} className="form-control" placeholder="password" onChange={(val) => { this.setState({ Password: val.target.value }) }} />
+                                    <i class={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} style={{ position: 'absolute', top: '33%', right: '5%', cursor: 'pointer' }} onClick={() => { this.showPassword() }}></i>
+
                                 </div>
                                 {/* <div className="form-group text-left">
                                     <div className="checkbox checkbox-fill d-inline">

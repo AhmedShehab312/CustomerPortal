@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { withRouter } from "react-router-dom";
-
 import ChatList from './ChatList';
 import Aux from "../../../../../hoc/_Aux";
 import DEMO from "../../../../../store/constants/Global";
-
 import Avatar1 from '../../../../../assets/images/user/avatar-1.jpg';
-import Avatar2 from '../../../../../assets/images/user/avatar-2.jpg';
-import Avatar3 from '../../../../../assets/images/user/avatar-3.jpg';
 import { setLoggedIn } from '../../../../../globals/globals';
+import { clearReducers } from '../../../../../store/actions/rootAction';
+import { connect } from 'react-redux';
 
 class NavRight extends Component {
     state = {
@@ -17,10 +15,11 @@ class NavRight extends Component {
     };
 
     logOut() {
-
-        const { history } = this.props;
-        history.push('/signin');
+        const { history, triggerClearReducers } = this.props;
         setLoggedIn(false)
+        triggerClearReducers();
+        history.push('/signin');
+        window.location.reload()
 
     }
 
@@ -118,4 +117,12 @@ class NavRight extends Component {
     }
 }
 
-export default withRouter(NavRight);
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        triggerClearReducers: () => dispatch(clearReducers()),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(withRouter(NavRight));

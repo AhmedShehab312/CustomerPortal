@@ -22,21 +22,21 @@ export default {
             title: 'Profile Data',
             type: 'group',
             icon: 'icon-ui',
-            role: ["OWNER", "ADMIN"],
+            role: ["OWNER", "ADMIN", "NotActive"],
             children: [
                 {
                     id: 'Conf',
                     title: 'Configuration',
                     type: 'collapse',
                     icon: 'feather icon-lock',
-                    role: ["OWNER", "ADMIN"],
+                    role: ["OWNER", "ADMIN", "NotActive"],
                     children: [
                         {
                             id: 'CompanyProfile',
                             title: 'Company Profile',
                             type: 'item',
                             url: '/CompanyProfile',
-                            role: ["OWNER", "ADMIN"],
+                            role: ["OWNER", "ADMIN", "NotActive"],
                             icon: 'fas fa-user-circle'
                         },
                         {
@@ -60,14 +60,14 @@ export default {
             icon: 'fas fa-cogs',
             role: ["OWNER", "ADMIN"],
             children: [
-                // {
-                //     id: 'Admins',
-                //     title: 'Admins',
-                //     type: 'item',
-                //     url: '/admins',
-                //     icon: 'fas fa-user',
-                //     role: ["OWNER"],
-                // },
+                {
+                    id: 'Admins',
+                    title: 'Admins',
+                    type: 'item',
+                    url: '/admins',
+                    icon: 'fas fa-user',
+                    role: ["OWNER"],
+                },
                 {
                     id: 'Reports',
                     title: 'Reports',

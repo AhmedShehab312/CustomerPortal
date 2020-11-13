@@ -42,7 +42,7 @@ class OutsideClick extends Component {
 
 const mapStateToProps = state => {
     return {
-        collapseMenu: state.GlobalState.collapseMenu
+        collapseMenu: state.storage.GlobalState.collapseMenu
     }
 };
 

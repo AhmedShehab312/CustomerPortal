@@ -1,0 +1,3 @@
+const CLEAR_REDUCERS = 'CLEAR_REDUCERS';
+
+export { CLEAR_REDUCERS };

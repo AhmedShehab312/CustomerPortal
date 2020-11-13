@@ -10,7 +10,8 @@ import {
     CardBody,
     FormGroup
 } from 'reactstrap';
-
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
 import { InputWithText, DropDown } from '../../App/components/ComponentModule'
 import Aux from "../../hoc/_Aux";
 import TableData from '../../App/components/Tables/TablesComp';
@@ -22,6 +23,9 @@ import { displayToast } from '../../globals/globals';
 import { StoreAdmins } from '../../store/actions/AdminsAction';
 import DatePicker from "react-datepicker";
 import moment from 'moment'
+import Card from "../../App/components/MainCard";
+import Delete from '../../assets/delete.png';
+import Add from '../../assets/add.png';
 
 
 class Admins extends React.Component {
@@ -29,7 +33,7 @@ class Admins extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Admins: null,
+            Admins: [],
             showAdd: false,
             showEdit: false,
             showDetails: false,
@@ -40,19 +44,34 @@ class Admins extends React.Component {
             selectedBranch: null,
             newAdmin: {},
             availableServices: null,
-            selectedService: null
+            selectedService: null,
+            newAdminRoles: [],
+            AddArr: [],
+            btnAddDisable: true,
+            EditArr: [],
+            btnEditDisable: true,
+            selectedServices: null,
+            errorMsg: null
+
         }
     }
 
 
 
     headCells = [
-        { id: 'id', numeric: false, disablePadding: true, label: 'ID' },
+        { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
         { id: 'email', numeric: false, disablePadding: true, label: 'Email' },
     ];
 
+    headCellsAdminRoless = [
+        { id: 'branchName', numeric: false, disablePadding: true, label: 'Branch Name' },
+        { id: 'allowedServices', numeric: false, disablePadding: true, label: 'Services' },
+    ]
 
-    DataShowPerTable = ["id", "email"];
+    DataShowPerTableAdminRoles = ["branchName", "allowedServices"]
+
+    DataShowPerTable = ["name", "email"];
+
 
     async componentDidMount() {
         const { Admins } = this.props;
@@ -65,6 +84,64 @@ class Admins extends React.Component {
             () => this.setState({ Admins: Admins }),
             10
         );
+    }
+
+
+    checkAddValidation(index, val, allLength) {
+        const { AddArr } = this.state;
+        let updatedArr;
+        updatedArr = AddArr;
+        updatedArr[index] = val;
+        this.setState({ AddArr: updatedArr })
+        this.checkDisableOrEnableBtnAddd(allLength, AddArr);
+
+    }
+
+    checkDisableOrEnableBtnAddd(num, arr) {
+        let result;
+        if (arr.length == num) {
+            result = arr.filter((Item) => {
+                return Item
+            });
+            if (result.length != num) {
+                this.setState({ btnAddDisable: true })
+            }
+            else {
+                this.setState({ btnAddDisable: false })
+            }
+        }
+        else {
+            this.setState({ btnAddDisable: true })
+        }
+    }
+
+
+    checkEditValidation(index, val, allLength) {
+        const { EditArr } = this.state;
+        let updatedArr;
+        updatedArr = EditArr;
+        updatedArr[index] = val;
+        this.setState({ EditArr: updatedArr })
+        this.checkDisableOrEnableBtnEdit(allLength, EditArr);
+
+    }
+
+    checkDisableOrEnableBtnEdit(num, arr) {
+        let result;
+        if (arr.length == num) {
+            result = arr.filter((Item) => {
+                return Item
+            });
+            if (result.length != num) {
+                this.setState({ btnEditDisable: true })
+            }
+            else {
+                this.setState({ btnEditDisable: false })
+            }
+        }
+        else {
+            this.setState({ btnEditDisable: true })
+        }
     }
 
 
@@ -83,6 +160,14 @@ class Admins extends React.Component {
                     newAdmin: {
                         ...this.state.newAdmin,
                         password: val
+                    }
+                })
+                break;
+            case 'name':
+                await this.setState({
+                    newAdmin: {
+                        ...this.state.newAdmin,
+                        name: val
                     }
                 })
                 break;
@@ -108,6 +193,14 @@ class Admins extends React.Component {
                     }
                 })
                 break;
+            case 'name':
+                await this.setState({
+                    selectedAdmin: {
+                        ...this.state.selectedAdmin,
+                        name: val
+                    }
+                })
+                break;
         }
 
     }
@@ -120,7 +213,7 @@ class Admins extends React.Component {
     //             Branches.splice(key, 1);
     //             this.setState({ Branches: Branches })
     //             storeBranches(Branches)
-    //             displayToast('branch is deleted succefully', true);
+    //             displayToast('branch is deleted successfully', true);
 
     //         }
     //     })
@@ -132,8 +225,21 @@ class Admins extends React.Component {
     }
 
     async Edit(item, index) {
+        await this.setState({ selectedAdmin: item, selectedAdminIndex: index, showEdit: true, newAdminRoles: item.adminRoles });
+        // await this.setState({ selectedAdmin: item, selectedAdminIndex: index, showEdit: true });
+        // HtttpGetDefult('admin/' + item.id + '').then((res) => {
+        //     if (res) {
+        //         if (res.roles && res.roles.length > 0) {
+        //             res.roles.map((Item) => {
+        //                 if (Item.Branch) {
+        //                     adminBranches.push(Item.Branch);
+        //                 }
 
-        await this.setState({ selectedAdmin: item, selectedAdminIndex: index, showEdit: true });
+        //             })
+
+        //         }
+        //     }
+        // })
     }
 
 
@@ -143,10 +249,14 @@ class Admins extends React.Component {
     }
 
     selectedServices(Item, Index) {
-        const { availableServices } = this.state;
+        const { availableServices, selectedServices } = this.state;
+        let res = selectedServices;
         Item.checked = !Item.checked;
         availableServices[Index] = Item;
-        this.setState({ availableServices: availableServices });
+        res = availableServices.filter((Item) => {
+            return Item.checked
+        })
+        this.setState({ availableServices: availableServices, selectedServices: res });
     }
 
 
@@ -159,10 +269,41 @@ class Admins extends React.Component {
 
     }
 
+    AddAdminRole() {
+        const { availableServices, selectedServices, newAdminRoles, selectedBranch } = this.state;
+        let newRole = { branch: {}, allowedServices: null }, services = selectedServices, res = [];
+        if (selectedServices == null || selectedServices.length == 0) {
+            this.setState({ errorMsg: 'You need to select at least one role' })
+        }
+        else {
+            services.map((Item) => {
+                res.push(Item.name)
+            })
+            newRole.branch = selectedBranch;
+            newRole.allowedServices = res.join();
+            newAdminRoles.push(newRole);
+            availableServices.map((Item) => {
+                if (Item.checked) {
+                    Item.checked = false
+                }
+            })
+            this.setState({ newAdminRoles: newAdminRoles, selectedServices: null, errorMsg: null, availableServices: availableServices })
+        }
+    }
+
+
+    RemovedminRole(Item, index) {
+        const { availableServices, selectedServices, newAdminRoles, selectedBranch } = this.state;
+        delete newAdminRoles[index];
+        this.setState({ newAdminRoles })
+
+    }
+
+
     AddForm() {
-        const { showAdd, newAdmin, selectedBranch, availableServices, selectedService } = this.state;
+        const { showAdd, newAdmin, selectedBranch, availableServices, selectedService, btnAddDisable, newAdminRoles, errorMsg } = this.state;
         const { Branches } = this.props;
-        const { email, password } = newAdmin;
+        const { email, password, name } = newAdmin;
 
         const handleClose = () => this.setState({ showAdd: false });
         return (
@@ -175,18 +316,44 @@ class Admins extends React.Component {
                         <CardBody>
                             <Form>
                                 <Row>
-                                    <Col md={6}>
-                                        <InputWithText type="text" label={"Email"} placeholder={"Enter  email"} value={email} onChange={(val) => { this.changeAddInput('email', val) }} />
+                                    <Col md={4}>
+                                        <InputWithText type="text" label={"Email"} placeholder={"Enter admin email"} value={email} onChange={(val) => { this.changeAddInput('email', val) }} validation="email" isRequired onBlur={(val) => { this.checkAddValidation('0', val, 3) }} />
                                     </Col>
-                                    <Col md={6}>
-                                        <InputWithText type="password" label={"Password"} placeholder={"Enter password"} value={password} onChange={(val) => { this.changeAddInput('password', val) }} />
+                                    <Col md={4}>
+                                        <InputWithText type="text" label={"Name"} placeholder={"Enter admin name"} value={name} onChange={(val) => { this.changeAddInput('name', val) }} isRequired onBlur={(val) => { this.checkAddValidation('1', val, 3) }} />
+                                    </Col>
+
+                                    <Col md={4}>
+                                        <InputWithText type="password" label={"Password"} placeholder={"Enter password"} value={password} onChange={(val) => { this.changeAddInput('password', val) }} validation="password" isRequired onBlur={(val) => { this.checkAddValidation('2', val, 3) }} />
                                     </Col>
                                 </Row>
+                                {newAdminRoles && newAdminRoles.length > 0 && <p className="AdminRolesTitle">Admin Roles:</p>}
+                                {newAdminRoles && newAdminRoles.map((Item, index) => {
+                                    return (
+                                        <Row>
+                                            <Col md="4">
+                                                <p style={{ fontSize: '16px' }}>{Item.branch.name}</p>
+                                            </Col>
+                                            <Col md="6">
+                                                {Item.allowedServices.split(',').map((ser) => {
+                                                    return <Chip style={{ margin: '4px' }} label={ser} variant="outlined" avatar={<Avatar>R</Avatar>}
+                                                    />
+                                                })}
+
+                                            </Col>
+                                            <Col md="2">
+                                                <img src={Delete} style={{ cursor: 'pointer', width: '27%' }} onClick={() => this.RemovedminRole(Item, index)} />
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                                }
                                 <Row >
                                     <Col md={6} style={{ margin: 'auto' }}>
                                         <FormGroup className="dropDownContainer">
                                             <label className="title">Branches</label>
                                             <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.selectedBranch(val) }} selctedItem={selectedBranch} />
+                                            {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -201,14 +368,17 @@ class Admins extends React.Component {
                                             )
                                         })
                                     }
-
                                 </Row>
+                                <div className="text-center">
+                                    <img src={Add} style={{ cursor: 'pointer', width: '6%' }} onClick={() => this.AddAdminRole()} />
+                                </div>
+
                             </Form>
                         </CardBody>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" onClick={() => this.AddAdmin()}>Save Changes</Button>
+                        <Button variant="primary" disabled={btnAddDisable} onClick={() => this.AddAdmin()}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
             </>
@@ -218,62 +388,84 @@ class Admins extends React.Component {
 
 
     EditForm() {
-        const { showEdit, selectedBranch, selectedIntervals } = this.state;
-        const { name, startDate, flashStartUsername, notificationEmail, nasName, type, price } = selectedBranch
+        const { showEdit, selectedAdmin, btnEditDisable, errorMsg, selectedBranch, availableServices, newAdminRoles } = this.state;
+        const { Branches } = this.props;
+        const { name, email, password } = selectedAdmin
 
         const handleClose = () => this.setState({ showEdit: false });
         return (
             <>
                 <Modal show={showEdit} onHide={handleClose} dialogClassName="modal-70w">
                     <Modal.Header closeButton>
-                        <Modal.Title>Edit Branch</Modal.Title>
+                        <Modal.Title>Edit Admin</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <CardBody>
                             <Form>
                                 <Row>
                                     <Col md={4}>
-                                        <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("Branches.NamePlacholder")} value={name} onChange={(val) => { this.changeEditInput('name', val) }} />
+                                        <InputWithText type="text" label={"Email"} placeholder={"Enter admin email"} value={email} onChange={(val) => { this.changeEditInput('email', val) }} validation="email" isRequired onBlur={(val) => { this.checkEditValidation('0', val, 3) }} />
                                     </Col>
                                     <Col md={4}>
-                                        <label className="Title">Start Date:</label>
-                                        <div>
-                                            <DatePicker className="DatePicker" selected={moment(startDate).toDate()} onChange={date => this.changeEditInput('startDate', moment(date).format('DD-MMM-YYYY'))} />
-                                            <i class="fas fa-calendar-alt"></i>
-                                        </div>
+                                        <InputWithText type="text" label={"Name"} placeholder={"Enter admin name"} value={name} onChange={(val) => { this.changeEditInput('name', val) }} isRequired onBlur={(val) => { this.checkEditValidation('1', val, 3) }} />
                                     </Col>
+
                                     <Col md={4}>
-                                        <InputWithText type="text" label={"flash Start Username"} placeholder={"Enter flash Start Username"} value={flashStartUsername} onChange={(val) => { this.changeEditInput('flashStartUsername', val) }} />
+                                        <InputWithText type="password" label={"Password"} placeholder={"Enter password"} value={password} onChange={(val) => { this.changeEditInput('password', val) }} validation="password" isRequired onBlur={(val) => { this.checkEditValidation('2', val, 3) }} />
                                     </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
+                                {newAdminRoles && newAdminRoles.length > 0 && <p className="AdminRolesTitle">Admin Roles:</p>}
+                                {newAdminRoles && newAdminRoles.map((Item, index) => {
+                                    return (
+                                        <Row>
+                                            <Col md="4">
+                                                <p style={{ fontSize: '16px' }}>{Item.branch.name}</p>
+                                            </Col>
+                                            <Col md="6">
+                                                {Item.allowedServices.split(',').map((ser) => {
+                                                    return <Chip style={{ margin: '4px' }} label={ser} variant="outlined" avatar={<Avatar>R</Avatar>}
+                                                    />
+                                                })}
+
+                                            </Col>
+                                            <Col md="2">
+                                                <img src={Delete} style={{ cursor: 'pointer', width: '27%' }} onClick={() => this.RemovedminRole(Item, index)} />
+                                            </Col>
+                                        </Row>
+                                    )
+                                })
+                                }
+                                <Row >
+                                    <Col md={6} style={{ margin: 'auto' }}>
                                         <FormGroup className="dropDownContainer">
-                                            <label className="title">Intervals</label>
-                                            <DropDown label={"Interval"} items={this.intervals} onClick={(val) => { this.selectedInterval(val) }} selctedItem={selectedIntervals} />
+                                            <label className="title">Branches</label>
+                                            <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.selectedBranch(val) }} selctedItem={selectedBranch} />
+                                            {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
                                         </FormGroup>
                                     </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Notification Email"} placeholder={"Enter Notification Email"} value={notificationEmail} onChange={(val) => { this.changeEditInput('notificationEmail', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"nas Name"} placeholder={"Enter nasName"} value={nasName} onChange={(val) => { this.changeEditInput('nasName', val) }} />
-                                    </Col>
                                 </Row>
-                                <Row>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Type"} placeholder={"Enter Notification Type"} value={type} onChange={(val) => { this.changeEditInput('type', val) }} />
-                                    </Col>
-                                    <Col md={4}>
-                                        <InputWithText type="text" label={"Price"} placeholder={"Enter Price"} value={price} onChange={(val) => { this.changeEditInput('price', val) }} />
-                                    </Col>
+                                <Row style={{ width: '45%', margin: 'auto' }}>
+                                    {
+                                        availableServices &&
+                                        availableServices.map((Item, Index) => {
+                                            return (
+                                                <Col md={6} style={{ marginBottom: '10px' }}>
+                                                    <Form.Check checked={Item.checked} label={Item.name} type={"checkbox"} id={Index} onChange={() => { this.selectedServices(Item, Index) }} />
+                                                </Col>
+                                            )
+                                        })
+                                    }
                                 </Row>
+                                <div className="text-center">
+                                    <img src={Add} style={{ cursor: 'pointer', width: '6%' }} onClick={() => this.AddAdminRole()} />
+                                </div>
+
                             </Form>
                         </CardBody>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" onClick={() => this.EditBranch()}>Save Changes</Button>
+                        <Button variant="primary" disabled={btnEditDisable} onClick={() => this.EditAdmin()}>Save Changes</Button>
                     </Modal.Footer>
                 </Modal>
             </>
@@ -282,97 +474,105 @@ class Admins extends React.Component {
 
     DetailsForm() {
         const { showDetails, selectedAdmin } = this.state;
-        const { email } = selectedAdmin;
+        const { email, name, adminRoles } = selectedAdmin;
         const handleClose = () => this.setState({ showDetails: false });
         return (
             <>
-                <Modal show={showDetails} onHide={handleClose} dialogClassName="modal-70w BranchesDetails">
-                    <Modal.Header closeButton>
-                        <Modal.Title>Admin Details</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
+                <Col md="12" >
+                    <Card title={'Admin Details'}>
                         <CardBody>
                             <Form>
-                                <Row>
-                                    <Col md="4">
-                                        <div className="detailsContainer">
-                                            <label className="Title">Email:</label>
-                                            <label className="subTitle">{email ? email : "No value"}</label>
-                                        </div>
-                                    </Col>
-                                </Row>
+                                <div className="BranchesDetails">
+                                    <Row>
+                                        <Col md="4">
+                                            <div className="detailsContainer">
+                                                <label className="Title">Email:</label>
+                                                <label className="subTitle">{email ? email : "No value"}</label>
+                                            </div>
+                                        </Col>
+                                        <Col md="4">
+                                            <div className="detailsContainer">
+                                                <label className="Title">Name:</label>
+                                                <label className="subTitle">{name ? name : "No value"}</label>
+                                            </div>
+                                        </Col>
+
+                                    </Row>
+                                    {adminRoles && adminRoles.length > 0 && <p className="AdminRolesTitle">Admin Roles:</p>}
+                                    {adminRoles && adminRoles.map((Item, index) => {
+                                        return (
+                                            <Row>
+                                                <Col md="4">
+                                                    <p style={{ fontSize: '16px' }}>{Item.branch.name}</p>
+                                                </Col>
+                                                <Col md="6">
+                                                    {Item.allowedServices.split(',').map((ser) => {
+                                                        return <Chip style={{ margin: '4px' }} label={ser} variant="outlined" avatar={<Avatar>R</Avatar>}
+                                                        />
+                                                    })}
+
+                                                </Col>
+                                            </Row>
+                                        )
+                                    })
+                                    }
+                                </div>
+                                <Button variant="secondary" style={{ marginTop: '20px' }} onClick={handleClose}>Close</Button>
+
                             </Form>
                         </CardBody>
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
+                    </Card>
+                </Col>
             </>
         );
     }
 
 
-    EditBranch() {
-        const { selectedBranch, selectedBranchIndex, Branches, selectedIntervals } = this.state;
-        const { storeBranches } = this.props;
-        selectedBranch.interval = selectedIntervals.name;
+    EditAdmin() {
+        const { selectedAdmin, newAdminRoles, Admins, selectedAdminIndex } = this.state;
+        const { StoreAdmins } = this.props;
+        selectedAdmin.adminRoles = newAdminRoles;
         this.setState({ showEdit: false });
-        HtttpPutDefult("branch/" + selectedBranch.id + "", selectedBranch).then((res) => {
+        HtttpPutDefult("admin/" + selectedAdmin._id + "", selectedAdmin).then((res) => {
             if (res) {
-                Branches[selectedBranchIndex] = selectedBranch;
-                this.setState({ Branches: Branches });
-                storeBranches(Branches)
-                displayToast('Branch is updated succefully', true);
+                Admins[selectedAdminIndex] = selectedAdmin;
+                this.setState({ Admins: Admins, newAdminRoles: null });
+                StoreAdmins(Admins)
+                displayToast('The Admin is updated successfully', true);
             }
         })
     }
 
     AddAdmin() {
-        const { newAdmin, Admins, selectedBranch } = this.state;
+        const { newAdmin, Admins, newAdminRoles } = this.state;
         const { OwnerProfile, StoreAdmins } = this.props;
-        newAdmin.BrandId = OwnerProfile.id;
-        newAdmin.BranchId = selectedBranch.id;
+        newAdmin.brand = OwnerProfile._id;
+        newAdmin.adminRoles = newAdminRoles;
         this.setState({ showAdd: false });
         HtttpPostDefult("admin/create", newAdmin).then(async (res) => {
             if (!res.errors) {
-                Admins.push(res);
+                Admins.push(newAdmin);
                 StoreAdmins(Admins);
-                await this.attachRoleAdmin(res);
-                this.setState({ Admins: Admins });
-
-                displayToast('Admin data is added succefully', true);
-
+                // await this.attachRoleAdmin(res);
+                this.setState({ Admins: Admins, newAdminRoles: null });
+                displayToast('"The Admin is created successfully"', true);
             }
             else {
-                displayToast('Admin data is not added succefully', false);
+                displayToast('"The Admin is not created successfully"', false);
             }
         })
-
-
     }
 
-    attachRoleAdmin(Admin) {
-        const { Admins, selectedBranch, availableServices } = this.state;
+    delete(Item, key) {
+        const { Admins } = this.state;
         const { StoreAdmins } = this.props;
-        let Services = [];
-        availableServices.map((Item) => {
-            if (Item.checked) {
-                Services.push(Item.name)
-            }
-        });
-        let body = {
-            "BranchId": selectedBranch.id,
-            "allowedServices": Services.join(","),
-            "AdminId": Admin.id
-        }
+        HtttpDeleteDefult("admin/" + Item._id + "").then((res) => {
+            if (res) {
+                Admins.splice(key, 1);
+                this.setState({ Admins: Admins })
+                StoreAdmins(Admins)
+                displayToast('Admin is deleted successfully', true);
 
-        HtttpPostDefult("role/create", body).then((res) => {
-            if (!res.errors) {
-            }
-            else {
-                displayToast('AttachRole is not added succefully', false);
             }
         })
     }
@@ -385,23 +585,28 @@ class Admins extends React.Component {
                     {showAdd && this.AddForm()}
                     {showEdit && this.EditForm()}
                     {showDetails && this.DetailsForm()}
-                    <Row>
-                        <Col md="12">
-                            <TableData
-                                headCells={this.headCells}
-                                data={Admins}
-                                DataShowPerTable={this.DataShowPerTable}
-                                handleDelete={(val, index) => { this.delete(val, index) }}
-                                handleDetails={(val, index) => { this.Details(val, index) }}
-                                handleEdit={(val, index) => { this.Edit(val, index) }}
-                                totalPages={1}
-                                Title={"Admins"}
-                                handleAdd={() => { this.Add() }}
-                            />
+                    {!showAdd && !showEdit && !showDetails &&
+
+                        <Row>
+                            <Col md="12">
+                                <TableData
+                                    headCells={this.headCells}
+                                    data={Admins}
+                                    DataShowPerTable={this.DataShowPerTable}
+                                    handleDelete={(val, index) => { this.delete(val, index) }}
+                                    handleDetails={(val, index) => { this.Details(val, index) }}
+                                    handleEdit={(val, index) => { this.Edit(val, index) }}
+                                    totalPages={1}
+                                    Title={"Admins"}
+                                    handleAdd={() => { this.Add() }}
+                                    showDelete
+                                />
 
 
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                    }
+
                 </div>
             </Aux>
         );
@@ -410,9 +615,9 @@ class Admins extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        Admins: state.AdminsState.Admins,
-        OwnerProfile: state.ProfileState.OwnerProfile,
-        Branches: state.BranchesState.Branches,
+        Admins: state.storage.AdminsState.Admins,
+        OwnerProfile: state.storage.ProfileState.OwnerProfile,
+        Branches: state.storage.BranchesState.Branches,
     };
 };
 

@@ -67,8 +67,8 @@ class NavItem extends Component {
 
 const mapStateToProps = state => {
     return {
-        layout: state.GlobalState.layout,
-        collapseMenu: state.GlobalState.collapseMenu
+        layout: state.storage.GlobalState.layout,
+        collapseMenu: state.storage.GlobalState.collapseMenu
     }
 };
 
