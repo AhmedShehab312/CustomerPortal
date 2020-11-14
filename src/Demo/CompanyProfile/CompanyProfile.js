@@ -288,7 +288,7 @@ class CompanyProfile extends React.Component {
                                                     </Row>
                                                     <Row>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={"Register ID"} placeholder={"Enter Register ID"} onChange={(val) => this.changeInput("regID", val)} value={regID} isRequired validation="number" onBlur={(val) => { this.checkValidation('5', val) }} />
+                                                            <InputWithText type="text" label={"Registration ID"} placeholder={"Enter Registration ID"} onChange={(val) => this.changeInput("regID", val)} value={regID} isRequired validation="number" onBlur={(val) => { this.checkValidation('5', val) }} />
                                                         </Col>
                                                         <Col md={6}>
                                                             <InputWithText type="text" label={"Tax ID"} placeholder={"Enter Tax ID"} onChange={(val) => this.changeInput("taxID", val)} value={taxID} isRequired validation="number" onBlur={(val) => { this.checkValidation('6', val) }} />
@@ -297,19 +297,19 @@ class CompanyProfile extends React.Component {
 
                                                     <Row>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={"SMTP Integration Server"} placeholder={"Enter SMTP Integration Server"} onChange={(val) => this.changeInput("server", val)} value={smtpIntegration.server} isRequired onBlur={(val) => { this.checkValidation('7', val) }} />
+                                                            <InputWithText type="text" label={"Integration Server"} placeholder={"Enter Integration Server"} onChange={(val) => this.changeInput("server", val)} value={smtpIntegration.server} isRequired onBlur={(val) => { this.checkValidation('7', val) }} />
                                                         </Col>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={"SMTP Integration Port"} placeholder={"Enter SMTP Integration Port"} onChange={(val) => this.changeInput("port", val)} value={smtpIntegration.port} isRequired onBlur={(val) => { this.checkValidation('8', val) }} />
+                                                            <InputWithText type="text" label={"Integration Port"} placeholder={"Enter Integration Port"} onChange={(val) => this.changeInput("port", val)} value={smtpIntegration.port} isRequired onBlur={(val) => { this.checkValidation('8', val) }} />
                                                         </Col>
                                                     </Row>
 
                                                     <Row>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={"SMTP Integration User Name"} placeholder={"Enter SMTP Integration User Name"} onChange={(val) => this.changeInput("username", val)} value={smtpIntegration.username} isRequired onBlur={(val) => { this.checkValidation('9', val) }} />
+                                                            <InputWithText type="text" label={"Integration User Name"} placeholder={"Enter Integration User Name"} onChange={(val) => this.changeInput("username", val)} value={smtpIntegration.username} isRequired onBlur={(val) => { this.checkValidation('9', val) }} />
                                                         </Col>
                                                         <Col md={6}>
-                                                            <InputWithText type="password" label={"SMTP Integration Password"} placeholder={"Enter SMTP Integration Password"} onChange={(val) => this.changeInput("passwordSMTP", val)} value={smtpIntegration.password} isRequired validation="password" onBlur={(val) => { this.checkValidation('10', val) }} />
+                                                            <InputWithText type="password" label={"Integration Password"} placeholder={"Enter Integration Password"} onChange={(val) => this.changeInput("passwordSMTP", val)} value={smtpIntegration.password} isRequired validation="password" onBlur={(val) => { this.checkValidation('10', val) }} />
                                                         </Col>
                                                     </Row>
 
@@ -405,7 +405,7 @@ class CompanyProfile extends React.Component {
 
                                                     <Row>
                                                         <Col>
-                                                            <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>SMTP INTEGRATION</h3>
+                                                            <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>INTEGRATION</h3>
                                                         </Col>
                                                     </Row>
 
@@ -450,7 +450,7 @@ class CompanyProfile extends React.Component {
                                                     <Row>
                                                         <Col md="6">
                                                             <div className="detailsContainer">
-                                                                <label className="Title">Register ID:</label>
+                                                                <label className="Title">Registration ID:</label>
                                                                 <label className="subTitle">{regID ? regID : "No value"}</label>
                                                             </div>
                                                         </Col>
