@@ -2,7 +2,19 @@
   .header {
     text-transform: uppercase;
   }
-
+  .buyBtnContainer{
+    justify-content: flex-end;
+    .buy{
+      background: #00ad81;
+      border:#00ad81;
+    }
+  }
+ 
+  .dropDownContainer {
+    width: 24%;
+    margin: auto;
+  }
+  
   .alertTxt{
     display: inline-block;
     font-size: 20px;
@@ -49,6 +61,8 @@
     }
   }
 
+}
+
   .Details{
     i{
       position: absolute;
@@ -65,6 +79,7 @@
     .detailsContainer{
       border-bottom: 1px dashed;
       margin-bottom: 30px;
+      white-space: nowrap;
       .Title{
         font-size: 17px;
         letter-spacing: 0.5px;
@@ -81,4 +96,4 @@
   }
 
 
-}
+

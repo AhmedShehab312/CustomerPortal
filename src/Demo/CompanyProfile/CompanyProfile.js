@@ -1,17 +1,21 @@
 import React from 'react';
 import {
-    Col, Row, Form,
-    CardHeader,
     CardBody,
-    FormGroup,
-    Input
+    FormGroup
 } from 'reactstrap';
+import {
+    Row,
+    Col,
+    Button,
+    Modal,
+    Form
+} from 'react-bootstrap';
 
 import './CompanyProfileStyle.scss';
 import i18n from '../../i18n';
-import { InputWithText } from '../../App/components/ComponentModule'
+import { InputWithText, DropDown } from '../../App/components/ComponentModule'
 import { connect } from 'react-redux';
-import { HtttpPutDefult } from '../../actions/httpClient';
+import { HtttpPutDefult, HtttpGetDefult, HtttpPostDefult } from '../../actions/httpClient';
 import { StoreProfile } from '../../store/actions/ProfileAction';
 import { displayToast, getVariable } from '../../globals/globals';
 import Card from "../../App/components/MainCard";
@@ -24,15 +28,36 @@ class CompanyProfile extends React.Component {
             profileObject: null,
             editMode: false,
             btnDisable: true,
-            EditArr: []
+            EditArr: [],
+            showPackages: false,
+            packages: null,
+            selectedPackage: null
         }
     }
 
 
 
     async componentDidMount() {
+        this.getProfileInfo();
+        this.getPackages();
+    }
+
+    getProfileInfo() {
         const { OwnerProfile } = this.props;
-        await this.setState({ profileObject: OwnerProfile });
+        HtttpGetDefult('brand/' + OwnerProfile._id + '', true).then((res) => {
+            if (res) {
+                this.setState({ profileObject: res });
+
+            }
+        })
+    }
+
+    getPackages() {
+        HtttpGetDefult('package/list', false).then((res) => {
+            if (res) {
+                this.setState({ packages: res });
+            }
+        })
     }
 
     changePhoto(event) {
@@ -51,7 +76,6 @@ class CompanyProfile extends React.Component {
 
     checkValidation(index, val) {
         const { OwnerProfile } = this.props;
-
         const { EditArr } = this.state;
         let updatedArr;
         updatedArr = EditArr;
@@ -234,15 +258,69 @@ class CompanyProfile extends React.Component {
 
     }
 
+    selectedPackage(val) {
+        this.setState({ selectedPackage: val });
+    }
+
+    AddPackageFunc() {
+        const { profileObject, selectedPackage } = this.state;
+        let body = {
+            packageID: selectedPackage._id,
+            count: 1
+        }
+        HtttpPostDefult('brand/buy/package/' + profileObject._id + '', body).then((res) => {
+            if (res) {
+                displayToast('New package is added successfully', true);
+                this.getProfileInfo();
+                this.setState({ showPackages: false, selectedPackage: null })
+            }
+        })
+    }
+
+    AddPackage() {
+        const { showPackages, packages, selectedPackage } = this.state;
+        const handleClose = () => this.setState({ showPackages: false, selectedPackage: null });
+
+        return (
+            <>
+                <Modal show={showPackages} onHide={handleClose} dialogClassName="modal-70w">
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add Package</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <CardBody>
+                            <Form>
+                                <Row>
+                                    <Col md={4}>
+                                        <FormGroup className="dropDownContainer">
+                                            <label className="title">Packages</label>
+                                            <DropDown label={"Package"} items={packages} onClick={(val) => { this.selectedPackage(val) }} selctedItem={selectedPackage} />
+                                            {!selectedPackage && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>This field is required</label>}
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </CardBody>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>Close</Button>
+                        <Button variant="primary" disabled={!selectedPackage} onClick={() => this.AddPackageFunc()}>Save Changes</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+        )
+    }
 
     render() {
         const { OwnerProfile } = this.props;
-        const { editMode, profilePic, btnDisable, profileObject } = this.state;
-        const { name, email, password, address, contact, contactPerson, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName } = profileObject ? profileObject : OwnerProfile;
+        const { editMode, profilePic, btnDisable, profileObject, showPackages } = this.state;
+        const { name, email, password, address, contact, contactPerson, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount } = profileObject ? profileObject : OwnerProfile;
 
         return (
             <div className="content CompanyProfile">
                 <Col md="12">
+                    {showPackages && this.AddPackage()}
+
                     <Card isOption title={editMode ? "Edit your profile" : "Profile Data"}>
                         {OwnerProfile.loginType == "NotActiveAdmin" || OwnerProfile.loginType == "NotActiveBrand" &&
                             <React.Fragment>  <img src={alert} style={{ width: '3%' }} /> <p className="alertTxt">You need to activate your account</p></React.Fragment>
@@ -263,6 +341,7 @@ class CompanyProfile extends React.Component {
                                                                 <img alt="" src={profilePic} />
                                                             </FormGroup>
                                                         </Col> */}
+
                                                         <Col md={6}>
                                                             <InputWithText type="text" label={i18n.t("CompanyProfile.Name")} placeholder={i18n.t("CompanyProfile.NamePlacholder")} value={name} disabled />
                                                         </Col>
@@ -318,12 +397,13 @@ class CompanyProfile extends React.Component {
                                                             <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkValidation('11', val) }} />
                                                         </Col>
                                                         <Col md={6}>
-                                                            <InputWithText type="text" label={"Sender ID"} placeholder={"Enter Sender ID"} onChange={(val) => this.changeInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkValidation('12', val) }} />
+                                                            <InputWithText type="text" label={"SMS Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkValidation('12', val) }} />
                                                         </Col>
                                                         <Col md={6}>
                                                             <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkValidation('13', val) }} />
                                                         </Col>
                                                     </Row>
+
                                                 </React.Fragment>
 
                                                 :
@@ -438,7 +518,21 @@ class CompanyProfile extends React.Component {
                                                             </div>
                                                         </Col>
                                                     </Row>
+                                                    <Row>
+                                                        <Col md="6">
+                                                            <div className="detailsContainer">
+                                                                <label className="Title">SMS Sender ID:</label>
+                                                                <label className="subTitle">{senderID ? senderID : "No value"}</label>
+                                                            </div>
+                                                        </Col>
 
+                                                        <Col md="6">
+                                                            <div className="detailsContainer">
+                                                                <label className="Title">Send Name:</label>
+                                                                <label className="subTitle">{sendName ? sendName : "No value"}</label>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
 
                                                     <Row>
                                                         <Col>
@@ -461,23 +555,32 @@ class CompanyProfile extends React.Component {
                                                             </div>
                                                         </Col>
                                                     </Row>
+
+
                                                     <Row>
-                                                        <Col md="6">
+                                                        <Col md="4">
                                                             <div className="detailsContainer">
-                                                                <label className="Title">Sender ID:</label>
-                                                                <label className="subTitle">{senderID ? senderID : "No value"}</label>
+                                                                <label className="Title">Push Notification Count:</label>
+                                                                <label className="subTitle">{notificationCount}</label>
                                                             </div>
                                                         </Col>
 
-                                                        <Col md="6">
+                                                        <Col md="4">
                                                             <div className="detailsContainer">
-                                                                <label className="Title">Send Name:</label>
-                                                                <label className="subTitle">{sendName ? sendName : "No value"}</label>
+                                                                <label className="Title">Email Count:</label>
+                                                                <label className="subTitle">{emailCount}</label>
                                                             </div>
                                                         </Col>
-
+                                                        <Col md="4">
+                                                            <div className="detailsContainer">
+                                                                <label className="Title">SMS Count:</label>
+                                                                <label className="subTitle">{smsCount}</label>
+                                                            </div>
+                                                        </Col>
                                                     </Row>
-
+                                                    <Row className="buyBtnContainer">
+                                                        <button type="button" className="btn btn-success buy" onClick={() => { this.setState({ showPackages: true }) }}>Buy Package</button>
+                                                    </Row>
                                                 </React.Fragment>
                                                 :
                                                 <React.Fragment>
