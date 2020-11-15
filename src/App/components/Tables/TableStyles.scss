@@ -1,6 +1,7 @@
 .TableContainer {
     width: 100%;
-  
+
+    
     .ExportTxt {
       display: inline;
       font-size: 15px;
@@ -107,6 +108,39 @@
           margin-right: 4px;
           margin-bottom: 1px;
         }
+
+        .PayBtn{
+          background: #00ad81;
+          border:#00ad81;
+          color: #fff;
+           &:hover {
+            background: #fff;
+            border: 1px solid #00ad81;
+            color: #00ad81;
+            transition: .5 ease-in-out;
+            i{
+              color: #00ad81 !important;
+              transition: .5 ease-in-out;
+            }  
+          }
+          &:focus , &:active {
+            background: #fff;
+            border: 1px solid #00ad81;
+            color: #00ad81;
+            transition: .5 ease-in-out;
+            i{
+              color: #00ad81 !important;
+              transition: .5 ease-in-out;
+            }  
+
+          }
+          i{
+            color: #fff;
+            margin-right: 13px;
+            margin-bottom: 4px;
+          }
+        }
+      
       }
     }
   

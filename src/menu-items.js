@@ -52,6 +52,41 @@ export default {
                 },
             ]
         },
+        {
+            id: 'Billing',
+            title: 'Billing',
+            type: 'group',
+            icon: 'icon-ui',
+            role: ["OWNER"],
+            children: [
+                {
+                    id: 'Pay',
+                    title: 'Payments',
+                    type: 'collapse',
+                    icon: 'fas fa-shopping-cart',
+                    role: ["OWNER"],
+                    children: [
+                        {
+                            id: 'CurrentPayments',
+                            title: 'Current Payments',
+                            type: 'item',
+                            url: '/CurrentPayments',
+                            role: ["OWNER"],
+                            icon: 'fas fa-money-bill-alt'
+                        },
+                        {
+                            id: 'HistoryPayments',
+                            title: 'History Payments',
+                            type: 'item',
+                            url: '/HistoryPayments',
+                            role: ["OWNER"],
+                            icon: 'fas fa-history'
+                        },
+                    ]
+
+                },
+            ]
+        },
 
         {
             id: 'settings',

@@ -10,7 +10,7 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import { Pagination } from 'antd';
 import 'antd/dist/antd.css';
 import React from 'react';
-import { Col, Row, Dropdown } from 'react-bootstrap';
+import { Col, Row, Dropdown, Form } from 'react-bootstrap';
 import swal from 'sweetalert';
 import Aux from "../../../hoc/_Aux";
 import './TableStyles.scss';
@@ -34,7 +34,8 @@ class TableData extends React.Component {
             searchVal: null,
             originalRows: [],
             age: "",
-            selectedFilter: null
+            selectedFilter: null,
+            checkBoxselectedList: []
 
         }
     }
@@ -48,6 +49,7 @@ class TableData extends React.Component {
         this.headCells = headCells;
         this.setState({ selectedFilter: this.headCells[0].id })
         if (data) {
+
             await this.InitializeRows(data, DataShowPerTable);
         }
     }
@@ -68,9 +70,6 @@ class TableData extends React.Component {
                 this.createData(Item, DataShowPerTable);
             })
         })
-
-
-
     }
 
     createData(Item, DataShowPerTable) {
@@ -178,7 +177,6 @@ class TableData extends React.Component {
     }
 
     filter(val) {
-        debugger
         const { selectedFilter, originalRows } = this.state;
         let res = originalRows.filter((Item) => {
             return Item[selectedFilter].toString().indexOf(val) != -1
@@ -186,8 +184,27 @@ class TableData extends React.Component {
         this.setState({ rows: res })
     }
 
+    async selected(item, index) {
+        const { headCells, data, DataShowPerTable } = this.props;
+        this.headCells = headCells;
+        this.setState({ selectedFilter: this.headCells[0].id });
+        data[index].checked = !data[index].checked;
+        if (data) {
+            await this.InitializeRows(data, DataShowPerTable);
+        }
+    }
+
+    async selectPayAll() {
+        const { headCells, data, DataShowPerTable } = this.props;
+        await data.map((Item) => {
+            Item.checked = true
+        })
+        await this.InitializeRows(data, DataShowPerTable);
+
+    }
+
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG } = this.props;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG, showCheckBox, handlePay } = this.props;
         const { rows } = this.state;
         const classes = {
             root: {
@@ -244,6 +261,9 @@ class TableData extends React.Component {
                         <Col md="6">
                             <div className="btnContainer">
                                 {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
+                                {showCheckBox && <Button variant="contained" onClick={() => handlePay()} className="PayBtn"> <i className="fas fa-shopping-cart " />Pay</Button>}
+                                {showCheckBox && <Button variant="contained" onClick={() => this.selectPayAll()}>Select All</Button>}
+
                                 {/* <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>
                                     <Dropdown.Menu>
@@ -341,7 +361,8 @@ class TableData extends React.Component {
                                                         {showDelete && <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />}
                                                         {handleDetails && <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />}
                                                         {handleEdit && <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />}
-
+                                                        {showCheckBox && <Form.Check checked={data[index].checked} label={""} type={"checkbox"} id={index} onChange={() => { this.selected(data[index], index) }} />
+                                                        }
                                                     </TableCell>
                                                 </TableRow>
                                             );

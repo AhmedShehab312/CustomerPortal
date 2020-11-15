@@ -32,6 +32,8 @@ const Integration = React.lazy(() => import('./Demo/Integration'));
 const InternetMangment = React.lazy(() => import('./Demo/InternetMangment'));
 const InvoicesPayments = React.lazy(() => import('./Demo/InvoicesPayments'));
 const Contacts = React.lazy(() => import('./Demo/Contacts'));
+const CurrentPayments = React.lazy(() => import('./Demo/CurrentPayments/CurrentPayments'));
+const HistoryPayments = React.lazy(() => import('./Demo/HistoryPayments/HistoryPayments'));
 
 
 
@@ -57,6 +59,8 @@ const routes = [
     { path: '/InternetMangment', exact: true, name: 'InternetMangment', component: InternetMangment },
     { path: '/InvoicesPayments', exact: true, name: 'InvoicesPayments', component: InvoicesPayments },
     { path: '/Contacts', exact: true, name: 'Contacts', component: Contacts },
+    { path: '/CurrentPayments', exact: true, name: 'CurrentPayments', component: CurrentPayments },
+    { path: '/HistoryPayments', exact: true, name: 'HistoryPayments', component: HistoryPayments },
 
 
 
