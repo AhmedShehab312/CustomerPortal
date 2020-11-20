@@ -124,6 +124,7 @@ class CurrentPayments extends React.Component {
                                     noResultMSG={"There is no available branches"}
                                     handlePay={() => { }}
                                     showCheckBox={true}
+                                    SelectAllPay={"select all branches"}
                                 />
                             </Col>
                         </Row>

@@ -204,7 +204,7 @@ class TableData extends React.Component {
     }
 
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG, showCheckBox, handlePay } = this.props;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG, showCheckBox, handlePay, addMSG, SelectAllPay } = this.props;
         const { rows } = this.state;
         const classes = {
             root: {
@@ -260,9 +260,9 @@ class TableData extends React.Component {
                         </Col>
                         <Col md="6">
                             <div className="btnContainer">
-                                {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" /> New Record</Button>}
+                                {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" />{addMSG}</Button>}
                                 {showCheckBox && <Button variant="contained" onClick={() => handlePay()} className="PayBtn"> <i className="fas fa-shopping-cart " />Pay</Button>}
-                                {showCheckBox && <Button variant="contained" onClick={() => this.selectPayAll()}>Select All</Button>}
+                                {showCheckBox && <Button variant="contained" onClick={() => this.selectPayAll()}>{SelectAllPay}</Button>}
 
                                 {/* <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>

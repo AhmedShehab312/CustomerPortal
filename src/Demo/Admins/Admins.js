@@ -568,6 +568,8 @@ class Admins extends React.Component {
                                     handleAdd={() => { this.Add() }}
                                     showDelete
                                     noResultMSG={"There is no available admins"}
+                                    addMSG={"add new admin"}
+
                                 />
 
 

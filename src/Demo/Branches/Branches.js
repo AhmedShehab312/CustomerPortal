@@ -925,6 +925,7 @@ class Branches extends React.Component {
                                     handleAdd={() => { this.Add() }}
                                     showDelete={false}
                                     noResultMSG={"There is no available branches"}
+                                    addMSG={"Add new branch"}
                                 />
                             </Col>
                         </Row>
