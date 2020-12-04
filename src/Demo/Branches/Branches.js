@@ -632,6 +632,8 @@ class Branches extends React.Component {
                                             totalPages={1}
                                             Title={"Access Points"}
                                             handleAdd={() => { this.AddAccessPoint() }}
+                                            addMSG={"Add new access point"}
+
                                         />
                                     </Col>
                                 </Row>

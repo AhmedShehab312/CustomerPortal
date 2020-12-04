@@ -119,6 +119,7 @@ class TableData extends React.Component {
 
 
     EnhancedTableHead(order, orderBy, numSelected, rowCount, onRequestSort) {
+        const { noActionCol } = this.props
         const createSortHandler = (property) => (event) => {
             onRequestSort(event, property);
         };
@@ -143,9 +144,10 @@ class TableData extends React.Component {
                             </TableSortLabel>
                         </TableCell>
                     ))}
-                    <TableCell align={'center'} sortDirection={false} >
+                    {!noActionCol && <TableCell align={'center'} sortDirection={false} >
                         <TableSortLabel>Actions</TableSortLabel>
                     </TableCell>
+                    }
                 </TableRow>
             </TableHead>
         );
@@ -189,9 +191,18 @@ class TableData extends React.Component {
         this.headCells = headCells;
         this.setState({ selectedFilter: this.headCells[0].id });
         data[index].checked = !data[index].checked;
+        this.checkIfItemSelected();
         if (data) {
             await this.InitializeRows(data, DataShowPerTable);
         }
+    }
+
+    async checkIfItemSelected() {
+        const { data } = this.props;
+        let checkedItems = await data.filter((Item) => {
+            return Item.checked
+        });
+        this.setState({ checkBoxselectedList: checkedItems })
     }
 
     async selectPayAll() {
@@ -199,13 +210,37 @@ class TableData extends React.Component {
         await data.map((Item) => {
             Item.checked = true
         })
+        this.checkIfItemSelected()
         await this.InitializeRows(data, DataShowPerTable);
 
     }
 
+    async Pay() {
+        const { handlePay, data } = this.props;
+        let checkedItems = await data.filter((Item) => {
+            return Item.checked
+        });
+
+        console.log(checkedItems)
+
+        swal({
+            title: "Are you sure?",
+            text: " You will renew the selected branches!",
+            icon: "info",
+            buttons: true,
+            dangerMode: false,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    handlePay(checkedItems);
+                }
+            });
+
+    }
+
     EnhancedTable() {
-        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, deActiveAction, showDelete, noResultMSG, showCheckBox, handlePay, addMSG, SelectAllPay } = this.props;
-        const { rows } = this.state;
+        const { handleDelete, handleDetails, handleEdit, totalPages, Title, handleAdd, data, DataShowPerTable, ActiveAction, noActionCol, showDelete, noResultMSG, showCheckBox, addMSG, SelectAllPay } = this.props;
+        const { rows, checkBoxselectedList } = this.state;
         const classes = {
             root: {
                 width: '100%',
@@ -261,7 +296,7 @@ class TableData extends React.Component {
                         <Col md="6">
                             <div className="btnContainer">
                                 {handleAdd && <Button variant="contained" onClick={() => handleAdd()}> <i className="fas fa-plus" />{addMSG}</Button>}
-                                {showCheckBox && <Button variant="contained" onClick={() => handlePay()} className="PayBtn"> <i className="fas fa-shopping-cart " />Pay</Button>}
+                                {showCheckBox && <Button disabled={checkBoxselectedList.length == 0} variant="contained" onClick={() => this.Pay()} className={["PayBtn", checkBoxselectedList.length == 0 && 'disabledBTN']}> <i className="fas fa-shopping-cart " />Pay</Button>}
                                 {showCheckBox && <Button variant="contained" onClick={() => this.selectPayAll()}>{SelectAllPay}</Button>}
 
                                 {/* <Dropdown>
@@ -306,7 +341,6 @@ class TableData extends React.Component {
                                                             this.headCells.map((Item) => {
                                                                 return <MenuItem value={Item.id}>{Item.id}</MenuItem>
                                                             })
-
                                                         }
                                                     </Select>
                                                 </FormControl>
@@ -350,20 +384,18 @@ class TableData extends React.Component {
                                                         return (<TableCell align="center">{Item[1]}</TableCell>)
                                                     })}
 
-                                                    <TableCell align="center" className="IconContainers">
-                                                        {/* {data[index] ?
-                                                            data[index].isActive ?
-                                                                <i className="fas fa-times-circle" onClick={() => { deActiveAction(data[index], index) }} /> :
-                                                                <i className="fas fa-check-circle" onClick={() => { ActiveAction(data[index], index) }} />
-                                                            : null
-                                                        }
-                                                        */}
-                                                        {showDelete && <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />}
-                                                        {handleDetails && <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />}
-                                                        {handleEdit && <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />}
-                                                        {showCheckBox && <Form.Check checked={data[index].checked} label={""} type={"checkbox"} id={index} onChange={() => { this.selected(data[index], index) }} />
-                                                        }
-                                                    </TableCell>
+                                                    {
+                                                        !noActionCol &&
+                                                        <TableCell align="center" className="IconContainers">
+                                                            {showDelete && <i className="fas fa-trash-alt" onClick={() => { this.deleteAction(data[index], index) }} />}
+                                                            {handleDetails && <i className="far fa-list-alt" onClick={() => { handleDetails(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Show Details" />}
+                                                            {handleEdit && <i className="fas fa-edit" onClick={() => { handleEdit(data[index], index) }} data-toggle="tooltip" data-placement="top" title="Edit" />}
+                                                            {showCheckBox && <Form.Check checked={data[index].checked} label={""} type={"checkbox"} id={index} onChange={() => { this.selected(data[index], index) }} />}
+
+                                                        </TableCell>
+
+                                                    }
+
                                                 </TableRow>
                                             );
                                         })}

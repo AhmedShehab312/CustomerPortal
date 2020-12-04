@@ -52,50 +52,38 @@ class HistoryPayments extends React.Component {
             SelectedAccessPointsIndex: null,
             showEditAccessPoint: false,
             btnEditDisableAccessPoints: true,
+            Payments: []
         }
     }
 
 
-
     headCells = [
-        { id: 'Id', numeric: false, disablePadding: true, label: 'ID' },
+        { id: 'paymentId', numeric: false, disablePadding: true, label: 'ID' },
+        { id: 'status', numeric: false, disablePadding: true, label: 'Status' },
+        { id: 'paymentMethod', numeric: false, disablePadding: true, label: 'Payment Method' },
         { id: 'type', numeric: false, disablePadding: true, label: 'Type' },
-        { id: 'name', numeric: false, disablePadding: true, label: 'Branch Name' },
-        { id: 'price', numeric: false, disablePadding: true, label: 'Total Price' },
-        { id: 'createdDate', numeric: false, disablePadding: true, label: 'Created Date' },
+        { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
     ];
 
 
 
 
-    DataShowPerTable = ["Id", "type", "price", "name", "startDate", "createdDate"];
+    DataShowPerTable = ["paymentId", "status", "paymentMethod", "type", "name"];
 
     async componentDidMount() {
         const { OwnerProfile } = this.props;
-        this.getBranches(OwnerProfile._id);
+        this.getPayments(OwnerProfile._id);
     }
 
 
-    async getBranches(id) {
-        const { storeBranches, StoreAdmins } = this.props;
-        HtttpGetDefult('brand/' + id + '', true).then(async (res) => {
+    async getPayments(id) {
+        HtttpGetDefult('brand/payments/' + id + '', true).then(async (res) => {
             if (res) {
-                storeBranches(res.branches);
-                StoreAdmins(res.admins);
-                if (res.branches && res.branches.length > 0) {
-                    let result = await res.branches.filter((Item) => {
-                        return Item.isDeleted == false;
-                    })
-                    await result.map((Item) => {
-                        Item.checked = false;
-                    })
-
-                    this.setState({ Branches: result });
-                    setTimeout(
-                        () => this.setState({ Branches: result }),
-                        10
-                    );
-                }
+                this.setState({ Payments: res.payments });
+                setTimeout(
+                    () => this.setState({ Payments: res.payments }),
+                    10
+                );
             }
         })
 
@@ -106,30 +94,26 @@ class HistoryPayments extends React.Component {
 
 
     render() {
-        const { Branches, showAdd, showDetails, showEdit } = this.state;
+        const { Payments } = this.state;
         return (
             <Aux>
                 <div className="Branches">
-                    {showAdd && this.AddForm()}
-                    {showEdit && this.EditForm()}
-                    {showDetails && this.DetailsForm()}
-                    {!showAdd && !showEdit && !showDetails &&
-                        <Row>
-                            <Col md="12">
-                                <TableData
-                                    headCells={this.headCells}
-                                    data={[]}
-                                    DataShowPerTable={this.DataShowPerTable}
-                                    totalPages={1}
-                                    Title={"Payments History"}
-                                    showDelete={false}
-                                    noResultMSG={"There is no available payments history"}
-                                    handlePay={() => { }}
-                                    showCheckBox={false}
-                                />
-                            </Col>
-                        </Row>
-                    }
+                    <Row>
+                        <Col md="12">
+                            <TableData
+                                headCells={this.headCells}
+                                data={Payments}
+                                DataShowPerTable={this.DataShowPerTable}
+                                totalPages={1}
+                                Title={"Payments History"}
+                                showDelete={false}
+                                noResultMSG={"There is no available payments history"}
+                                showCheckBox={false}
+                                noActionCol={true}
+                            />
+                        </Col>
+                    </Row>
+
                 </div>
             </Aux>
         );

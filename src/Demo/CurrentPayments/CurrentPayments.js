@@ -60,29 +60,39 @@ class CurrentPayments extends React.Component {
     headCells = [
         { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
         { id: 'price', numeric: false, disablePadding: true, label: 'Price' },
-        { id: 'startDate', numeric: false, disablePadding: true, label: 'Renewal Date' },
+        { id: 'startDate', numeric: false, disablePadding: true, label: 'Start Date' },
+        { id: 'renewalDate', numeric: false, disablePadding: true, label: 'Renewal Date' },
+
     ];
 
 
-
-
-    DataShowPerTable = ["name", "price", "startDate"];
+    DataShowPerTable = ["name", "price", "startDate", "renewalDate"];
 
     async componentDidMount() {
         const { OwnerProfile } = this.props;
+
         this.getBranches(OwnerProfile._id);
     }
 
+    isWithinAWeek(momentDate) {
+        let date = new Date();
+        var REFERENCE = moment(date); // fixed just for testing, use moment();
+        var A_WEEK_OLD = REFERENCE.clone().subtract(7, 'days').startOf('day');
+
+        return momentDate.isAfter(A_WEEK_OLD);
+    }
 
     async getBranches(id) {
         const { storeBranches, StoreAdmins } = this.props;
+
+
         HtttpGetDefult('brand/' + id + '', true).then(async (res) => {
             if (res) {
                 storeBranches(res.branches);
                 StoreAdmins(res.admins);
                 if (res.branches && res.branches.length > 0) {
                     let result = await res.branches.filter((Item) => {
-                        return Item.isDeleted == false;
+                        return Item.isDeleted == false && this.isWithinAWeek(moment(Item.renewalDate))
                     })
                     await result.map((Item) => {
                         Item.checked = false;
@@ -100,7 +110,21 @@ class CurrentPayments extends React.Component {
     }
 
 
-
+    handlePay(checkedItems) {
+        const { OwnerProfile } = this.props;
+        let ItemIds = [], TotalPrices = 0;
+        checkedItems.map((Item) => {
+            ItemIds.push(Item._id);
+            TotalPrices += Item.price
+        })
+        let body = {
+            branches: ItemIds,
+            price: TotalPrices
+        };
+        HtttpPostDefult('brand/renew/' + OwnerProfile._id + '', body).then((res) => {
+            displayToast('The branches renewed successfully', true);
+        })
+    }
 
 
     render() {
@@ -121,9 +145,9 @@ class CurrentPayments extends React.Component {
                                     totalPages={1}
                                     Title={"Current Payments"}
                                     showDelete={false}
-                                    noResultMSG={"There is no available branches"}
-                                    handlePay={() => { }}
-                                    showCheckBox={true}
+                                    noResultMSG={"There is no branches needed to renew"}
+                                    handlePay={(checkedItems) => { this.handlePay(checkedItems) }}
+                                    showCheckBox={Branches && Branches.length > 0 ? true : false}
                                     SelectAllPay={"select all branches"}
                                 />
                             </Col>

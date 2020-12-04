@@ -569,7 +569,6 @@ class Admins extends React.Component {
                                     showDelete
                                     noResultMSG={"There is no available admins"}
                                     addMSG={"add new admin"}
-
                                 />
 
 

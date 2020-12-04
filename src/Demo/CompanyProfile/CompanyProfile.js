@@ -304,7 +304,7 @@ class CompanyProfile extends React.Component {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>Close</Button>
-                        <Button variant="primary" disabled={!selectedPackage} onClick={() => this.AddPackageFunc()}>Save Changes</Button>
+                        <Button variant="primary" disabled={!selectedPackage} onClick={() => this.AddPackageFunc()}>Buy</Button>
                     </Modal.Footer>
                 </Modal>
             </>
