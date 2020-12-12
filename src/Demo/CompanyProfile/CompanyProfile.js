@@ -20,6 +20,8 @@ import { StoreProfile } from '../../store/actions/ProfileAction';
 import { displayToast, getVariable } from '../../globals/globals';
 import Card from "../../App/components/MainCard";
 import alert from '../../assets/alert-icon.png';
+import { PhotoshopPicker } from 'react-color';
+
 class CompanyProfile extends React.Component {
 
     constructor(props) {
@@ -31,7 +33,8 @@ class CompanyProfile extends React.Component {
             EditArr: [],
             showPackages: false,
             packages: null,
-            selectedPackage: null
+            selectedPackage: null,
+            displayColorPicker: false
         }
     }
 
@@ -85,7 +88,7 @@ class CompanyProfile extends React.Component {
             this.checkDisableOrEnableBtn(3, EditArr);
         }
         else {
-            this.checkDisableOrEnableBtn(14, EditArr);
+            this.checkDisableOrEnableBtn(16, EditArr);
 
         }
     }
@@ -122,6 +125,20 @@ class CompanyProfile extends React.Component {
                 this.setState({ editMode: false })
             }
         })
+    }
+
+    handleChangeComplete = (color) => {
+        this.setState({
+            profileObject: {
+                ...this.state.profileObject,
+                displayColor: color.hex
+            }
+        })
+
+    };
+
+    handleClosePicker(type) {
+        this.setState({ displayColorPicker: false })
     }
 
     changeInput(Input, val) {
@@ -252,6 +269,30 @@ class CompanyProfile extends React.Component {
                     }
                 })
                 break;
+            case 'title':
+                this.setState({
+                    profileObject: {
+                        ...this.state.profileObject,
+                        displayName: val
+                    }
+                })
+                break;
+            case 'description':
+                this.setState({
+                    profileObject: {
+                        ...this.state.profileObject,
+                        displayDesc: val
+                    }
+                })
+                break;
+            case 'color':
+                this.setState({
+                    profileObject: {
+                        ...this.state.profileObject,
+                        displayColor: val
+                    }
+                })
+                break;
         }
 
 
@@ -314,7 +355,7 @@ class CompanyProfile extends React.Component {
     render() {
         const { OwnerProfile } = this.props;
         const { editMode, profilePic, btnDisable, profileObject, showPackages } = this.state;
-        const { name, email, password, address, contact, contactPerson, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount } = profileObject ? profileObject : OwnerProfile;
+        const { name, email, password, address, contact, contactPerson, regID, taxID, smtpIntegration, smsApiKey, senderID, sendName, smsCount, emailCount, notificationCount, displayName, displayColor, displayDesc } = profileObject ? profileObject : OwnerProfile;
 
         return (
             <div className="content CompanyProfile">
@@ -325,7 +366,6 @@ class CompanyProfile extends React.Component {
                         {OwnerProfile.loginType == "NotActiveAdmin" || OwnerProfile.loginType == "NotActiveBrand" &&
                             <React.Fragment>  <img src={alert} style={{ width: '3%' }} /> <p className="alertTxt">You need to activate your account</p></React.Fragment>
                         }
-
                         <CardBody>
                             {profileObject ?
                                 editMode ?
@@ -393,15 +433,56 @@ class CompanyProfile extends React.Component {
                                                     </Row>
 
                                                     <Row>
-                                                        <Col md={6}>
+                                                        <Col md={4}>
                                                             <InputWithText type="text" label={"SMS Api Key"} placeholder={"Enter SMS Api Key"} onChange={(val) => this.changeInput("smsApiKey", val)} value={smsApiKey} isRequired onBlur={(val) => { this.checkValidation('11', val) }} />
                                                         </Col>
-                                                        <Col md={6}>
+                                                        <Col md={4}>
                                                             <InputWithText type="text" label={"SMS Sender ID"} placeholder={"Enter SMS Sender ID"} onChange={(val) => this.changeInput("senderID", val)} value={senderID} validation="number" isRequired onBlur={(val) => { this.checkValidation('12', val) }} />
                                                         </Col>
-                                                        <Col md={6}>
+                                                        <Col md={4}>
                                                             <InputWithText type="text" label={"Send Name"} placeholder={"Enter Send Name"} onChange={(val) => this.changeInput("sendName", val)} value={sendName} isRequired onBlur={(val) => { this.checkValidation('13', val) }} />
                                                         </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col md={6}>
+                                                            <InputWithText type="text" label={"Brand Title"} placeholder={"Enter the brand title"} onChange={(val) => this.changeInput("title", val)} value={displayName} isRequired onBlur={(val) => { this.checkValidation('14', val) }} />
+                                                        </Col>
+                                                        <Col md={6}>
+                                                            <InputWithText type="text" label={"Brand Description"} placeholder={"Enter the brand description"} onChange={(val) => this.changeInput("description", val)} value={displayDesc} isRequired onBlur={(val) => { this.checkValidation('15', val) }} />
+                                                        </Col>
+                                                    </Row>
+                                                    <Row style={{ display: 'flex', width: '80%', margin: 'auto', marginTop: 20, marginBottom: 20 }}>
+                                                        <div className="colorSchemaPart1">
+                                                            <label className="Title">Pick your color schema:</label>
+                                                            <div className="pickColorOutter" onClick={() => { this.setState({ displayColorPicker: true }) }}>
+                                                                <div className={"pickColorInner"} style={{ background: displayColor }}></div>
+                                                            </div>
+                                                            {
+                                                                this.state.displayColorPicker &&
+                                                                <PhotoshopPicker
+                                                                    color={displayColor}
+                                                                    onChangeComplete={this.handleChangeComplete}
+                                                                    onCancel={(color) => this.handleClosePicker(color, 'close')}
+                                                                    onAccept={(color) => this.handleClosePicker(color, 'accept')}
+                                                                />
+                                                            }
+                                                        </div>
+                                                        <div className="colorSchemaPart2">
+                                                            <div className="Container">
+                                                                <Row className="Row" style={{ borderColor: displayColor }}>
+                                                                    <Col md="4" className="Left" style={{ background: displayColor }}>
+                                                                        <p className="showTitle">{displayName}</p>
+                                                                        <p className="showDesc">{displayDesc}</p>
+
+                                                                    </Col>
+                                                                    <Col md="6" className="Right">
+                                                                        <p className="NumberTxt">Phone:</p>
+                                                                        <div className="Number" style={{ borderColor: displayColor }}></div>
+                                                                        <Button style={{ background: displayColor }}>Connect</Button>
+                                                                    </Col>
+                                                                </Row>
+                                                            </div>
+                                                        </div>
                                                     </Row>
 
                                                 </React.Fragment>
@@ -578,9 +659,41 @@ class CompanyProfile extends React.Component {
                                                             </div>
                                                         </Col>
                                                     </Row>
+
+                                                    <Row>
+                                                        <Col>
+                                                            <h3 style={{ marginBottom: '30px', marginTop: '30px' }}>LANDING PAGE CONFIGURATIONS:</h3>
+                                                        </Col>
+                                                    </Row>
+
+                                                    <Row>
+                                                        <Col md="6">
+                                                            <div className="detailsContainer">
+                                                                <label className="Title">Title:</label>
+                                                                <label className="subTitle">{displayName}</label>
+                                                            </div>
+                                                        </Col>
+                                                        <Col md="6">
+                                                            <div className="detailsContainer" style={{ whiteSpace: 'none' }}>
+                                                                <label className="Title">Color Schema:</label>
+                                                                <div className="pickColorOutter">
+                                                                    <div className={"pickColorInner"} style={{ background: displayColor }}></div>
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
+                                                    <Row>
+                                                        <Col md="12">
+                                                            <div className="detailsContainer">
+                                                                <label className="Title">Description:</label>
+                                                                <label className="subTitle">{displayDesc}</label>
+                                                            </div>
+                                                        </Col>
+                                                    </Row>
                                                     <Row className="buyBtnContainer">
                                                         <button type="button" className="btn btn-success buy" onClick={() => { this.setState({ showPackages: true }) }}>Buy Package</button>
                                                     </Row>
+
                                                 </React.Fragment>
                                                 :
                                                 <React.Fragment>
@@ -604,6 +717,8 @@ class CompanyProfile extends React.Component {
                                                             </div>
                                                         </Col>
                                                     </Row>
+
+
                                                 </React.Fragment>
                                         }
 

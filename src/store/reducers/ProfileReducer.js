@@ -4,6 +4,7 @@ import {
 
 const initialState = {
     OwnerProfile: {
+        // displayColor: '#22194D'
     },
 };
 

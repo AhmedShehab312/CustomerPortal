@@ -97,3 +97,96 @@
 
 
 
+
+  .photoshop-picker {
+    position: absolute;
+    z-index: 1;
+    background: "#fff";
+    width: 513px;
+  }
+  
+  .pickColorOutter {
+    background: #efefef;
+    width: 60px;
+    height: 34px;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin-left: 11px;
+    vertical-align: middle;
+  }
+  
+  .pickColorInner {
+    background: #22194d;
+    width: 50px;
+    height: 27px;
+    cursor: pointer;
+    position: absolute;
+    top: 3px;
+    left: 5px;
+  }
+  
+  .colorSchemaPart1 {
+    width: 45%;
+    padding-top: 7%;
+  }
+  
+  .colorSchemaPart2 {
+    width: 50%;
+    margin: auto;
+    .showTitle {
+      color: #fff;
+      margin-top: 36px;
+      margin-bottom: 0;
+      font-size: 11px;
+    }
+  
+    .showDesc {
+      color: #fff;
+      font-size: 9px;
+      height: 40px;
+      overflow: hidden;
+    }
+    .Container {
+      width: 150px;
+      .Row {
+        height: 150px;
+        border: 1px solid;
+        width: 250px;
+        .Left {
+          background: #22194d;
+          overflow: hidden;
+          word-wrap: break-word;
+        }
+        .Right {
+          Button {
+            position: absolute;
+            bottom: 17px;
+            margin-left: 15px;
+            padding: 4px;
+            font-size: 10px;
+            background: #22194d;
+            border: 0;
+          }
+          .Number {
+            height: 11px;
+            background: #efefef;
+            width: 60px;
+            border: 1px solid;
+            position: absolute;
+            bottom: 56%;
+            left: 47%;
+          }
+  
+          .NumberTxt {
+            position: absolute;
+            bottom: 48%;
+            left: 6%;
+            font-size: 9px;
+          }
+        }
+      }
+    }
+  }
+  
+  
