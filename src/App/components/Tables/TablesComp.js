@@ -19,7 +19,40 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { CSVLink } from "react-csv";
+import Pdf from "react-to-pdf";
+import ReactExport from "react-export-excel";
 
+const ref = React.createRef();
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const dataSet1 = [
+    {
+        name: "Johson",
+        amount: 30000,
+        sex: 'M',
+        is_married: true
+    },
+    {
+        name: "Monika",
+        amount: 355000,
+        sex: 'F',
+        is_married: false
+    },
+    {
+        name: "John",
+        amount: 250000,
+        sex: 'M',
+        is_married: false
+    },
+    {
+        name: "Josef",
+        amount: 450500,
+        sex: 'M',
+        is_married: true
+    }
+];
 class TableData extends React.Component {
 
     constructor(props) {
@@ -43,14 +76,28 @@ class TableData extends React.Component {
     headCells;
     pageSizeOptions = [5, 10, 25]
 
+    headers = [
+        { label: "First Name", key: "firstname" },
+        { label: "Last Name", key: "lastname" },
+        { label: "Email", key: "email" }
+    ];
+
+    data = [
+        { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+        { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+        { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+    ];
+
 
     async componentDidMount() {
         const { headCells, data, DataShowPerTable } = this.props;
         this.headCells = headCells;
         this.setState({ selectedFilter: this.headCells[0].id })
         if (data) {
-
             await this.InitializeRows(data, DataShowPerTable);
+            console.log(this.state.rows)
+            console.log(DataShowPerTable)
+
         }
     }
 
@@ -60,6 +107,8 @@ class TableData extends React.Component {
         this.setState({ selectedFilter: this.headCells[0].id })
         if (data) {
             await this.InitializeRows(data, DataShowPerTable);
+            console.log(this.state.rows)
+
         }
 
     }
@@ -86,6 +135,7 @@ class TableData extends React.Component {
 
         rows.push(result);
         this.setState({ rows: rows, originalRows: rows }, () => {
+
         })
     }
 
@@ -299,13 +349,26 @@ class TableData extends React.Component {
                                 {showCheckBox && <Button disabled={checkBoxselectedList.length == 0} variant="contained" onClick={() => this.Pay()} className={["PayBtn", checkBoxselectedList.length == 0 && 'disabledBTN']}> <i className="fas fa-shopping-cart " />Pay</Button>}
                                 {showCheckBox && <Button variant="contained" onClick={() => this.selectPayAll()}>{SelectAllPay}</Button>}
 
-                                {/* <Dropdown>
+                                <Dropdown>
                                     <Dropdown.Toggle variant="success" id="dropdown-basic"><i className="fa fa-download" /><p className="ExportTxt">Export Table</p></Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item ><i className="fa fa-file-excel" /> Excel</Dropdown.Item>
-                                        <Dropdown.Item ><i className="fa fa-file-pdf" />PDF</Dropdown.Item>
+                                        <ExcelFile element={<div className="csvText csvContainer"><i className="fa fa-file-excel" /> Excel</div>} filename={`${Title}`}>
+                                            <ExcelSheet data={rows} name="Employees" >
+                                                {
+                                                    DataShowPerTable.map((Item)=>{
+                                                        return   <ExcelColumn label={Item} value={Item} />
+                                                    })
+                                                }
+                                               
+                                            </ExcelSheet>
+                                        </ExcelFile>
+                                        <CSVLink className="csvText csvContainer" filename={`${Title}.csv`} data={rows} headers={DataShowPerTable}>  <i className="fa fa-file-excel" /> CSV </CSVLink>
+                                        <Pdf targetRef={ref} filename={`${Title}.pdf`} className="csvContainer">
+                                            {({ toPdf }) =>
+                                                <button className="pdfBTN" onClick={toPdf}><i className="fa fa-file-pdf" />Pdf</button>}
+                                        </Pdf>
                                     </Dropdown.Menu>
-                                </Dropdown> */}
+                                </Dropdown>
                             </div>
                         </Col>
                         <hr />
@@ -356,7 +419,7 @@ class TableData extends React.Component {
                     </Row>
 
 
-                    <TableContainer>
+                    <TableContainer ref={ref}>
                         {rows && rows.length > 0 ?
                             <Table
                                 className={classes.table}

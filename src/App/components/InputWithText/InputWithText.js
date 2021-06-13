@@ -31,7 +31,7 @@ class InputWithText extends React.Component {
 
     validationFunc = (value, validation, isRequired) => {
         const { onBlur } = this.props;
-        if (isRequired && value.toString().match(this.commonRegex.isRequired)) {
+        if (onBlur && isRequired && value.toString().match(this.commonRegex.isRequired)) {
             this.setState({ errorMsg: "This field is required" });
             onBlur(false);
         }
@@ -81,7 +81,7 @@ class InputWithText extends React.Component {
 
                 default:
                     this.setState({ errorMsg: null });
-                    onBlur(true);
+                    onBlur && onBlur(true);
                     break;
             }
         }
@@ -110,7 +110,7 @@ class InputWithText extends React.Component {
             <FormGroup>
                 <label style={{ color: '#000' }}>{label}</label>
                 <Input style={this.state.errorMsg ? { borderColor: '#ea6464' } : null} type={type} placeholder={placeholder} onChange={onChange ? (val) => { onChange(val.target.value); } : null} disabled={disabled}
-                    defaultValue={value ? value : null} onBlur={(val) => { this.validationFunc(val.target.value, validation, isRequired) }} />
+                    defaultValue={value ? value : null} onBlur={ (val) => { this.validationFunc(val.target.value, validation, isRequired) }} />
                 {
                     validation == "password" && <i class={showPassword ? "fas fa-eye" : "fas fa-eye-slash"} style={{ position: 'absolute', top: this.state.errorMsg ? "38%" : '44px', right: '25px', cursor: 'pointer' }} onClick={() => { this.showPassword() }}></i>
                 }

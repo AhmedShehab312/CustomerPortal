@@ -104,6 +104,14 @@ export default {
                     role: ["OWNER"],
                 },
                 {
+                    id: 'Groups',
+                    title: 'Groups',
+                    type: 'item',
+                    url: '/Groups',
+                    icon: 'fas fa-user',
+                    role: ["OWNER"],
+                },
+                {
                     id: 'Reports',
                     title: 'Reports',
                     type: 'item',

@@ -95,7 +95,8 @@ export function HtttpGetDefult(
   url,
   showSpinner = false,
   isLogin = false,
-  isRefresh = false
+  isRefresh = false,
+  isGraph = false
 ) {
 
   if (showSpinner) {
@@ -105,7 +106,7 @@ export function HtttpGetDefult(
   setRequestHeader(isRefresh, isLogin, url);
   return new Promise((resolve, reject) => {
     httpClient
-      .get(Configs.getEndpoint + url)
+      .get(isGraph ? Configs.getEndpointGraph + url : Configs.getEndpoint + url)
       .then(res => {
         resolve(res);
       })

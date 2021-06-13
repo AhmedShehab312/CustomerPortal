@@ -24,6 +24,7 @@ class NavRight extends Component {
     }
 
     render() {
+        const { history, triggerClearReducers , OwnerProfile } = this.props;
 
         return (
             <Aux>
@@ -85,9 +86,9 @@ class NavRight extends Component {
                             </Dropdown.Menu>
                         </Dropdown>
                     </li> */}
-                    <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
+                    {/* <li className={this.props.rtlLayout ? 'm-r-15' : 'm-l-15'}>
                         <a href={DEMO.BLANK_LINK} className="displayChatbox" onClick={() => { this.setState({ listOpen: true }); }}><i className="icon feather icon-mail" /></a>
-                    </li>
+                    </li> */}
                     <li>
                         <Dropdown alignRight={!this.props.rtlLayout} className="drp-user">
                             <Dropdown.Toggle variant={'link'} id="dropdown-basic">
@@ -96,16 +97,14 @@ class NavRight extends Component {
                             <Dropdown.Menu alignRight className="profile-notification">
                                 <div className="pro-head">
                                     <img src={Avatar1} className="img-radius" alt="User Profile" />
-                                    <span>John Doe</span>
+                                    <span>{OwnerProfile?.name || 'Winfi'}</span>
                                     <a href={DEMO.BLANK_LINK} className="dud-logout" title="Logout" onClick={() => { this.logOut() }}>
                                         <i className="feather icon-log-out" />
                                     </a>
                                 </div>
                                 <ul className="pro-body">
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-settings" /> Settings</a></li>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-user" /> Profile</a></li>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-mail" /> My Messages</a></li>
-                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-lock" /> Lock Screen</a></li>
+                                    {/* <li><a href={DEMO.BLANK_LINK} className="dropdown-item"><i className="feather icon-settings" /> Settings</a></li> */}
+                                    <li><a href={DEMO.BLANK_LINK} className="dropdown-item" onClick={()=>{history.push('/CompanyProfile')}}> <i className="feather icon-user" /> Profile</a></li>
                                 </ul>
                             </Dropdown.Menu>
                         </Dropdown>
@@ -118,11 +117,15 @@ class NavRight extends Component {
 }
 
 
-
+const mapStateToProps = (state) => {
+    return {
+        OwnerProfile: state.storage.ProfileState.OwnerProfile,
+    };
+};
 const mapDispatchToProps = (dispatch) => {
     return {
         triggerClearReducers: () => dispatch(clearReducers()),
     };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(NavRight));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavRight));

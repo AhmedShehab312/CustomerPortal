@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import ProfileReducer from './reducers/ProfileReducer';
 import BranchesReducer from './reducers/BranchsReducer';
 import GlobalReducer from './reducers/GlobalReducer';
+import GroupsReducer from './reducers/GroupsReducer';
 import AdminsReducer from './reducers/AdminsReducer';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
@@ -13,6 +14,7 @@ const storageReducer = combineReducers({
     BranchesState: BranchesReducer,
     GlobalState: GlobalReducer,
     AdminsState: AdminsReducer,
+    GroupsState:GroupsReducer
 
 });
 
@@ -28,7 +30,7 @@ const rootPersistConfig = {
 const storagePersistConfig = {
     key: 'storage',
     storage,
-    whitelist: ['ProfileState', 'BranchesState', 'GlobalState', 'AdminsState'],
+    whitelist: ['ProfileState', 'BranchesState', 'GlobalState', 'AdminsState'  , 'GroupsState'],
 };
 
 const rootStorageReducer = (state, action) => {

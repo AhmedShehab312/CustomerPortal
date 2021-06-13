@@ -34,6 +34,9 @@ const InvoicesPayments = React.lazy(() => import('./Demo/InvoicesPayments'));
 const Contacts = React.lazy(() => import('./Demo/Contacts'));
 const CurrentPayments = React.lazy(() => import('./Demo/CurrentPayments/CurrentPayments'));
 const HistoryPayments = React.lazy(() => import('./Demo/HistoryPayments/HistoryPayments'));
+const Groups = React.lazy(() => import('./Demo/Groups/Groups'));
+
+
 
 
 
@@ -62,6 +65,8 @@ const routes = [
     { path: '/Contacts', exact: true, name: 'Contacts', component: Contacts },
     { path: '/CurrentPayments', exact: true, name: 'CurrentPayments', component: CurrentPayments },
     { path: '/HistoryPayments', exact: true, name: 'HistoryPayments', component: HistoryPayments },
+    { path: '/Groups', exact: true, name: 'Groups', component: Groups },
+    
 
 
 

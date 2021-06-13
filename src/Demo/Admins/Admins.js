@@ -534,7 +534,7 @@ class Admins extends React.Component {
     delete(Item, key) {
         const { Admins } = this.state;
         const { StoreAdmins } = this.props;
-        HtttpDeleteDefult("admin/" + Item._id + "", true).then((res) => {
+        HtttpDeleteDefult("admins/" + Item._id + "", true).then((res) => {
             if (res) {
                 Admins.splice(key, 1);
                 this.setState({ Admins: Admins })

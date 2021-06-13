@@ -16,7 +16,7 @@ import Aux from "../../hoc/_Aux";
 import TableData from '../../App/components/Tables/TablesComp';
 import './HistoryPaymentsStyle.scss';
 import i18n from '../../i18n';
-import { HtttpDeleteDefult, HtttpPostDefult, HtttpPutDefult, HtttpGetDefult } from '../../actions/httpClient';
+import { HtttpGetDefult } from '../../actions/httpClient';
 import { connect } from 'react-redux';
 import { StoreProfile } from '../../store/actions/ProfileAction';
 import { displayToast } from '../../globals/globals';
@@ -77,7 +77,7 @@ class HistoryPayments extends React.Component {
 
 
     async getPayments(id) {
-        HtttpGetDefult('brand/payments/' + id + '', true).then(async (res) => {
+        HtttpGetDefult('brands/' + id + '/payments', true).then(async (res) => {
             if (res) {
                 this.setState({ Payments: res.payments });
                 setTimeout(

@@ -86,7 +86,7 @@ class CurrentPayments extends React.Component {
         const { storeBranches, StoreAdmins } = this.props;
 
 
-        HtttpGetDefult('brand/' + id + '', true).then(async (res) => {
+        HtttpGetDefult('brands/' + id + '', true).then(async (res) => {
             if (res) {
                 storeBranches(res.branches);
                 StoreAdmins(res.admins);
@@ -121,7 +121,7 @@ class CurrentPayments extends React.Component {
             branches: ItemIds,
             price: TotalPrices
         };
-        HtttpPostDefult('brand/renew/' + OwnerProfile._id + '', body).then((res) => {
+        HtttpPostDefult('brands/renew/' + OwnerProfile._id + '', body).then((res) => {
             displayToast('The branches renewed successfully', true);
         })
     }

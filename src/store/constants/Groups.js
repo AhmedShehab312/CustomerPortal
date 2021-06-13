@@ -1,0 +1,3 @@
+const STORE_GROUPS = 'STORE_GROUPS';
+
+export { STORE_GROUPS };

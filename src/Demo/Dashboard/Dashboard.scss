@@ -1,0 +1,33 @@
+ .Dashboard{
+    .dateTxt{
+        margin-right: 10px;
+        color: #898989;
+    }
+    .react-datepicker-wrapper{
+        display: block;
+    }
+    .dropDownContainer {
+        margin-bottom: 20px;
+      }
+      .chartContainer{
+        margin-top: 30px;
+      }
+      .filterBtn{
+        background: #fff;
+        border: 1px solid #3699ff;
+        color: #3699ff;
+        background-color: transparent;
+        font-weight: 600;    
+        margin-top: 6%;
+        margin-bottom: 0;
+    }
+      .react-datepicker__input-container{
+          input{
+            border-radius: 5px;
+            border: 1px solid;
+            padding: 5px;
+            cursor: pointer;
+            text-align: center;
+          }
+      }
+ }

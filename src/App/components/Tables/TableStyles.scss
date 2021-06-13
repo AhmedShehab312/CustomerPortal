@@ -245,6 +245,48 @@
         }
       }
     }
+
+    .csvContainer {
+      cursor: pointer;
+      width: 100%!important;
+      padding: 0.25rem 1.5rem !important;
+      text-align: left!important;
+      color: #16181b !important;;
+    display: block !important;
+
+  
+      &:hover{
+        color: #16181b;
+        text-decoration: none;
+        background-color: #f8f9fa;
+    }
+
+    .csvText {
+      color: #000;
+      }
+    }
+
+    .pdfBTN{
+      border: 0 !important;
+    margin: 0 !important;
+    font-size: 17px !important;
+    color: #000 !important;
+    padding: 3px !important;
+    width: 100%!important;
+    padding: 0.25rem 1.5rem !important;
+    text-align: left!important;
+    &:hover{
+      color: #16181b !important;
+      text-decoration: none !important;
+      background-color: #f8f9fa !important;
+  }
+
+  &:focus{
+    outline: none;
+    background-color: #f8f9fa !important;
+  }
+
+   }
   }
   
   .swal-text {

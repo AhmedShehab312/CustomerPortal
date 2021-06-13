@@ -47,16 +47,15 @@ class CompanyProfile extends React.Component {
 
     getProfileInfo() {
         const { OwnerProfile } = this.props;
-        HtttpGetDefult('brand/' + OwnerProfile._id + '', true).then((res) => {
+        HtttpGetDefult('brands/' + OwnerProfile._id + '', true).then((res) => {
             if (res) {
                 this.setState({ profileObject: res });
-
             }
         })
     }
 
     getPackages() {
-        HtttpGetDefult('package/list', false).then((res) => {
+        HtttpGetDefult('packages', false).then((res) => {
             if (res) {
                 this.setState({ packages: res });
             }
@@ -300,6 +299,7 @@ class CompanyProfile extends React.Component {
     }
 
     selectedPackage(val) {
+        console.log(val)
         this.setState({ selectedPackage: val });
     }
 
@@ -340,6 +340,47 @@ class CompanyProfile extends React.Component {
                                         </FormGroup>
                                     </Col>
                                 </Row>
+                                {
+                                    selectedPackage &&  
+                                    <div className="Details">
+
+                                    <Row>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Package Name:</label>
+                                            <label className="subTitle">{selectedPackage.name}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Price:</label>
+                                            <label className="subTitle">{selectedPackage.price + ' ' + selectedPackage.currency}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Notification Count:</label>
+                                            <label className="subTitle">{selectedPackage.notificationCount}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">SMS Count:</label>
+                                            <label className="subTitle">{selectedPackage.smsCount}</label>
+                                        </div>
+                                    </Col>
+                                    <Col md="4">
+                                        <div className="detailsContainer">
+                                            <label className="Title">Email Count:</label>
+                                            <label className="subTitle">{selectedPackage.emailCount}</label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                </div>
+                                }
+
                             </Form>
                         </CardBody>
                     </Modal.Body>

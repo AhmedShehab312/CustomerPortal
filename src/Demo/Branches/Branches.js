@@ -86,7 +86,7 @@ class Branches extends React.Component {
 
     getBranches(id) {
         const { storeBranches, StoreAdmins } = this.props;
-        HtttpGetDefult('brand/' + id + '', true).then(async (res) => {
+        HtttpGetDefult('brands/' + id + '', true).then(async (res) => {
             if (res) {
                 storeBranches(res.branches);
                 StoreAdmins(res.admins);
@@ -340,7 +340,7 @@ class Branches extends React.Component {
     delete(Item, key) {
         const { Branches } = this.state;
         const { storeBranches } = this.props;
-        HtttpDeleteDefult("branch/" + Item.id + "").then((res) => {
+        HtttpDeleteDefult("branches/" + Item.id + "").then((res) => {
             if (res) {
                 Branches.splice(key, 1);
                 this.setState({ Branches: Branches })
@@ -654,7 +654,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.interval = selectedIntervals.name;
         this.setState({ showEdit: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -675,7 +675,7 @@ class Branches extends React.Component {
         newBranch.interval = selectedIntervals.name;
         newBranch.allowedServices = "";
         newBranch.accessPoints = null
-        HtttpPostDefult("branch/create", newBranch, true).then((res) => {
+        HtttpPostDefult("branches", newBranch, true).then((res) => {
             if (!res.errors) {
                 newBranch._id = res.id;
                 Branches.push(newBranch);
@@ -806,7 +806,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.accessPoints ? selectedBranch.accessPoints.push(NewAccessPoints) : selectedBranch.accessPoints = [NewAccessPoints];
         this.setState({ showAddAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });
@@ -821,7 +821,7 @@ class Branches extends React.Component {
         const { storeBranches } = this.props;
         selectedBranch.accessPoints[SelectedAccessPointsIndex] = SelectedAccessPoints;
         this.setState({ showEditAccessPoint: false });
-        HtttpPutDefult("branch/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
+        HtttpPutDefult("branches/" + selectedBranch._id + "", selectedBranch, true).then((res) => {
             if (res) {
                 Branches[selectedBranchIndex] = selectedBranch;
                 this.setState({ Branches: Branches });

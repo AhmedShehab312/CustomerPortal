@@ -8,8 +8,11 @@ import { setLoggedIn, displayToast } from '../../../globals/globals';
 import { StoreProfile } from '../../../store/actions/ProfileAction';
 import { StoreBranches } from '../../../store/actions/BranchsAction';
 import { StoreAdmins } from '../../../store/actions/AdminsAction';
+import { StoreGroups } from '../../../store/actions/GroupsAction';
 import { connect } from 'react-redux';
 import { HtttpGetDefult, HtttpPostDefult } from '../../../actions/httpClient';
+import moment from 'moment'
+
 
 class SignUp1 extends React.Component {
 
@@ -71,13 +74,13 @@ class SignUp1 extends React.Component {
             this.getAdminBranches(data.id); // get Admin branches
             storeProfile(data.details);
         }
-
+        this.getGroups(data.id);
         setLoggedIn(true);
     }
 
     getBranches(id) {
         const { storeBranches, StoreAdmins } = this.props;
-        HtttpGetDefult('brand/' + id + '').then((res) => {
+        HtttpGetDefult('brands/' + id + '').then((res) => {
             if (res) {
                 storeBranches(res.branches);
                 StoreAdmins(res.admins)
@@ -88,7 +91,7 @@ class SignUp1 extends React.Component {
     getAdminBranches(id) {
         const { storeBranches } = this.props;
         let adminBranches = [];
-        HtttpGetDefult('admin/' + id + '').then((res) => {
+        HtttpGetDefult('admins/' + id + '').then((res) => {
             if (res) {
                 if (res.adminRoles && res.adminRoles.length > 0) {
                     res.adminRoles.map((Item) => {
@@ -128,6 +131,34 @@ class SignUp1 extends React.Component {
             }
         })
 
+    }
+
+
+    getGroups = (id) => {
+        const { StoreGroups } = this.props;
+        let groups = [];
+
+        HtttpGetDefult('groups').then((res) => {
+            if (res) {
+                res.data.map((Item) => {
+                    groups.push({
+                        uploadSpeed: Item.bandwidthUp.value,
+                        downloadSpeed: Item.bandwidthDown.value,
+                        quotaLimitDaily: Item.quotaLimitDaily.value,
+                        quotaLimitWeekly: Item.quotaLimitWeekly.value,
+                        quotaLimitMonthly: Item.quotaLimitMonthly.value,
+                        timeLimitDaily: Item.timeLimitDaily.value,
+                        timeLimitWeekly: Item.timeLimitWeekly.value,
+                        timeLimitMonthly: Item.timeLimitMonthly.value,
+                        createdAt: moment(Item.createdAt).format('DD-MMM-YYYY'),
+                        name: Item.name,
+                        _id: Item._id
+                    })
+                })
+
+                StoreGroups(groups)
+            }
+        })
     }
 
     render() {
@@ -180,6 +211,8 @@ const mapDispatchToProps = (dispatch) => {
         storeProfile: (val) => dispatch(StoreProfile(val)),
         storeBranches: (val) => dispatch(StoreBranches(val)),
         StoreAdmins: (val) => dispatch(StoreAdmins(val)),
+        StoreGroups: (val) => dispatch(StoreGroups(val)),
+
 
     };
 };
