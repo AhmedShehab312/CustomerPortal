@@ -117,7 +117,7 @@ class CompanyProfile extends React.Component {
         const { profileObject } = this.state;
         const { storeProfile, OwnerProfile } = this.props;
         let res = profileObject;
-        HtttpPutDefult('brand/' + OwnerProfile._id + '', res, true).then((res) => {
+        HtttpPutDefult('brands/' + OwnerProfile._id + '', res, true).then((res) => {
             if (res) {
                 storeProfile(profileObject);
                 displayToast('Profile data is updated successfully', true);
@@ -309,7 +309,7 @@ class CompanyProfile extends React.Component {
             packageID: selectedPackage._id,
             count: 1
         }
-        HtttpPostDefult('brand/buy/package/' + profileObject._id + '', body).then((res) => {
+        HtttpPostDefult('brands/' + profileObject._id + '/package/buy', body).then((res) => {
             if (res) {
                 displayToast('New package is added successfully', true);
                 this.getProfileInfo();

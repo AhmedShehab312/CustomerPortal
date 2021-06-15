@@ -82,7 +82,7 @@ class Dashboard extends React.Component {
             if (res) {
                 this.setState({
                     QuotaLineChartData: this.reformatQuotaLineChartData(res.data[0].lineChartData),
-                    series: [res.data[0].totalConsumedQuota[0].total / (res.data[0].totalConsumedQuota[0].total + 2300)]
+                    series: res.data[0].totalConsumedQuota[0] ? [res.data[0].totalConsumedQuota[0].total / (res.data[0].totalConsumedQuota[0].total + 2300)] : null
                 })
             }
         })
@@ -118,7 +118,6 @@ class Dashboard extends React.Component {
     render() {
         const { selectedBranchQuota, errorMsg, startDateQuota, EndDateQuota, EndDateBandwidth, startDateBandwidth, selectedBranchBandwidth, BandwidthLineChartData, series, options, QuotaLineChartData, BandwidthSpeedMeterChartData } = this.state;
         const { Branches } = this.props;
-
         return (
             <Aux >
                 <div className="Dashboard" >
@@ -150,9 +149,8 @@ class Dashboard extends React.Component {
                                     </Row>
                                     <Row className="chartContainer">
                                         {
-                                            BandwidthLineChartData &&
+                                            BandwidthLineChartData && BandwidthLineChartData.length > 0 &&
                                             <Col md={4}>
-
                                                 <LineChart width={400} height={300} data={BandwidthLineChartData}>
                                                     <CartesianGrid strokeDasharray="3 3" />
                                                     <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
@@ -233,7 +231,7 @@ class Dashboard extends React.Component {
 
                                     <Row className="chartContainer">
                                         {
-                                            series.length > 0 &&
+                                           series && series.length > 0 &&
                                             <Col md={6}>
                                                 <div id="chart">
                                                     <Chart options={options} series={series} type="radialBar" height={350} />
@@ -241,7 +239,7 @@ class Dashboard extends React.Component {
                                             </Col>
                                         }
                                         {
-                                            QuotaLineChartData &&
+                                            QuotaLineChartData && QuotaLineChartData.length > 0 &&
                                             <Col md={6}>
                                                 <div >
                                                     <LineChart width={500} height={300} data={QuotaLineChartData}>
