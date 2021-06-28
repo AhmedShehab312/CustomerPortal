@@ -49,7 +49,7 @@
         &:checked + .form-check-label,
         &:checked + .cr {
             &:before {
-                background: $theme-color;
+                // background: $theme-color;
                 transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
             }
 
@@ -75,7 +75,7 @@
 
     &.switch-alternative input[type=checkbox]:checked + .form-check-label:before,
     &.switch-alternative input[type=checkbox]:checked + .cr:before {
-        background: $theme-color2;
+        // background: $theme-color2;
     }
 }
 /**====== Switches css end ======**/
