@@ -125,15 +125,19 @@ class Dashboard extends React.Component {
                         <Col>
                             <Card title={"Bandwidth"}>
                                 <CardBody>
-                                    <Row>
-                                        <Col md={6} style={{ margin: 'auto' }}>
-                                            <FormGroup className="dropDownContainer">
-                                                <label className="title">Branches</label>
-                                                <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.setState({ selectedBranchBandwidth: val }) }} selctedItem={selectedBranchBandwidth} />
-                                                {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
+                                    {
+                                        Branches && Branches.length > 0 &&
+                                        <Row>
+                                            <Col md={6} style={{ margin: 'auto' }}>
+                                                <FormGroup className="dropDownContainer">
+                                                    <label className="title">Branches</label>
+                                                    <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.setState({ selectedBranchBandwidth: val }) }} selctedItem={selectedBranchBandwidth} />
+                                                    {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    }
+
                                     <Row>
                                         <Col md={4} className="text-center" style={{ margin: 'auto' }}>
                                             <label className="dateTxt">From Date:</label>
@@ -206,15 +210,17 @@ class Dashboard extends React.Component {
                         <Col>
                             <Card title={"Quota"}>
                                 <CardBody>
-                                    <Row>
-                                        <Col md={6} style={{ margin: 'auto' }}>
-                                            <FormGroup className="dropDownContainer">
-                                                <label className="title">Branches</label>
-                                                <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.setState({ selectedBranchQuota: val }) }} selctedItem={selectedBranchQuota} />
-                                                {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
+                                    {Branches && Branches.length > 0 &&
+                                        <Row>
+                                            <Col md={6} style={{ margin: 'auto' }}>
+                                                <FormGroup className="dropDownContainer">
+                                                    <label className="title">Branches</label>
+                                                    <DropDown label={"Branches"} items={Branches} onClick={(val) => { this.setState({ selectedBranchQuota: val }) }} selctedItem={selectedBranchQuota} />
+                                                    {errorMsg && <label style={{ color: '#ea6464', marginLeft: '10px', fontSize: '12px' }}>{errorMsg}</label>}
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
+                                    }
                                     <Row>
                                         <Col md={4} className="text-center" style={{ margin: 'auto' }}>
                                             <label className="dateTxt">From Date:</label>
@@ -231,7 +237,7 @@ class Dashboard extends React.Component {
 
                                     <Row className="chartContainer">
                                         {
-                                           series && series.length > 0 &&
+                                            series && series.length > 0 &&
                                             <Col md={6}>
                                                 <div id="chart">
                                                     <Chart options={options} series={series} type="radialBar" height={350} />

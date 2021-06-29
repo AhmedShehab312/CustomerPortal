@@ -3,7 +3,6 @@ import React from 'react';
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import './DropDownStyle.scss';
 const DropDown = ({ label, items, selctedItem, onClick, title }) => {
-    console.log('@@' ,items )
     return (
         <React.Fragment>
             {title && <label className="dropDownTitle">{title}</label>}
@@ -14,8 +13,8 @@ const DropDown = ({ label, items, selctedItem, onClick, title }) => {
                 </DropdownToggle>
                 <DropdownMenu>
                     {
-                       items && items.map((Item, key) => {
-                            return <DropdownItem key={key} onClick={() => { onClick(Item) }} active={selctedItem && Item._id == selctedItem._id}>{Item.name}</DropdownItem>
+                       items && items.length > 0 && items.map((Item, key) => {
+                        return <DropdownItem key={key} onClick={() => { onClick(Item) }} active={selctedItem && Item._id == selctedItem._id}>{Item.name}</DropdownItem>
                         })
                     }
                 </DropdownMenu>
