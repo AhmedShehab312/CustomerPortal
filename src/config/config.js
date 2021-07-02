@@ -1,4 +1,4 @@
-const ENDPOINT = "http://52.29.158.36:3000/";
+const ENDPOINT = "http://139.59.152.220:3000/";
 const ENDPOINTGraph = "https://03ce97055263.ngrok.io/";
 
 const TIMEOUT = 120000;
